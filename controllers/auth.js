@@ -9,6 +9,8 @@ const KEYS = require('../config/keys.json');
 
 let userProfile; //only used if you want to see user info beyond username
 
+const Player = require('../models/player_model');
+
 router.use(session({
   resave: false,
   saveUninitialized: true,
@@ -62,6 +64,7 @@ router.get('/auth/google/callback',
 router.get("/auth/logout", (request, response) => {
   request.logout();
   let playerID = request.user._json.email;
+  Player.createPlayer(playerID, playerID.split('.')[0]);//only creates if not in players.json
   response.redirect('/');
 });
 
