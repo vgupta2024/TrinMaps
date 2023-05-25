@@ -1,21 +1,17 @@
 const express = require('express');
 router = express.Router();
-const fs = require('fs');
+const User = require('../models/users_model')
 
 
-router.get('/', function(request, response) {
-    response.status(200);
-    response.setHeader('Content-Type', 'text/html')
-    response.render("about", {
-        user: request.user
-    });
-});
+function loggedIn(request, response, next) {
+    if (request.user) {
+        next();
+    } else {
+        response.redirect('/login');
+    }
+}
 
 
-router.get('/login', function(request, response) {
-    response.status(200);
-    response.setHeader('Content-Type', 'text/html')
-    response.render("login", {
-        user: request.user
-    });
+router.post('/news', function(request, response) {
+
 });
