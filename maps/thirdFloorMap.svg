@@ -26,8 +26,8 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="1.838075"
-     inkscape:cx="160.76602"
-     inkscape:cy="309.29097"
+     inkscape:cx="352.27072"
+     inkscape:cy="390.89809"
      inkscape:window-width="1512"
      inkscape:window-height="827"
      inkscape:window-x="0"
@@ -42,6 +42,16 @@
      id="floor-3"
      x="5.0699601"
      y="2.7899907" /><circle
+     style="fill:#ff0000;stroke-width:0.264583"
+     id="MB-NS1"
+     cx="125.66475"
+     cy="69.669807"
+     r="0.97081733" /><circle
+     style="fill:#ff0000;stroke-width:0.264583"
+     id="WB-NS1"
+     cx="125.66476"
+     cy="65.351433"
+     r="0.97081733" /><circle
      style="fill:#ff0000;stroke-width:0.264583"
      id="N-303"
      cx="183.84691"
