@@ -26,8 +26,8 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="1.838075"
-     inkscape:cx="797.57355"
-     inkscape:cy="255.43027"
+     inkscape:cx="294.05764"
+     inkscape:cy="230.40409"
      inkscape:window-width="1512"
      inkscape:window-height="827"
      inkscape:window-x="0"
@@ -42,6 +42,11 @@
      id="floor-3"
      x="5.0699601"
      y="2.7899907" /><circle
+     style="fill:#ff0000;stroke-width:0.264583"
+     id="BATHROOM-EW2"
+     cx="125.66476"
+     cy="38.721443"
+     r="0.97081733" /><circle
      style="fill:#ff0000;stroke-width:0.264583"
      id="WCOR-1"
      cx="14.394588"
@@ -222,6 +227,11 @@
      id="N-326"
      cx="132.38248"
      cy="85.433723"
+     r="0.97081733" /><circle
+     style="fill:#ff0000;stroke-width:0.264583"
+     id="BATHROOM-EW1"
+     cx="125.66476"
+     cy="85.50386"
      r="0.97081733" /><circle
      style="fill:#ff0000;stroke-width:0.264583"
      id="N-325"
