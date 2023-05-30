@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
-<svg id="SVG"
+<svg
    width="381.85983mm"
    height="203.31406mm"
    viewBox="0 0 381.85984 203.31406"
@@ -26,8 +26,8 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="1.838075"
-     inkscape:cx="875.64436"
-     inkscape:cy="243.46123"
+     inkscape:cx="797.57355"
+     inkscape:cy="255.43027"
      inkscape:window-width="1512"
      inkscape:window-height="827"
      inkscape:window-x="0"
@@ -43,13 +43,18 @@
      x="5.0699601"
      y="2.7899907" /><circle
      style="fill:#ff0000;stroke-width:0.264583"
+     id="WCOR-1"
+     cx="14.394588"
+     cy="85.503853"
+     r="0.97081733" /><circle
+     style="fill:#ff0000;stroke-width:0.264583"
      id="US-LIBRARY-EW2"
-     cx="246.14746"
+     cx="246.21942"
      cy="51.532627"
      r="0.97081733" /><circle
      style="fill:#ff0000;stroke-width:0.264583"
      id="US-LIBRARY-EW1"
-     cx="246.2914"
+     cx="246.21942"
      cy="77.154999"
      r="0.97081733" /><circle
      style="fill:#ff0000;stroke-width:0.264583"
@@ -84,8 +89,8 @@
      r="0.97081733" /><circle
      style="fill:#ff0000;stroke-width:0.264583"
      id="Stair-NB"
-     cx="245.03406"
-     cy="38.682072"
+     cx="246.18562"
+     cy="38.969963"
      r="0.97081733" /><circle
      style="fill:#ff0000;stroke-width:0.264583"
      id="N-314"
@@ -153,10 +158,7 @@
      id="N-317"
      cx="41.298946"
      cy="38.682076"
-     r="0.97081733" /><path
-     style="fill:#ff0000;stroke:#000000;stroke-width:0.316833;stroke-dasharray:none;stroke-opacity:1"
-     d="m 18.024549,38.682074 c 231.156961,0 231.156961,0 231.156961,0"
-     id="path83313-8" /><circle
+     r="0.97081733" /><circle
      style="fill:#ff0000;stroke-width:0.264583"
      id="N-318"
      cx="19.888201"
@@ -256,7 +258,9 @@
      id="N-320"
      cx="20.037447"
      cy="85.433723"
-     r="0.97081733" /><path
-     style="fill:#ff0000;stroke:#000000;stroke-width:0.316833;stroke-dasharray:none;stroke-opacity:1"
-     d="m 17.957558,85.433723 c 231.156972,0 231.156972,0 231.156972,0"
-     id="path83313" /></svg>
+     r="0.97081733" /><circle
+     style="fill:#ff0000;stroke-width:0.264583"
+     id="STAIR-NA"
+     cx="14.250643"
+     cy="38.721443"
+     r="0.97081733" /></svg>
