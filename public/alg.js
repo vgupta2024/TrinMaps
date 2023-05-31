@@ -9,13 +9,8 @@ const connections = {
   
 }
 
-const shared = {
-  "N-319":"N-320",
-  "N-324":"N-323",
-}
-
 function findPath(start, end){
-
+  
 }
 
 function getNode(id){
@@ -23,7 +18,7 @@ function getNode(id){
 }
 
 function getMDistance(node1, node2){
-  return Math.abs(node1.x+)
+  return Math.abs(node1.x-node2.x) + Math.abs(node1.y-node2.y)
 }
 function getDistance(node1,node2){
 
