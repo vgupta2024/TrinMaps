@@ -39,3 +39,10 @@ exports.updateUser = function(ID, name, userGroup) {
     allUsers[ID] = user;
     fs.writeFileSync(__dirname + '/../data/users.json', JSON.stringify(allUsers));
 }
+
+module.exports = {
+    getUsers,
+    getUser,
+    createUser,
+    updateUser
+  };
