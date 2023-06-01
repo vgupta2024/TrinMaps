@@ -19,3 +19,5 @@ router.get('/login', function(request, response) {
         user: request.user
     });
 });
+
+module.exports=router;

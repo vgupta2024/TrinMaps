@@ -12,7 +12,7 @@ app.use(express.json()); //Used to parse JSON bodies (needed for POST requests)
 app.use(express.urlencoded());
 
 
-app.use(methodOverride('_method'));//middleware for CRUD:UPDATE and DELETE
+//app.use(methodOverride('_method'));//middleware for CRUD:UPDATE and DELETE
 
 app.use(express.static('public')); //specify location of static assests
 app.set('views', __dirname + '/views'); //specify location of templates
@@ -30,3 +30,5 @@ const port = process.env.PORT || 3000;
 app.listen(port, function() {
   console.log('Server started at http://localhost:'+port+'.')
 });
+
+module.exports = router;
