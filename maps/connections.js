@@ -39,6 +39,4 @@ const conenctions = {
     "STAIR-NA": ["N-318, WCOR, 1"],
     "WB-NS1": ["MB-NS1", "Bathroom-EW2"],
     "MB-NS1": ["WN-NS1", "BATHROOM-EW1"],
-
-
 }
