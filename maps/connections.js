@@ -128,7 +128,14 @@ function shortestPath(startNodeID, endNodeID){
     }
     path.push(next)
     console.timeEnd()
-    return path.reverse()
+    const solution = path.reverse()
+    removeAllLines()
+    for(let i = 1; i < solution.length; i++) {
+      const n1 = document.getElementById(solution[i])
+      const n2 = document.getElementById(solution[i-1])
+      addLine(n1.cx.baseVal.value, n1.cy.baseVal.value, n2.cx.baseVal.value, n2.cy.baseVal.value)
+    }
+    return solution
   }else{
     console.timeEnd()
     return "Impossible"
@@ -168,6 +175,25 @@ function inf(){
     const start = n_list[Math.floor(Math.random()*n_list.length)], end = n_list[Math.floor(Math.random()*n_list.length)]
     console.log(`Start: ${start}, End ${end}, Path: ${JSON.stringify(shortestPath(start, end))}`)
     inf()
-  }, 10)
+  }, 500)
 }
 inf()
+
+function removeAllLines(){
+  Array.from(document.getElementsByClassName('path_line')).forEach((el)=>{
+    el.remove()
+  })
+}
+
+function addLine(x1,y1,x2,y2) {
+  var newLine = document.createElementNS('http://www.w3.org/2000/svg','line');
+  newLine.setAttribute('id','line2');
+  newLine.setAttribute('x1',x1);
+  newLine.setAttribute('y1',y1);
+  newLine.setAttribute('x2',x2);
+  newLine.setAttribute('y2',y2);
+  newLine.classList.add('path_line')
+  newLine.setAttribute("stroke", "blue")
+
+  document.getElementById('svg5').append(newLine);
+}
