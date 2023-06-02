@@ -1,12 +1,27 @@
 <%- include('partials/header', {title:"TrinMaps"}) -%>
 
-<div class="container">
-  <div class="jumbotron text-center text-primary">
-    <h1><span class="fa fa-lock"></span> Login to Enter TrinMaps</h1>
-    <p>Login with:
-      <a href="/auth/google" class="btn btn-danger"><span class="fa fa-google"></span> Google</a>
-    </p>
-  </div>
-</div>
+<main>
+  
+    <div class="row">
+        <div class="col-5"></div>
+         <div class="col-2">
+        
+           <a class="btn btn-outline-dark" href="/auth/google" role="button" style="text-transform:none">
+             <img width="100%"  alt="Google sign-in"
+               src="https://simphy.com/google-signin-button.png" />
+           
+              
+           </a>  
+         </div>
+         <div class="col-5"></div>
+       </div>
+  
+  <br>
+  <br>
+  <%if(user){%>
+    <a style="display:block;text-align:center" href="/index">Click to load page</a>
+  <%}%>
+ 
+</main>
 
 <%- include('partials/footer') -%>
