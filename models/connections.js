@@ -45,7 +45,7 @@ const connections = {
   "US-LIBRARY-EW1":["US-LIBRARY-EW2", "STAIR-HF"],
 }
 
-function shortestPath(startNodeID, endNodeID){
+exports.shortestPath = function (startNodeID, endNodeID){
   console.time()
   const endNode = document.getElementById(endNodeID)
   const startNode = document.getElementById(startNodeID)
@@ -169,7 +169,7 @@ console.log(shortestPath("US-LIBRARY-EW1", "N-301"))
 console.log(shortestPath("US-LIBRARY-EW1","N-329"))
 console.log(shortestPath("US-LIBRARY-EW2","N-310"))
 console.log("AUTOMATING TEST CASES")
-function inf(){
+/*function inf(){
   setTimeout(()=>{
     const n_list = Object.keys(connections)
     const start = n_list[Math.floor(Math.random()*n_list.length)], end = n_list[Math.floor(Math.random()*n_list.length)]
@@ -177,7 +177,7 @@ function inf(){
     inf()
   }, 500)
 }
-inf()
+inf()*/
 
 function removeAllLines(){
   Array.from(document.getElementsByClassName('path_line')).forEach((el)=>{
