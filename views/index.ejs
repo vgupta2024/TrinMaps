@@ -1,16 +1,20 @@
 <%- include('partials/header', {title:"TrinMaps"}) -%>
 
 <body>
+  <form action="/directions" method="POST">
   <select id = "from">
     <% for(let room in data){ %>
     <option><%=room%></option> 
     <%}%>
     </select>
-    <select id = "from">
+    <select id = "to">
       <% for(let room in data){ %>
       <option><%=room%></option> 
       <%}%>
       </select>
+      <br></br>
+   <input type="submit" value="Get Directions!" required/>
+    </form>
 
   
 </body>
