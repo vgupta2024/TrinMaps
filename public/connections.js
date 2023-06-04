@@ -45,7 +45,7 @@ const connections = {
   "US-LIBRARY-EW1":["US-LIBRARY-EW2", "STAIR-HF"],
 }
 
-exports.shortestPath = function (startNodeID, endNodeID){
+const shortestPath = function (startNodeID, endNodeID){
   console.time()
   const endNode = document.getElementById(endNodeID)
   const startNode = document.getElementById(startNodeID)
@@ -161,14 +161,14 @@ function insertSorted(mainArray, cellID, cell_data) {
   mainArray.splice(index, 0, cellID);
 }
 
-console.log(shortestPath("N-330", "N-301"))
-console.log(shortestPath("N-327", "STAIR-HF"))
-console.log(shortestPath("N-316", "N-304-EW2"))
-console.log(shortestPath("N-330", "N-301"))
-console.log(shortestPath("US-LIBRARY-EW1", "N-301"))
-console.log(shortestPath("US-LIBRARY-EW1","N-329"))
-console.log(shortestPath("US-LIBRARY-EW2","N-310"))
-console.log("AUTOMATING TEST CASES")
+// console.log(shortestPath("N-330", "N-301"))
+// console.log(shortestPath("N-327", "STAIR-HF"))
+// console.log(shortestPath("N-316", "N-304-EW2"))
+// console.log(shortestPath("N-330", "N-301"))
+// console.log(shortestPath("US-LIBRARY-EW1", "N-301"))
+// console.log(shortestPath("US-LIBRARY-EW1","N-329"))
+// console.log(shortestPath("US-LIBRARY-EW2","N-310"))
+// console.log("AUTOMATING TEST CASES")
 /*function inf(){
   setTimeout(()=>{
     const n_list = Object.keys(connections)

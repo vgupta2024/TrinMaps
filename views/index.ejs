@@ -9,11 +9,11 @@
     </select>
     <select id = "to">
       <% for(let room in data){ %>
-      <option><%=room%></option> 
+      <option ><%=room%></option> 
       <%}%>
       </select>
       <br></br>
-   <input type="submit" value="Get Directions!" required/>
+   <input type="button" value="Get Directions!" onclick="find()" required/>
     </form>
 
 <link rel="stylesheet" href="style.css" />
@@ -434,8 +434,14 @@
     r="0.97081733"
   />
 </svg>
-
-  
+  <script src='connections.js'></script>
+  <script>
+    function find(){
+      let to = document.getElementById('to').value
+      let from = document.getElementById('from').value
+      shortestPath(to, from)
+    }
+  </script>
 </body>
 
   
