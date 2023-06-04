@@ -5,8 +5,6 @@ const Maps = require('../models/maps_model')
 
 
 
-
-
 router.get('/', function(request, response) {
     response.status(200);
     response.setHeader('Content-Type', 'text/html')
