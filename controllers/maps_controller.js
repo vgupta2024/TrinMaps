@@ -1,6 +1,9 @@
 const express = require('express');
 router = express.Router();
-const User = require('../models/users_model')
+const multer = require('multer');
+const User = require('../models/user_model');
+const Maps = require('../models/maps_model');
+
 
 
 function loggedIn(request, response, next) {
@@ -14,6 +17,15 @@ function loggedIn(request, response, next) {
 
 router.post('/news', function(request, response) {
 
+});
+
+router.get('/directions', function(request, response) {
+    response.status(200);
+    response.setHeader('Content-Type', 'text/html')
+});
+
+router.post('/directions', function(request, response) {
+    response.status(200);
 });
 
 module.exports=router;

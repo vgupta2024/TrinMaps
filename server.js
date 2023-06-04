@@ -20,6 +20,7 @@ app.set('view engine', 'ejs'); //specify templating library
 
 app.use(require('./controllers/auth'));
 app.use(require('./controllers/index'));
+//app.use(require('./controllers/maps_controller'));
 
 app.use("", function(request, response) {
   response.redirect('/error?code=400');
