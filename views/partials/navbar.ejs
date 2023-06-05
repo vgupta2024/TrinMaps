@@ -9,9 +9,11 @@
           <a class="nav-link" href="/index">Home</a>
         </li>
       <%}%>
-      <li class="nav-item active">
-        <a class="nav-link" href="/login">Login</a>
-      </li>
+      <%if(!user){%>
+        <li class="nav-item active">
+          <a class="nav-link" href="/login">Login</a>
+        </li>
+      <%}%>
     </ul>
     <%if(user){%>
       <small>Logged in as <%=user._json.email%></small>
