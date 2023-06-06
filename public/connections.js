@@ -1,49 +1,49 @@
-const connections = {
-  "WCOR-1": ["N-320", ],
-  "N-320": ["N-321", "WCOR-1",],
-  "N-321": ["N-320", "N-322", ],
-  "N-322": ["N-321", "N-323", "N-324", ],
-  "N-323": ["N-322", "N-324", "N-325", ],
-  "N-324": ["N-322", "N-323", "N-325", ],
-  "N-325": ["N-323", "N-324", "BATHROOM-EW1", "N-312-EW1"],
-  "N-312-EW1":["N-323", "N-324", "BATHROOM-EW1","N-325"],
-  "BATHROOM-EW1": ["N-325", "N-326", "MB-NS1"],
-  "N-326": ["BATHROOM-EW1", "N-307-EW1", ],
-  "N-307-EW1": ["N-326", "N-306A", "N-327", ],
-  "N-306A": ["N-307-EW1", "N-327", "N-328", ],
-  "N-327": ["N-306A", "N-307-EW1", "N-328", ],
-  "N-328": ["N-306A", "N-327", "N-323", "N-304-EW1", "N-329", ],
-  "N-304-EW1": ["N-328", "N-329", "N-330", "N-302-EW1", ],
-  "N-329": ["N-304-EW1", "N-328", "N-330", "N-302-EW1", ],
-  "N-302-EW1": ["N-304-EW1", "N-329", "STAIR-HF"],
-  "N-330": ["N-304-EW1", "N-329", "STAIR-HF"],
-  "STAIR-HF": ["N-330", "N-302-EW1", "US-LIBRARY-EW1"],
-  "STAIR-NB": ["N-301", "N-302-EW2", "US-LIBRARY-EW2"],
-  "N-302-EW2": ["STAIR-NB", "N-301", "N-303", "N-304-EW2"],
-  "N-301": ["STAIR-NB", "N-302-EW2", "N-303", "N-304-EW2"],
-  "N-303": ["N-301", "N-302-EW2", "N-304-EW2", "N-305", "N-306"],
-  "N-304-EW2": ["N-301", "N-302-EW2", "N-303", "N-305", "N-306"],
-  "N-306": ["N-303", "N-304-EW2", "N-305", "N-307-EW2"],
-  "N-307-EW2": ["N-306", "N-305", "N-308"],
-  "N-305": ["N-303", "N-304-EW2", "N-306", "N-308"],
-  "N-308": ["N-307-EW2", "N-309"],
-  "N-309": ["N-308", "BATHROOM-EW2"],
-  "BATHROOM-EW2": ["N-309", "WB-NS1", "N-310"],
-  "N-310": ["BATHROOM-EW2", "N-311"],
-  "N-311": ["N-310", "N-312-EW2", "N-313"],
-  "N-312-EW2": ["N-313", "N-310", "N-314"],
-  "N-313": ["N-310", "N-312-EW2", "N-314"],
-  "N-314": ["N-312-EW2", "N-313", "N-315"],
-  "N-315": ["N-314", "N-317", "N-316"],
-  "N-317": ["N-316", "N-315", "N-318"],
-  "N-316": ["N-317", "N-315", "N-318"],
-  "N-318": ["N-317", "N-316", "STAIR-NA"],
-  "STAIR-NA": ["N-318", "WCOR-1"],
-  "WB-NS1": ["MB-NS1", "BATHROOM-EW2"],
-  "MB-NS1": ["WB-NS1", "BATHROOM-EW1"],
-  "US-LIBRARY-EW2":["STAIR-NB", "US-LIBRARY-EW1"],
-  "US-LIBRARY-EW1":["US-LIBRARY-EW2", "STAIR-HF"],
-}
+// const connections = {
+//   "WCOR-1": ["N-320", ],
+//   "N-320": ["N-321", "WCOR-1",],
+//   "N-321": ["N-320", "N-322", ],
+//   "N-322": ["N-321", "N-323", "N-324", ],
+//   "N-323": ["N-322", "N-324", "N-325", ],
+//   "N-324": ["N-322", "N-323", "N-325", ],
+//   "N-325": ["N-323", "N-324", "BATHROOM-EW1", "N-312-EW1"],
+//   "N-312-EW1":["N-323", "N-324", "BATHROOM-EW1","N-325"],
+//   "BATHROOM-EW1": ["N-325", "N-326", "MB-NS1"],
+//   "N-326": ["BATHROOM-EW1", "N-307-EW1", ],
+//   "N-307-EW1": ["N-326", "N-306A", "N-327", ],
+//   "N-306A": ["N-307-EW1", "N-327", "N-328", ],
+//   "N-327": ["N-306A", "N-307-EW1", "N-328", ],
+//   "N-328": ["N-306A", "N-327", "N-323", "N-304-EW1", "N-329", ],
+//   "N-304-EW1": ["N-328", "N-329", "N-330", "N-302-EW1", ],
+//   "N-329": ["N-304-EW1", "N-328", "N-330", "N-302-EW1", ],
+//   "N-302-EW1": ["N-304-EW1", "N-329", "STAIR-HF"],
+//   "N-330": ["N-304-EW1", "N-329", "STAIR-HF"],
+//   "STAIR-HF": ["N-330", "N-302-EW1", "US-LIBRARY-EW1"],
+//   "STAIR-NB": ["N-301", "N-302-EW2", "US-LIBRARY-EW2"],
+//   "N-302-EW2": ["STAIR-NB", "N-301", "N-303", "N-304-EW2"],
+//   "N-301": ["STAIR-NB", "N-302-EW2", "N-303", "N-304-EW2"],
+//   "N-303": ["N-301", "N-302-EW2", "N-304-EW2", "N-305", "N-306"],
+//   "N-304-EW2": ["N-301", "N-302-EW2", "N-303", "N-305", "N-306"],
+//   "N-306": ["N-303", "N-304-EW2", "N-305", "N-307-EW2"],
+//   "N-307-EW2": ["N-306", "N-305", "N-308"],
+//   "N-305": ["N-303", "N-304-EW2", "N-306", "N-308"],
+//   "N-308": ["N-307-EW2", "N-309"],
+//   "N-309": ["N-308", "BATHROOM-EW2"],
+//   "BATHROOM-EW2": ["N-309", "WB-NS1", "N-310"],
+//   "N-310": ["BATHROOM-EW2", "N-311"],
+//   "N-311": ["N-310", "N-312-EW2", "N-313"],
+//   "N-312-EW2": ["N-313", "N-310", "N-314"],
+//   "N-313": ["N-310", "N-312-EW2", "N-314"],
+//   "N-314": ["N-312-EW2", "N-313", "N-315"],
+//   "N-315": ["N-314", "N-317", "N-316"],
+//   "N-317": ["N-316", "N-315", "N-318"],
+//   "N-316": ["N-317", "N-315", "N-318"],
+//   "N-318": ["N-317", "N-316", "STAIR-NA"],
+//   "STAIR-NA": ["N-318", "WCOR-1"],
+//   "WB-NS1": ["MB-NS1", "BATHROOM-EW2"],
+//   "MB-NS1": ["WB-NS1", "BATHROOM-EW1"],
+//   "US-LIBRARY-EW2":["STAIR-NB", "US-LIBRARY-EW1"],
+//   "US-LIBRARY-EW1":["US-LIBRARY-EW2", "STAIR-HF"],
+// }
 
 const shortestPath = function (startNodeID, endNodeID){
   console.time()
@@ -198,22 +198,118 @@ function addLine(x1,y1,x2,y2) {
   document.getElementById('svg5').append(newLine);
 }
 
-function toTextBased(path){
-  // N = north, S= south, E = east, W = west
-  let directions = []
-  for(let i = 1; i < path.length; i++){
-    const node1 = document.getElementById(path[i-1])
-    const node2 = document.getElementById(path[i])
-    const rawX = node2.cx.baseVal.value-node1.cx.baseVal.value, rawY = node2.cy.baseVal.value - node1.cy.baseVal.value
-    if(Math.abs(rawX)+Math.abs(rawY) < 2){
-      directions.push('X')
-      continue
-    } 
-    if(rawX < rawY){
-      rawY > 0 ? directions.push('N') : directions.push('S')
-    }else{
-      rawX > 0 ? directions.push('E') : directions.push('W')
-    }
-  }
+// function toTextBased(path){
+//   // N = north, S= south, E = east, W = west
+//   let directions = []
+//   for(let i = 1; i < path.length; i++){
+//     const node1 = document.getElementById(path[i-1])
+//     const node2 = document.getElementById(path[i])
+//     const rawX = node2.cx.baseVal.value-node1.cx.baseVal.value, rawY = node2.cy.baseVal.value - node1.cy.baseVal.value
+//     if(Math.abs(rawX)+Math.abs(rawY) < 2){
+//       directions.push('X')
+//       continue
+//     } 
+//     if(rawX < rawY){
+//       rawY > 0 ? directions.push('N') : directions.push('S')
+//     }else{
+//       rawX > 0 ? directions.push('E') : directions.push('W')
+//     }
+//   }
   
+// }
+
+function generateConnections(){
+  let connections = {}
+  let x_val = {}
+  let y_val = {}
+  let nodes = Array.from(document.getElementsByTagName('circle')).map((el)=>{
+    const x = Math.round(el.cx.baseVal.value)
+    const y = Math.round(el.cy.baseVal.value)
+    let array = [el.id, x, y]
+    if(x in x_val){
+      x_val[x].push(array)
+    }else{
+      x_val[x] = [array]
+    }
+    if(y in y_val){
+      y_val[y].push(array)
+    }else{
+      y_val[y] = [array]
+    }
+    return array
+  })
+  
+  Object.keys(x_val).forEach((id)=>{
+    x_val[id].sort((a,b)=>{
+      return a[2] - b[2]
+    })
+  })
+  Object.keys(y_val).forEach((id)=>{
+    y_val[id].sort((a,b)=>{
+      return a[1] - b[1]
+    })
+  })
+  nodes.forEach((array)=>{
+    connections[array[0]] = []
+  })
+  console.log(x_val, y_val)
+  nodes.forEach((array)=>{
+    
+    const id = array[0]
+    const x = array[1]
+    const y = array[2]
+    
+    const x_arr = x_val[x]
+    const y_arr = y_val[y]
+
+    const x_ind = x_arr.indexOf(array)
+    const y_ind = y_arr.indexOf(array)
+    const x_len = x_arr.length
+    const y_len = y_arr.length
+    for(let i = x_ind+1; i < x_len; i++){
+      const y_diff = Math.abs(x_arr[i][2] - y)
+      if(y_diff < 2){
+        if(connections[id].indexOf(x_arr[i][0]) == -1){
+          connections[id].push(x_arr[i][0])
+        }
+      }else{
+        connections[id].push(x_arr[i][0])
+        break
+      }
+    }
+    for(let i = x_ind-1; i > -1; i--){
+      const y_diff = Math.abs(x_arr[i][2] - y)
+      if(y_diff < 2){
+        if(connections[id].indexOf(x_arr[i][0]) == -1){
+          connections[id].push(x_arr[i][0])
+        }
+      }else{
+        connections[id].push(x_arr[i][0])
+        break
+      }
+    }  
+    for(let i = y_ind-1; i > -1; i--){
+      const y_diff = Math.abs(y_arr[i][1] - x)
+      if(y_diff < 2){
+        if(connections[id].indexOf(y_arr[i][0]) == -1){
+          connections[id].push(y_arr[i][0])
+        }
+      }else{
+        connections[id].push(y_arr[i][0])
+        break
+      }
+    }
+    for(let i = y_ind+1; i > y_len; i++){
+      const y_diff = Math.abs(y_arr[i][1] - x)
+      if(y_diff < 2){
+        if(connections[id].indexOf(y_arr[i][0]) == -1){
+          connections[id].push(y_arr[i][0])
+        }
+      }else{
+        connections[id].push(y_arr[i][0])
+        break
+      }
+    }
+  })
+  return connections
 }
