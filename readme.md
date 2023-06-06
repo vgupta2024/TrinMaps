@@ -2,12 +2,17 @@
 
 ## This demonstrates:
 
-1.  Using the middleware pattern to add user login via Google OAuth and passport
+To Do:
+- CSS styling -- Matthew
+- Link to Google form in footer -- Varun
+- You are Here -- Solo Goblin
+- Text based directions -- Varun/Shiv
+- Button to toggle floors -- Shiv
+- Update shortest path alg for multiple floors -- Matthew
+- Arrows by Steps -- Solo Goblin
+- Host on Heroku -- All
 
-2.  The creation of a Player entity that contains a privileges property
-
-3.  How to exclude certain views/CRUD operations via login/privileges
-
-4.  How to implement the U and D in CRUD via methodOverride middleware
-
-Documentation:
+Long Term:
+- SVG fix (too big for mobiles)
+- Scaling issue with PNG
+- Form for blocked hallways
