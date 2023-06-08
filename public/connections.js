@@ -201,21 +201,14 @@ function addLine(x1,y1,x2,y2) {
 // function toTextBased(path){
 //   // N = north, S= south, E = east, W = west
 //   let directions = []
-//   for(let i = 1; i < path.length; i++){
-//     const node1 = document.getElementById(path[i-1])
-//     const node2 = document.getElementById(path[i])
-//     const rawX = node2.cx.baseVal.value-node1.cx.baseVal.value, rawY = node2.cy.baseVal.value - node1.cy.baseVal.value
-//     if(Math.abs(rawX)+Math.abs(rawY) < 2){
-//       directions.push('X')
-//       continue
-//     } 
-//     if(rawX < rawY){
-//       rawY > 0 ? directions.push('N') : directions.push('S')
-//     }else{
-//       rawX > 0 ? directions.push('E') : directions.push('W')
+//   for(let i = 2; i < path.length; i++){
+//     const node1 = document.getElementById(path[i-1]);
+//     const node2 = document.getElementById(path[i]);
+//     const node3 = document.getElementById(path[i]);
+//     if ((node1.cx.baseVal.value == node2) && ()){
+
 //     }
 //   }
-  
 // }
 
 function generateConnections(){

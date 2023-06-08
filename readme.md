@@ -5,11 +5,11 @@
 To Do:
 - CSS styling -- Matthew
 - Link to Google form in footer -- Varun
-- "You are Here" -- Solo Goblin
-- Text based directions -- Varun/Shiv
+- "You are Here" -- Solo Goblin/Shiv
+- Text based directions -- Varun
 - Button/carousel to toggle floors -- Shiv
 - Update shortest path alg for multiple floors -- Matthew
-- Arrows by Steps -- Solo Goblin
+- Arrows by Steps -- Solo Goblin/Shiv
 - Host on Heroku -- All
 
 Long Term:
