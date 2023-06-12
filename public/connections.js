@@ -238,6 +238,7 @@ function toTextBased(path){
         console.log("here1");
         directions.push("Turn left by " + node2.id);
       }
+      
     }
     if (((Math.abs(node1.cx.baseVal.value - node2.cx.baseVal.value)) > (Math.abs(node1.cy.baseVal.value - node2.cy.baseVal.value)))&&((Math.abs(node2.cx.baseVal.value - node3.cx.baseVal.value)) < (Math.abs(node2.cy.baseVal.value - node3.cy.baseVal.value)))){
       if((node2.cy.baseVal.value > node3.cy.baseVal.value)&&(node1.cx.baseVal.value > node2.cx.baseVal.value)){
