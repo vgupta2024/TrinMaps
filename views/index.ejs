@@ -1,20 +1,35 @@
 <%- include('partials/header', {title:"TrinMaps"}) -%>
 
     <body>
+      <div class="form-div">
+        <p>Enter </p>
         <form action="/directions" method="POST">
-            <select id="from">
-    <% for(let room in data){ %>
-    <option><%=room%></option> 
-    <%}%>
-    </select>
-            <select id="to">
-      <% for(let room in data){ %>
-      <option ><%=room%></option> 
-      <%}%>
-      </select>
-            <br></br>
-            <input type="button" value="Get Directions!" onclick="find()" required/>
-        </form>
+          <div style="display:flex;">
+            
+              <div class="selection-div">
+                <p class="tip">Start:</p>
+                <select class="selection"id="from">
+                  <% for(let room in data){ %>
+                  <option><%=room%></option> 
+                  <%}%>
+                  </select>
+              </div>
+              <div class="selection-div">
+                <p class="tip">End:</p>
+                <select class="selection" id="to">
+                <% for(let room in data){ %>
+                <option ><%=room%></option> 
+                <%}%>
+                </select>
+              </div>
+              
+          </div>
+          <div class="center">
+            <input id="sub" class="selection" type="button" value="Get Directions!" onclick="find()" required/>
+          </div>
+                
+            </form>
+      </div>
 
         <link rel="stylesheet" href="style.css" />
 

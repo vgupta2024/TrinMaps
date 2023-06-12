@@ -1,22 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <a class="navbar-brand" href="/">
-    </a>
-    <ul class="navbar-nav mr-auto">
-
-      <%if(user){%>
-        <li class="nav-item active">
-          <a class="nav-link" href="/index">TrinMaps Beta</a>
-        </li>
-      <%}%>
-      <%if(!user){%>
-        <li class="nav-item active">
-          <a class="nav-link" href="/login">Login</a>
-        </li>
-      <%}%>
-    </ul>
-    <%if(user){%>
-      <small>Logged in as <%=user._json.email%></small>
-      <%}%>
-  </div>
+<nav class="myNav">
+  <a class="nav-item Logo" href="/">TrinMaps</a>
+  <a class="nav-item" href="/">Home</a>
+  <a class="nav-item" href="/auth/google">Login</a>
+  <a class="nav-item" href="/index">Map</a>
 </nav>
