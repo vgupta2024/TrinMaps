@@ -21,6 +21,7 @@ footer{
   display: flex;
   background-color: rgb(46, 44, 44);
   position: absolute;
+  justify-content: space-between;
   
 }
 .nav-item{
@@ -65,7 +66,7 @@ footer{
   font-size: 1.5rem;
   widtH: 100vw;
   text-align: center;
-  padding-bottom: 1.2rem;
+  
 }
 .dev{
   color: rgb(230, 2, 2);
@@ -125,4 +126,20 @@ footer{
   justify-content: center;
   align-items: center;
 
+}
+.s1{
+  padding: 1rem 2rem;
+}
+
+#login-button{
+  padding: .5rem 1.5rem;
+  background-color: transparent;
+  border: .01rem solid rgb(84, 193, 233);;
+  color: white;
+  font-weight: 100;
+  margin: 1rem;
+  transition: all .5s ease-in-out;
+}
+#login-button:hover{
+  background-color: rgb(0, 0, 0);
 }

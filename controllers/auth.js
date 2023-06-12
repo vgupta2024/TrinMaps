@@ -61,9 +61,9 @@ router.get('/auth/google/callback',
     response.redirect('/');
   });
 
-router.get("/auth/logout", (request, response) => {
-  request.logout();
-  let playerID = request.user._json.email;
+router.get("/logout", (request, response) => {
+  request.session.destroy()
+  
   response.redirect('/');
 });
 

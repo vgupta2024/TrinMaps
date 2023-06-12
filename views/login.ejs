@@ -1,12 +1,17 @@
-<%- include('partials/header', {title:"TrinMaps"}) -%>
+<%- include('partials/header', {title:"TrinMaps", logged: false}) -%>
 <body>
   <div class="main-div">
     <img class="cover-img" src="hello.jpg">
     <h1 class="Logo" id="title">Welcome to TrinMaps!</h1>
-    <p id="disclaimer">Disclaimer: TrinMaps is <span class="dev">IN DEVELOPMENT</span>. </p> 
-    <p id="about">TrinMaps aims to assist the navigation of Trinity by displaying the shortest path between two locations in the school. We, the developers of TrinMaps, would like the application to be ________. Please keep these in mind as you critique the application and thank you for taking the time to check this out! Enter any feedback at the bottom of this page.</p>
+    <p id="disclaimer">TrinMaps is <span class="dev">IN DEVELOPMENT</span>. </p> 
+    <p id="about">TrinMaps is a navigation tool for the Trinity School building. The current model is a proof of concept and is limited to the 2nd and 3rd floors of the New Building. Please leave us some feedback using the form at the bottom of this page. Thank you! -Matthew Chin '24, Varun Gupta '24, Shiv Shamdasani '24, and Solomon Kalichstein '25.</p>
+    <button id='login-button'>Get Started</button> 
   </div>
-  
+  <script>
+    document.getElementById('login-button').addEventListener('click', function(e){
+      window.location.href = "/auth/google"
+    })
+  </script>
 </body>
 <!-- <main>
   
@@ -29,7 +34,7 @@
   <%if(user){%>
     <a style="display:block;text-align:center" href="/index">Click to load page</a>
   <%}%>
- 
+    
 </main> -->
 
 <%- include('partials/footer') -%>
