@@ -1,42 +1,42 @@
 <%- include('partials/header', {title:"TrinMaps"}) -%>
 
     <body>
-      <div class="form-div">
-        <p>Enter </p>
-        <form action="/directions" method="POST">
-          <div style="display:flex;">
-            
-              <div class="selection-div">
-                <p class="tip">Start:</p>
-                <select class="selection"id="from">
+        <div class="form-div">
+            <p>Enter </p>
+            <form action="/directions" method="POST">
+                <div style="display:flex;">
+
+                    <div class="selection-div">
+                        <p class="tip">Start:</p>
+                        <select class="selection" id="from">
                   <% for(let room in data){ %>
                   <option><%=room%></option> 
                   <%}%>
                   </select>
-              </div>
-              <div class="selection-div">
-                <p class="tip">End:</p>
-                <select class="selection" id="to">
+                    </div>
+                    <div class="selection-div">
+                        <p class="tip">End:</p>
+                        <select class="selection" id="to">
                 <% for(let room in data){ %>
                 <option ><%=room%></option> 
                 <%}%>
                 </select>
-              </div>
-              
-          </div>
-          <div class="center">
-            <input id="sub" class="selection" type="button" value="Get Directions!" onclick="find()" required/>
-          </div>
-                
+                    </div>
+
+                </div>
+                <div class="center">
+                    <input id="sub" class="selection" type="button" value="Get Directions!" onclick="find()" required/>
+                </div>
+
             </form>
-      </div>
+        </div>
 
         <link rel="stylesheet" href="style.css" />
 
         <?xml version="1.0" encoding="UTF-8" standalone="no"?>
         <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
-        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div id="carouselExampleControls" class="carousel slide">
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <svg width="381mm" height="297mm" viewBox="0 0 381 297" version="1.1" id="svg2" inkscape:version="1.2.2 (b0a8486, 2022-12-01)" xml:space="preserve" sodipodi:docname="SecondFloor.svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -792,11 +792,11 @@
       </svg> </div>
             </div>
             <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="carousel-control-prev-icon" aria-hidden="false"></span>
                 <span class="sr-only">Previous</span>
             </a>
             <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="carousel-control-next-icon" aria-hidden="false"></span>
                 <span class="sr-only">Next</span>
             </a>
         </div>
