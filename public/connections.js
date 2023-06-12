@@ -222,45 +222,49 @@ function addLine(x1, y1, x2, y2) {
 function toTextBased(path){
   // N = north, S= south, E = east, W = west
   let directions = []
-  for(let i = 2; i < path.length; i++){
+  for(let i = path.length-1; i > 1; i--){
     const node1 = document.getElementById(path[i-2]);
     const node2 = document.getElementById(path[i-1]);
     const node3 = document.getElementById(path[i]);
-    if (node1.cx.baseVal.value == node2.cx.baseVal.value){
-      if(node1.cy.baseVal.value > node2.cy.baseVal.value){
-        directions.push("South past " + node2.id);
-      }else if(node1.cy.baseVal.value < node2.cy.baseVal.value){
-        directions.push("North past " + node2.id);
-      }
+    if(i == (path.length-1)){
+      directions.push("You are at " + node3.id);
     }
-    if (node1.cy.baseVal.value == node2.cy.baseVal.value){
-      if(node1.cx.baseVal.value > node2.cx.baseVal.value){
-        directions.push("West past " + node2.id);
-      }else if(node1.cx.baseVal.value < node2.cx.baseVal.value){
-        directions.push("East past " + node2.id);
-      }
-    }
-    if ((node1.cx.baseVal.value == node2.cx.baseVal.value)&&(node2.cy.baseVal.value == node3.cy.baseVal.value)){
-      console.log("here");
+    if (((Math.abs(node1.cx.baseVal.value - node2.cx.baseVal.value)) < (Math.abs(node1.cy.baseVal.value - node2.cy.baseVal.value)))&&((Math.abs(node2.cx.baseVal.value - node3.cx.baseVal.value)) > (Math.abs(node2.cy.baseVal.value - node3.cy.baseVal.value)))){
       if((node2.cx.baseVal.value > node3.cx.baseVal.value)&&(node1.cy.baseVal.value > node2.cy.baseVal.value)){
         console.log("here1");
-        directions.push("Turn left to" + node3.id);
+        directions.push("Turn right by " + node2.id);
       }
       if((node2.cx.baseVal.value > node3.cx.baseVal.value)&&(node1.cy.baseVal.value < node2.cy.baseVal.value)){
         console.log("here1");
-        directions.push("Turn right to" + node3.id);
+        directions.push("Turn left by " + node2.id);
       }
     }
-    if ((node1.cy.baseVal.value == node2.cy.baseVal.value)&&(node2.cx.baseVal.value == node3.cx.baseVal.value)){
-      console.log("here");
+    if (((Math.abs(node1.cx.baseVal.value - node2.cx.baseVal.value)) > (Math.abs(node1.cy.baseVal.value - node2.cy.baseVal.value)))&&((Math.abs(node2.cx.baseVal.value - node3.cx.baseVal.value)) < (Math.abs(node2.cy.baseVal.value - node3.cy.baseVal.value)))){
       if((node2.cy.baseVal.value > node3.cy.baseVal.value)&&(node1.cx.baseVal.value > node2.cx.baseVal.value)){
         console.log("here1");
-        directions.push("Turn left to" + node3.id);
+        directions.push("Turn left by " + node2.id);
       }
       if((node2.cy.baseVal.value > node3.cy.baseVal.value)&&(node1.cx.baseVal.value < node2.cx.baseVal.value)){
         console.log("here1");
-        directions.push("Turn right to" + node3.id);
+        directions.push("Turn right by " + node2.id);
       }
+    }
+    if ((Math.abs(node1.cx.baseVal.value - node2.cx.baseVal.value)) < (Math.abs(node1.cy.baseVal.value - node2.cy.baseVal.value))){
+      if(node1.cy.baseVal.value > node2.cy.baseVal.value){
+        directions.push("Move south past " + node2.id);
+      }else if(node1.cy.baseVal.value < node2.cy.baseVal.value){
+        directions.push("Move north past " + node2.id);
+      }
+    }else if ((Math.abs(node1.cx.baseVal.value - node2.cx.baseVal.value)) > (Math.abs(node1.cy.baseVal.value - node2.cy.baseVal.value))){
+      if(node1.cx.baseVal.value > node2.cx.baseVal.value){
+        directions.push("Move east past " + node2.id);
+      }else if(node1.cx.baseVal.value < node2.cx.baseVal.value){
+        directions.push("Move west past " + node2.id);
+      }
+    }
+    
+    if(i == 2){
+      directions.push("You have arrived at " + node1.id)
     }
   }
   console.log(directions);
