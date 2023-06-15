@@ -14,7 +14,7 @@ footer{
   align-items: center;
 }
 .node{
-  visibility:hidden;
+  /* visibility:hidden; */
 }
 .myNav{
   width: 100vw;
@@ -69,7 +69,7 @@ footer{
   
 }
 .dev{
-  color: rgb(230, 2, 2);
+  color: rgb(9, 255, 0);
   text-decoration: underline;
 }
 #about{
@@ -142,4 +142,62 @@ footer{
 }
 #login-button:hover{
   background-color: rgb(0, 0, 0);
+}
+option{
+  background-color: rgb(35, 35, 35);
+  color: white;
+}
+#sub:hover{
+  background-color: rgb(35, 35, 35);
+}
+#sub{
+  transition: all .2s ease-in-out;
+}
+.center{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.floor-type{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid red; */
+  /* padding: .5rem 0; */
+}
+.col{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.floor-select{
+  margin:0;
+  padding: 0.5rem 1.5rem;
+  background-color: black;
+  color: white;
+  outline: 0px solid transparent;
+  border: 0.1rem solid white;
+  transition: all .2s ease-in-out;
+}
+.floor-select:hover{
+  background-color: rgb(29, 14, 113);
+}
+.floor-selected{
+  background-color: rgb(59, 24, 167);
+}
+.noRight{
+  border-right: transparent;
+}
+.noLeft{
+  border-left:transparent;
+}
+#floor-ind{
+  padding-top:1.5rem;
+  font-weight: 300;
+}
+.you-here{
+  transform: translate(-.4rem,-.7rem)
 }

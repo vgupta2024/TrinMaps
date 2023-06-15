@@ -1,3 +1,122 @@
+
+const floor = {
+    "U-218A":2,
+    "STAIR-HB2":2,
+    "CORRIDOR-B3":2,
+    "U-228":2,
+    "U-216":2,
+    "U-214-2":2,
+    "U-215":2,
+    "U-200":2,
+    "U-204":2,
+    "U-202":2,
+    "U-203":2,
+    "U-201":2,
+    "N-200-0-5-15":2,
+    "U-205":2,
+    "N-200-0-5-49":2,
+    "U-229":2,
+    "U-227":2,
+    "U-226":2,
+    "U-223":2,
+    "U-222":2,
+    "N-200-0-5-83":2,
+    "STAIR-HH2":2,
+    "U-220":2,
+    "U-219":2,
+    "STAIR-HD2":2,
+    "N-200-0-5-6":2,
+    "U-213":2,
+    "U-214-1":2,
+    "U-212":2,
+    "U-210":2,
+    "U-209":2,
+    "U-208":2,
+    "U-211":2,
+    "U-207":2,
+    "U-206":2,
+    "N-200-9":2,
+    "BATHROOM-S":2,
+    "N-14":2,
+    "N-211-9":2,
+    "N-211":2,
+    "N-210":2,
+    "BATHROOM-SB":2,
+    "STAIR-NA2":2,
+    "N-215":2,
+    "N-208":2,
+    "N-200":2,
+    "N-206":2,
+    "path555885-4":2,
+    "N-201":2,
+    "N-202":2,
+    "N-204":2,
+    "BATHROOM-ST":2,
+    "N-205":2,
+    "N-203":2,
+    "N-200D":2,
+    "circle950":2,
+    "STAIR-HE2":2,
+    "CORRIDOR2-GNB":2,
+    "U-217":2,
+    "U-224":2,
+    "U-225":2,
+    "BATHROOM-EW2":3,
+    "WCOR-1":3,
+    "US-LIBRARY-EW2":3,
+    "US-LIBRARY-EW1":3,
+    "MB-NS1":3,
+    "WB-NS1":3,
+    "N-303":3,
+    "N-304-EW2":3,
+    "N-301":3,
+    "N-302-EW2":3,
+    "STAIR-NB":3,
+    "N-314":3,
+    "N-313":3,
+    "N-312-EW2":3,
+    "N-311":3,
+    "N-310":3,
+    "N-309":3,
+    "N-308":3,
+    "N-305":3,
+    "N-307-EW2":3,
+    "N-306":3,
+    "N-315":3,
+    "N-316":3,
+    "N-317":3,
+    "N-318":3,
+    "N-312-EW1":3,
+    "STAIR-HF":3,
+    "N-330":3,
+    "N-302-EW1":3,
+    "N-329":3,
+    "N-304-EW1":3,
+    "N-328":3,
+    "N-327":3,
+    "N-306A":3,
+    "N-307-EW1":3,
+    "N-326":3,
+    "BATHROOM-EW1":3,
+    "N-325":3,
+    "N-324":3,
+    "N-323":3,
+    "N-322":3,
+    "N-321":3,
+    "N-320":3,
+    "STAIR-NA":3,
+}
+
+const stair = {
+    "STAIR-NA":2,
+    "STAIR-HB2":2,
+    "STAIR-HH2":2,
+    "STAIR-NA2":2,
+    "STAIR-HE2":2,
+    "STAIR-NB":3,
+    "STAIR-HF":3,
+}
+
 const connections = {
     "WCOR-1": ["N-320", ],
     "N-320": ["N-321", "WCOR-1", ],
@@ -186,7 +305,7 @@ const shortestPath = function(startNodeID, endNodeID) {
         return solution
     } else {
         console.timeEnd()
-        return "Impossible"
+        return []
     }
 }
 
@@ -233,22 +352,29 @@ function removeAllLines() {
     })
 }
 
-function addYouAreHere(x, y) {
-    var youAreHereLabel = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-    youAreHereLabel.setAttribute('x', x)
-    youAreHereLabel.setAttribute('y', y + 0.5)
-    youAreHereLabel.setAttribute('width', 10)
-    youAreHereLabel.setAttribute('height', 3)
-    youAreHereLabel.setAttribute('fill', 'green')
-    document.getElementById('svg5').append(youAreHereLabel)
-
-
-
-
-
-
+function addYouAreHere(x, y, floor) {
+    console.log('called')
+    var youAreHereLabel = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+    youAreHereLabel.setAttributeNS('http://www.w3.org/1999/xlink','href', 'here.png');
+    youAreHereLabel.setAttribute('x', String(x))
+    youAreHereLabel.setAttribute('y', String(y))
+    
+    youAreHereLabel.setAttribute('height', '.8rem')
+    youAreHereLabel.classList.add('you-here')
+    // youAreHereLabel.setAttribute('fill', 'green')
+    const key = {
+        2: 'svg2',
+        3: "svg5"
+    }
+    
+    document.getElementById(key[floor]).append(youAreHereLabel)
 }
 
+function clearYouAreHere(){
+    Array.from(document.getElementsByClassName('you-here')).forEach((e)=>{
+        e.remove()
+    })
+}
 
 function addLine(x1, y1, x2, y2) {
     var newLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
