@@ -5,7 +5,6 @@
 To Do:
 - CSS styling -- Matthew
 - "You are Here" -- Shiv
-- Text based directions -- Varun
 - Update shortest path alg for multiple floors -- Matthew
 - Arrows by Steps -- Solo Goblin
 - Host on Heroku -- All
