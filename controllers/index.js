@@ -13,7 +13,7 @@ router.get('/', function(request, response) {
         let data = Maps.getAllRooms();
         response.render("index", {
             user: request.user,
-            data: data.sort((a,b)=>a>b),
+            data: data,
             logged: true,
         });
     }catch{
