@@ -1,3 +1,5 @@
+
+
 *{
   margin:0;
   padding:0;
@@ -201,3 +203,9 @@ option{
 .you-here{
   transform: translate(-.4rem,-.7rem)
 }
+
+/* @media only screen and (max-width: 1200px) and (min-width: 900px) {
+  html{
+    font-size: .8rem;
+  }
+} */

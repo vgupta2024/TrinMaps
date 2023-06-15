@@ -296,7 +296,7 @@ const shortestPath = function(startNodeID, endNodeID) {
         console.timeEnd()
         const solution = path.reverse()
         removeAllLines()
-        addYouAreHere(endX, endY)
+        addYouAreHere(endX, endY, 3)
         for (let i = 1; i < solution.length; i++) {
             const n1 = document.getElementById(solution[i])
             const n2 = document.getElementById(solution[i - 1])
