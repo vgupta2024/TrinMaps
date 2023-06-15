@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.0"
+   width="130.000000pt"
+   height="130.000000pt"
+   viewBox="0 0 130.000000 130.000000"
+   preserveAspectRatio="xMidYMid meet"
+   id="svg10"
+   sodipodi:docname="XO2MdG01.svg"
+   inkscape:version="1.2.2 (b0a8486, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs14" />
+  <sodipodi:namedview
+     id="namedview12"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="pt"
+     showgrid="false"
+     inkscape:zoom="1.3615385"
+     inkscape:cx="88.502822"
+     inkscape:cy="86.666664"
+     inkscape:window-width="1309"
+     inkscape:window-height="456"
+     inkscape:window-x="0"
+     inkscape:window-y="37"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg10" />
+  <metadata
+     id="metadata2">
+Created by potrace 1.10, written by Peter Selinger 2001-2011
+</metadata>
+  <g
+     transform="matrix(0.1,0,0,-0.1,3.3050847,130.55085)"
+     fill="#000000"
+     stroke="none"
+     id="g8"
+     style="fill:#aa0000">
+    <path
+       d="M 495,1261 C 410,1220 356,1170 320,1096 257,969 269,841 357,683 509,411 538,346 595,145 615,73 636,11 641,5 c 16,-17 28,8 64,136 48,173 102,300 194,458 89,154 110,208 118,302 12,146 -71,291 -204,353 -61,30 -162,48 -149,28 4,-7 0,-12 -11,-13 -10,0 7,-6 37,-13 131,-28 233,-110 269,-218 12,-34 21,-80 21,-102 0,-60 -28,-166 -53,-206 -13,-19 -28,-46 -35,-60 -7,-14 -26,-47 -42,-75 -42,-69 -90,-162 -90,-174 0,-5 -13,-39 -30,-74 -16,-36 -30,-74 -30,-84 0,-11 -3,-23 -7,-27 -4,-3 -8,-12 -9,-19 -17,-89 -44,-150 -44,-101 0,54 -97,322 -147,404 -18,30 -33,59 -33,64 0,5 -6,17 -14,25 -27,32 -95,168 -111,225 -33,112 -3,241 73,319 41,43 129,92 183,102 21,4 36,12 36,21 0,24 -67,16 -132,-15 z"
+       id="path4"
+       style="fill:#aa0000" />
+    <path
+       d="m 594,1050 c -11,-4 -33,-22 -47,-40 -22,-25 -27,-42 -27,-82 0,-45 4,-54 39,-89 35,-35 44,-39 91,-39 47,0 56,4 91,39 34,33 39,45 39,83 0,51 -30,105 -70,125 -28,14 -85,16 -116,3 z m 127,-49 c 64,-65 20,-171 -71,-171 -58,0 -100,42 -100,100 0,91 106,135 171,71 z"
+       id="path6"
+       style="fill:#aa0000" />
+  </g>
+</svg>
