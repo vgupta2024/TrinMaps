@@ -1,0 +1,48 @@
+<style>
+.hidden{
+  visibility: hidden;
+}
+.output{
+  font-size: 2rem;
+  border: 3px solid black;
+}
+.line{
+  stroke-width: 3;
+  stroke:blue;
+}
+.node{
+  stroke:purple;
+  stroke-width:3;
+  fill:purple;
+}
+.selected{
+  fill:red;
+  stroke:red;
+}
+</style>
+<div style="display:flex;flex-direction: row;">
+  <svg
+  id="floor-plan"
+  class="data-svg"
+  width="2448"
+  height="1584"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <image href="/floor_plans/floor_3.png" />
+</svg>
+<div id="item_info_div" style="display: flex; flex-direction: column; width:calc(100vw-2448px); border:1px solid red;font-size: 1.5rem;" class="hidden">
+  <h1 style="font-weight: 50;" id="confirm_name">New Name</h1>
+  <input type="text" style="width:12.5vw;font-size: 2.5rem;border:3px solid black" id='new_name'>
+  <button type="button" id="confirm_changes"style="width:12.5vw;font-size: 2.5rem;" onclick="updateItem()">Confirm Changes</button>
+  <button type="button" style="width:12.5vw;font-size: 2.5rem;" onclick="deleteItem()">Delete Item</button>
+</div>
+</div>
+<div>
+  <button type="button" style="width:100vw;font-size: 4rem;" onclick="generateOutput()">Save All</button>
+  <p id="html_out" class="output"></p>
+  <p id="edges_out" class="output"></p>
+  <p id="data_out" class="output"></p>
+  <textarea style="width:100%; font-size:2rem; height:50rem;" id='data_in'></textarea>
+  <button type="button" style="width:100vw;font-size: 4rem;" onclick="loadInput()">Load Map</button>
+</div>
+<script src="data-struct-gen.js"></script>

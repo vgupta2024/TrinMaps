@@ -20,6 +20,9 @@ router.post('/news', function(request, response) {
 
 });
 
+
+
+
 router.get('/directions', function(request, response) {
     response.status(200);
     response.setHeader('Content-Type', 'text/html')

@@ -24,6 +24,12 @@ router.get('/', function(request, response) {
     }
     
 });
+router.get('/d', (req,res)=>{
+    console.log('h')
+    res.status(200);
+    res.setHeader('Content-Type', 'text/html')
+    res.render('structure')
+})
 
 
 

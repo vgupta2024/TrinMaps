@@ -209,3 +209,6 @@ option{
     font-size: .8rem;
   }
 } */
+.data-svg{
+  border:5px solid black;
+}
