@@ -31,7 +31,7 @@ console.log(KEYS)
 passport.use(new GoogleStrategy({
         clientID: KEYS["google-client_id"],
         clientSecret: KEYS["google-client_secret"],
-        callbackURL: "http://localhost:3000/auth/google/callback"
+        callbackURL: "/auth/google/callback"
             //todo: port==process.env.PORT? :
     },
     function(accessToken, refreshToken, profile, done) {
