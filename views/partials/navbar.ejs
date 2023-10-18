@@ -1,15 +1,16 @@
 <nav class="myNav">
-  <div class="s1">
-    <a class="nav-item Logo" href="/">TrinMaps</a>
-    <a class="nav-item" href="/">Home</a>
-    <% if (!logged){%>
-      <a class="nav-item" href="/auth/google">Login</a>
-    <% } %>
-    <a class="nav-item" href="/index">Map</a>
-  </div>
-  <div class='s1'>
-    <% if(logged){ %>
-      <a class="nav-item" href="/logout">Logout</a>
-    <% } %>
-  </div>
+    <div class="s1">
+        <a class="nav-item Logo" href="/">TrinMaps</a>
+        <a class="nav-item" href="/">Home</a>
+        <a class="nav-item" href="/">Map</a>
+    </div>
+    <div class='s1'>
+        <% if(logged){ %>
+            <a class="nav-item" href="/logout">Logout</a>
+            <% } %>
+                <% if (!logged){%>
+                    <a class="nav-item" href="/auth/google">Login</a>
+                    <a class="nav-item" href="/guestlogin">Guest Login</a>
+                    <% } %>
+    </div>
 </nav>
