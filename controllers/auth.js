@@ -31,7 +31,7 @@ console.log(KEYS)
 passport.use(new GoogleStrategy({
         clientID: KEYS["google-client_id"],
         clientSecret: KEYS["google-client_secret"],
-        callbackURL: "/auth/google/callback"
+        callbackURL: "http://trinmaps-fb3270f04abd.herokuapp.com/auth/google/callback"
             //todo: port==process.env.PORT? :
     },
     function(accessToken, refreshToken, profile, done) {
