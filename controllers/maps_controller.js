@@ -3,7 +3,6 @@ router = express.Router();
 const multer = require('multer');
 const User = require('../models/user_model');
 const Maps = require('../models/maps_model');
-const Connections = require('../models/connections');
 
 
 

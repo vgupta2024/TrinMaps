@@ -235,6 +235,15 @@ function toTextBased(path) {
       }
   }
   console.log(directions);
+  const textDiv = document.getElementById('text-directions')
+  textDiv.innerHTML = ""
+  directions.forEach((direction)=>{
+      const p_element = document.createElement("p")
+      p_element.innerHTML = direction
+      p_element.classList.add('text-direction')
+      textDiv.appendChild(p_element)
+  })
+  return directions
 }
 
 function generateConnections() {
@@ -339,22 +348,30 @@ function find() {
   if(from in multi_room && to in multi_room){
     from = multi_room[from]
     to = multi_room[to]
-    showSolution(from.map((from)=>{
-      return to.map((to)=>shortestPath(to, from))
-    }).flat(Infinity).sort((a,b)=>a.distance - b.distance)[0].solution)
+    const solution = from.map((from)=>{
+        return to.map((to)=>shortestPath(to, from))
+      }).flat(Infinity).sort((a,b)=>a.distance - b.distance)[0].solution
+    showSolution(solution)
+    toTextBased(solution)
   }else if(from in multi_room){
     from = multi_room[from]
-    showSolution(from.map((from)=>{
-      return shortestPath(to, from);
-    }).sort((a,b)=>a.distance - b.distance)[0].solution)
+    const solution = from.map((from)=>{
+        return shortestPath(to, from);
+      }).sort((a,b)=>a.distance - b.distance)[0].solution
+    showSolution(solution)
+    toTextBased(solution)
   }else if(to in multi_room){
     to = multi_room[to]
-    showSolution(to.map((to)=>{
-      return shortestPath(to, from);
-    }).sort((a,b)=>a.distance - b.distance)[0].solution)
+    const solution = to.map((to)=>{
+        return shortestPath(to, from);
+      }).sort((a,b)=>a.distance - b.distance)[0].solution
+    showSolution(solution)
+    toTextBased(solution)
     
   }else{
-    showSolution(shortestPath(to, from).solution)
+    const solution = shortestPath(to, from).solution
+    showSolution(solution)
+    toTextBased(solution)
   }
 }
 function changeFloor(n) {
