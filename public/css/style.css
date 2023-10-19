@@ -36,6 +36,9 @@ footer {
     text-align: center;
     font-weight: 200;
 }
+.node{
+  visibility:hidden;
+}
 
 .nav-item:hover {
     background-color: rgb(33, 31, 31);
@@ -241,6 +244,10 @@ option {
   }
 } */
 
-.data-svg {
-    border: 5px solid black;
+.data-svg{
+  border:5px solid black;
+}
+.path_line{ 
+  stroke-width: 10;
+  stroke:red;
 }

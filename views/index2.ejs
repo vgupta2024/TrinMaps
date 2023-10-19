@@ -1,0 +1,722 @@
+<%- include('partials/header', {title:"TrinMaps", logged: true}) -%>
+
+<body>
+  <div class="form-div">
+    <p>Enter your current locaiton and your desired destination.</p>
+    <form action="/directions" method="POST">
+      <div style="display: flex">
+        <div class="selection-div">
+          <p class="tip">Start:</p>
+          <select class="selection" id="from">
+            <% for(let room of data){ %>
+             
+            <option><%=room%></option>
+            <%}%>
+          </select>
+        </div>
+        <div class="selection-div">
+          <p class="tip">End:</p>
+          <select class="selection" id="to">
+            <% for(let room of data){ %>
+            <option><%=room%></option>
+            <%}%>
+          </select>
+        </div>
+      </div>
+      <div class="center">
+        <input
+          id="sub"
+          class="selection"
+          type="button"
+          value="Get Directions!"
+          onclick="find()"
+          required
+        />
+      </div>
+    </form>
+    <div class="floor-type">
+      <h1 id="floor-ind">2nd Floor</h1>
+      <div class="center">
+        <button onclick="changeFloor(1)" class="floor-select noRight" id="1st">
+          1st Floor
+        </button>
+        <button
+          onclick="changeFloor(2)"
+          class="floor-select"
+          id="2nd"
+        >
+          2nd Floor
+        </button>
+        <button onclick="changeFloor(3)" class="floor-select floor-selected noLeft" id="3rd">
+          3rd Floor
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+  <!-- Created with Inkscape (http://www.inkscape.org/) -->
+  <div class="center">
+    <div id="carouselExampleControls" class="carousel slide">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <svg
+            id="floor-plan-1"
+            class="data-svg"
+            width="2448"
+            height="1584"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <image href="/floor_plans/floor_1.png" />
+            <circle cx="2254" cy="931" r="3" class="node" id="INT-4" />
+            <circle cx="1897" cy="810" r="3" class="node" id="INT-7" />
+            <circle cx="2319" cy="931" r="3" class="node" id="INT-9" />
+            <circle cx="2319" cy="1120" r="3" class="node" id="INT-10" />
+            <circle cx="2319" cy="994" r="3" class="node" id="INT-12" />
+            <circle cx="2361" cy="1120" r="3" class="node" id="INT-13" />
+            <circle cx="2361" cy="994" r="3" class="node" id="INT-14" />
+            <circle cx="1201" cy="1027" r="3" class="node" id="INT-18" />
+            <circle cx="367" cy="952" r="3" class="node" id="INT-26" />
+            <circle cx="468" cy="952" r="3" class="node" id="INT-27" />
+            <circle cx="300" cy="952" r="3" class="node" id="INT-29" />
+            <circle cx="542" cy="952" r="3" class="node" id="INT-32" />
+            <circle cx="542" cy="1051" r="3" class="node" id="L-103" />
+            <circle cx="576" cy="1051" r="3" class="node" id="INT-34" />
+            <circle cx="1131" cy="784" r="3" class="node" id="INT-38" />
+            <circle cx="1361" cy="1027" r="3" class="node" id="INT-43" />
+            <circle cx="1527" cy="1027" r="3" class="node" id="INT-44" />
+            <circle cx="1553" cy="1027" r="3" class="node" id="INT-45" />
+            <circle cx="1588" cy="1027" r="3" class="node" id="INT-46" />
+            <circle cx="1645" cy="1027" r="3" class="node" id="INT-47" />
+            <circle cx="1655" cy="1027" r="3" class="node" id="INT-48" />
+            <circle cx="1655" cy="1096" r="3" class="node" id="INT-49" />
+            <circle cx="1694" cy="1096" r="3" class="node" id="INT-50" />
+            <circle cx="1672" cy="1096" r="3" class="node" id="INT-51" />
+            <circle cx="1339" cy="1027" r="3" class="node" id="INT-52" />
+            <circle cx="1361" cy="969" r="3" class="node" id="M-110" />
+            <circle cx="1313" cy="969" r="3" class="node" id="INT-54" />
+            <circle cx="1289" cy="969" r="3" class="node" id="INT-55" />
+            <circle cx="1424" cy="969" r="3" class="node" id="INT-56" />
+            <circle cx="1796" cy="823" r="3" class="node" id="INT-68" />
+            <circle cx="1796" cy="1027" r="3" class="node" id="INT-69" />
+            <circle cx="1796" cy="958" r="3" class="node" id="INT-70" />
+            <circle cx="1796" cy="786" r="3" class="node" id="INT-71" />
+            <circle cx="2254" cy="718" r="3" class="node" id="INT-72" />
+            <circle cx="1897" cy="718" r="3" class="node" id="INT-73" />
+            <circle cx="1796" cy="718" r="3" class="node" id="INT-74" />
+            <circle cx="2254" cy="769" r="3" class="node" id="INT-75" />
+            <circle cx="1897" cy="769" r="3" class="node" id="INT-76" />
+            <circle cx="1796" cy="769" r="3" class="node" id="INT-77" />
+            <circle cx="300" cy="767" r="3" class="node" id="INT-80" />
+            <circle cx="699" cy="586" r="3" class="node" id="INT-82" />
+            <circle cx="612" cy="952" r="3" class="node" id="INT-85" />
+            <circle cx="1039" cy="508" r="3" class="node" id="INT-86" />
+            <circle cx="1039" cy="373" r="3" class="node" id="KITCHEN-2" />
+            <circle cx="1060" cy="373" r="3" class="node" id="INT-89" />
+            <circle cx="1060" cy="329" r="3" class="node" id="INT-92" />
+            <circle cx="1060" cy="338" r="3" class="node" id="INT-93" />
+            <circle cx="782" cy="823" r="3" class="node" id="INT-94" />
+            <circle cx="782" cy="508" r="3" class="node" id="INT-95" />
+            <circle cx="782" cy="690" r="3" class="node" id="INT-96" />
+            <circle cx="782" cy="373" r="3" class="node" id="KITCHEN-1" />
+            <circle cx="782" cy="920" r="3" class="node" id="INT-98" />
+            <circle cx="1089" cy="823" r="3" class="node" id="INT-99" />
+            <circle cx="1089" cy="784" r="3" class="node" id="INT-100" />
+            <circle cx="1089" cy="508" r="3" class="node" id="INT-101" />
+            <circle cx="1089" cy="690" r="3" class="node" id="INT-102" />
+            <circle cx="782" cy="863" r="3" class="node" id="BERLIN-GARDEN" />
+            <circle cx="1089" cy="863" r="3" class="node" id="INT-104" />
+            <circle cx="977" cy="920" r="3" class="node" id="INT-105" />
+            <circle cx="977" cy="863" r="3" class="node" id="INT-106" />
+            <circle cx="1645" cy="915" r="3" class="node" id="INT-107" />
+            <circle cx="2254" cy="347" r="3" class="node" id="INT-108" />
+            <circle cx="2254" cy="385" r="3" class="node" id="INT-109" />
+            <circle cx="2254" cy="425" r="3" class="node" id="INT-111" />
+            <circle cx="2254" cy="523" r="3" class="node" id="INT-115" />
+            <circle cx="2254" cy="518" r="3" class="node" id="INT-116" />
+            <circle cx="2254" cy="610" r="3" class="node" id="INT-119" />
+            <circle cx="2254" cy="793" r="3" class="node" id="INT-120" />
+            <circle cx="2254" cy="776" r="3" class="node" id="INT-121" />
+            <circle cx="2254" cy="898" r="3" class="node" id="INT-122" />
+            <circle cx="120" cy="1116" r="3" class="node" id="INT-123" />
+            <circle cx="194" cy="1116" r="3" class="node" id="INT-124" />
+            <circle cx="300" cy="1051" r="3" class="node" id="L-101" />
+            <circle cx="194" cy="1051" r="3" class="node" id="INT-126" />
+            <circle cx="120" cy="1040" r="3" class="node" id="INT-127" />
+            <circle cx="249" cy="1051" r="3" class="node" id="INT-129" />
+            <circle cx="249" cy="1019" r="3" class="node" id="INT-130" />
+            <circle cx="1710" cy="1027" r="3" class="node" id="INT-131" />
+            <circle cx="1897" cy="378" r="3" class="node" id="INT-132" />
+            <circle cx="1897" cy="419" r="3" class="node" id="INT-134" />
+            <circle cx="1897" cy="502" r="3" class="node" id="INT-135" />
+            <circle cx="1897" cy="539" r="3" class="node" id="INT-137" />
+            <circle cx="1897" cy="577" r="3" class="node" id="INT-138" />
+            <circle cx="1897" cy="628" r="3" class="node" id="INT-139" />
+            <circle cx="1925" cy="628" r="3" class="node" id="INT-140" />
+            <circle cx="1897" cy="450" r="3" class="node" id="INT-141" />
+            <circle cx="1929" cy="450" r="3" class="node" id="INT-142" />
+            <circle cx="2054" cy="718" r="3" class="node" id="INT-143" />
+            <circle cx="2054" cy="650" r="3" class="node" id="INT-144" />
+            <circle cx="2054" cy="677" r="3" class="node" id="NURSE-US" />
+            <circle cx="2124" cy="718" r="3" class="node" id="INT-146" />
+            <circle cx="2226" cy="718" r="3" class="node" id="INT-147" />
+            <circle cx="2254" cy="590" r="3" class="node" id="INT-148" />
+            <circle cx="934" cy="1068" r="3" class="node" id="INT-149" />
+            <circle cx="1060" cy="1068" r="3" class="node" id="INT-150" />
+            <circle cx="1060" cy="1085" r="3" class="node" id="INT-151" />
+            <circle cx="877" cy="1068" r="3" class="node" id="INT-152" />
+            <circle cx="863" cy="1068" r="3" class="node" id="INT-153" />
+            <circle cx="863" cy="1107" r="3" class="node" id="NURSE-LS" />
+            <circle cx="972" cy="1068" r="3" class="node" id="INT-155" />
+            <circle cx="1012" cy="1068" r="3" class="node" id="INT-156" />
+            <circle cx="1038" cy="1068" r="3" class="node" id="INT-157" />
+            <circle cx="1038" cy="984" r="3" class="node" id="INT-158" />
+            <circle cx="1122" cy="984" r="3" class="node" id="INT-159" />
+            <circle cx="542" cy="986" r="3" class="node" id="INT-160" />
+            <circle cx="300" cy="992" r="3" class="node" id="INT-161" />
+            <circle cx="1796" cy="899" r="3" class="node" id="INT-162" />
+            <circle cx="934" cy="1175" r="3" class="node" id="EXIT-ANNEX" />
+            <circle cx="1796" cy="1181" r="3" class="node" id="EXIT-101" />
+            <circle cx="367" cy="1133" r="3" class="node" id="EXIT-LS" />
+            <circle cx="120" cy="1185" r="3" class="node" id="EXIT-HM" />
+            <circle cx="1868" cy="378" r="3" class="node" id="U-109" />
+            <circle cx="2292" cy="347" r="3" class="node" id="U-114" />
+            <circle cx="2291" cy="425" r="3" class="node" id="U-115" />
+            <circle cx="2293" cy="518" r="3" class="node" id="U-117" />
+            <circle cx="2281" cy="453" r="3" class="node" id="U-116" />
+            <circle cx="2221" cy="610" r="3" class="node" id="U-111" />
+            <circle cx="2227" cy="590" r="3" class="node" id="M-BATHROOM-1" />
+            <circle cx="1201" cy="1183" r="3" class="node" id="EXIT-MS" />
+            <circle cx="612" cy="885" r="3" class="node" id="L-104" />
+            <circle cx="1089" cy="638" r="3" class="node" id="CAFETERIA-2" />
+            <circle cx="1035" cy="690" r="3" class="node" id="CAFETERIA-1" />
+            <circle cx="782" cy="778" r="3" class="node" id="CAFETERIA-3" />
+            <circle cx="713" cy="508" r="3" class="node" id="CAFETERIA-4" />
+            <circle cx="1869" cy="502" r="3" class="node" id="U-108" />
+            <circle cx="1856" cy="539" r="3" class="node" id="U-106" />
+            <circle cx="1863" cy="577" r="3" class="node" id="U-105" />
+            <circle cx="1862" cy="628" r="3" class="node" id="U-104" />
+            <circle cx="1273" cy="823" r="3" class="node" id="INT-163" />
+            <circle cx="1431" cy="823" r="3" class="node" id="INT-164" />
+            <circle cx="1273" cy="847" r="3" class="node" id="M-BATHROOM-2" />
+            <circle cx="1431" cy="851" r="3" class="node" id="W-BATHROOM-2" />
+            <circle cx="2254" cy="399" r="3" class="node" id="INT-165" />
+            <circle cx="2228" cy="385" r="3" class="node" id="U-113" />
+            <circle cx="2228" cy="399" r="3" class="node" id="W-BATHROOM-1" />
+            <circle cx="1527" cy="1067" r="3" class="node" id="M-102" />
+            <circle cx="1527" cy="987" r="3" class="node" id="M-109" />
+            <circle cx="1553" cy="1069" r="3" class="node" id="M-103" />
+            <circle cx="1553" cy="986" r="3" class="node" id="M-108" />
+            <circle cx="1361" cy="1073" r="3" class="node" id="M-101" />
+            <circle cx="1655" cy="1067" r="3" class="node" id="M-104" />
+            <circle cx="1694" cy="1126" r="3" class="node" id="MS-PRINCIPAL" />
+            <circle cx="1672" cy="1126" r="3" class="node" id="MS-ASSISTANT" />
+            <circle cx="1339" cy="1069" r="3" class="node" id="M-100" />
+            <circle cx="1313" cy="945" r="3" class="node" id="M-112" />
+            <circle cx="1289" cy="946" r="3" class="node" id="M-111" />
+            <circle cx="1588" cy="987" r="3" class="node" id="M-107" />
+            <circle cx="1931" cy="539" r="3" class="node" id="U-107" />
+            <circle cx="705" cy="756" r="3" class="node" id="M-BATHROOM-3" />
+            <circle cx="712" cy="716" r="3" class="node" id="W-BATHROOM-3" />
+            <circle cx="2254" cy="453" r="3" class="node" id="INT-166" />
+            <circle cx="2231" cy="453" r="3" class="node" id="STAIR-H-E-1" />
+            <circle cx="185" cy="767" r="3" class="node" id="L-105B" />
+            <circle cx="1622" cy="915" r="3" class="node" id="M-106" />
+            <circle cx="1932" cy="810" r="3" class="node" id="HAWLEY-1" />
+            <circle cx="1897" cy="846" r="3" class="node" id="U-103" />
+            <circle cx="1868" cy="899" r="3" class="node" id="U-102" />
+            <circle cx="2300" cy="793" r="3" class="node" id="U-120" />
+            <circle cx="2285" cy="776" r="3" class="node" id="U-119" />
+            <circle cx="2361" cy="914" r="3" class="node" id="STAIR-H-G-1" />
+            <circle cx="576" cy="1116" r="3" class="node" id="LS-PRINCIPAL" />
+            <circle cx="542" cy="1111" r="3" class="node" id="LS-ASSISTANT" />
+            <circle cx="972" cy="1100" r="3" class="node" id="A-104" />
+            <circle cx="1162" cy="784" r="3" class="node" id="N-101A" />
+            <circle cx="1131" cy="670" r="3" class="node" id="N-101" />
+            <circle cx="300" cy="877" r="3" class="node" id="INT-167" />
+            <circle cx="468" cy="877" r="3" class="node" id="INT-168" />
+            <circle cx="546" cy="877" r="3" class="node" id="L-105A" />
+            <circle cx="468" cy="1056" r="3" class="node" id="L-102" />
+            <circle cx="194" cy="1080" r="3" class="node" id="HEAD-OFFICE" />
+            <circle cx="194" cy="1019" r="3" class="node" id="HEAD-CONF" />
+            <circle cx="171" cy="952" r="3" class="node" id="ADMISSIONS" />
+            <circle cx="300" cy="1026" r="3" class="node" id="INT-169" />
+            <circle cx="367" cy="1026" r="3" class="node" id="INT-170" />
+            <circle cx="468" cy="1026" r="3" class="node" id="INT-171" />
+            <circle cx="542" cy="1026" r="3" class="node" id="INT-172" />
+            <circle cx="1991" cy="1120" r="3" class="node" id="MANUAL-INT-1" />
+            <circle cx="1925" cy="659" r="3" class="node" id="STAIR-H-B-1" />
+            <circle cx="1929" cy="464" r="3" class="node" id="STAIR-H-C-1" />
+            <circle cx="2226" cy="682" r="3" class="node" id="STAIR-H-D-1" />
+            <circle cx="1747" cy="786" r="3" class="node" id="STAIR-H-F-1" />
+            <circle cx="1710" cy="951" r="3" class="node" id="STAIR-M-B-1" />
+            <circle cx="1236" cy="823" r="3" class="node" id="INT-173" />
+            <circle cx="1236" cy="991" r="3" class="node" id="INT-174" />
+            <circle cx="1236" cy="1027" r="3" class="node" id="INT-175" />
+            <circle cx="1236" cy="947" r="3" class="node" id="INT-176" />
+            <circle cx="1236" cy="906" r="3" class="node" id="STAIR-M-A-1" />
+            <circle cx="1122" cy="950" r="3" class="node" id="STAIR-E-A-1" />
+            <circle cx="877" cy="1036" r="3" class="node" id="A-101" />
+            <circle cx="1012" cy="1032" r="3" class="node" id="A-102" />
+            <circle cx="764" cy="1068" r="3" class="node" id="INT-177" />
+            <circle cx="764" cy="1144" r="3" class="node" id="INT-178" />
+            <circle cx="743" cy="1144" r="3" class="node" id="INT-179" />
+            <circle cx="743" cy="1131" r="3" class="node" id="STAIR-E-B-1" />
+            <circle cx="1723" cy="253" r="3" class="node" id="EXIT-STAIR-N-B" />
+            <circle cx="1723" cy="365" r="3" class="node" id="STAIR-N-B-1" />
+            <circle cx="1060" cy="257" r="3" class="node" id="EXIT-KITCHEN" />
+            <circle cx="1897" cy="275" r="3" class="node" id="EXIT-US-WEST" />
+            <circle cx="2254" cy="273" r="3" class="node" id="EXIT-US-EAST" />
+            <circle cx="1796" cy="1052" r="3" class="node" id="INT-189" />
+            <circle cx="1878" cy="958" r="3" class="node" id="INT-190" />
+            <circle cx="1878" cy="979" r="3" class="node" id="U-101" />
+            <circle cx="1908" cy="1052" r="3" class="node" id="HAWLEY-2" />
+            <circle cx="2264" cy="1120" r="3" class="node" id="INT-192" />
+            <circle cx="2264" cy="1058" r="3" class="node" id="HAWLEY-3" />
+            <circle cx="2319" cy="955" r="3" class="node" id="INT-193" />
+            <circle cx="1870" cy="810" r="3" class="node" id="STAIR-H-A-1" />
+            <circle cx="1857" cy="419" r="3" class="node" id="U-108A" />
+            <circle cx="1754" cy="419" r="3" class="node" id="TRASH-ROOM" />
+            <circle cx="2291" cy="994" r="3" class="node" id="U-121" />
+            <circle cx="2230" cy="523" r="3" class="node" id="U-112" />
+            <circle cx="2291" cy="610" r="3" class="node" id="U-118" />
+            <circle cx="1881" cy="1052" r="3" class="node" id="MANUAL-INT-2" />
+            <circle cx="672" cy="823" r="3" class="node" id="INT-194" />
+            <circle cx="672" cy="508" r="3" class="node" id="INT-195" />
+            <circle cx="672" cy="586" r="3" class="node" id="INT-196" />
+            <circle cx="672" cy="716" r="3" class="node" id="INT-197" />
+            <circle cx="672" cy="756" r="3" class="node" id="INT-198" />
+            <circle cx="672" cy="952" r="3" class="node" id="INT-199" />
+            <circle cx="672" cy="1176" r="3" class="node" id="EXIT-LINK" />
+            <circle cx="672" cy="373" r="3" class="node" id="STAIR-N-A-1" />
+            <circle cx="672" cy="255" r="3" class="node" id="EXIT-STAIR-N-A" />
+            <circle cx="573" cy="986" r="3" class="node" id="STAIR-L-A-1" />
+            <circle cx="271" cy="992" r="3" class="node" id="STAIR-C-L-1" />
+            <circle cx="698" cy="1068" r="3" class="node" id="STAIR-N-D-1" />
+            <circle cx="672" cy="1130" r="3" class="node" id="INT-202" />
+            <circle cx="698" cy="1130" r="3" class="node" id="INT-203" />
+          </svg>
+        </div>
+        <div class="carousel-item">
+          <svg
+            id="floor-plan-2"
+            class="data-svg"
+            width="2448"
+            height="1584"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <image href="/floor_plans/floor_2.png" />
+            <circle cx="2257" cy="425" r="3" class="node" id="INT-0-2" />
+            <circle cx="2257" cy="1090" r="3" class="node" id="INT-1-2" />
+            <circle cx="1931" cy="1090" r="3" class="node" id="INT-2-2" />
+            <circle cx="1931" cy="1122" r="3" class="node" id="INT-3-2" />
+            <circle cx="1895" cy="1122" r="3" class="node" id="INT-4-2" />
+            <circle cx="1888" cy="1122" r="3" class="node" id="INT-5-2" />
+            <circle cx="1888" cy="1045" r="3" class="node" id="INT-6-2" />
+            <circle cx="1217" cy="1045" r="3" class="node" id="M-212" />
+            <circle cx="1649" cy="1045" r="3" class="node" id="INT-8-2" />
+            <circle cx="1649" cy="824" r="3" class="node" id="INT-9-2" />
+            <circle cx="1649" cy="771" r="3" class="node" id="INT-10-2" />
+            <circle cx="1239" cy="1045" r="3" class="node" id="INT-11-2" />
+            <circle cx="1239" cy="824" r="3" class="node" id="INT-12-2" />
+            <circle cx="1239" cy="771" r="3" class="node" id="INT-13-2" />
+            <circle cx="777" cy="824" r="3" class="node" id="INT-15-2" />
+            <circle cx="777" cy="771" r="3" class="node" id="INT-16-2" />
+            <circle cx="1450" cy="1045" r="3" class="node" id="INT-17-2" />
+            <circle cx="1427" cy="1045" r="3" class="node" id="INT-18-2" />
+            <circle cx="1695" cy="685" r="3" class="node" id="INT-19-2" />
+            <circle cx="1662" cy="425" r="3" class="node" id="INT-20-2" />
+            <circle cx="1662" cy="685" r="3" class="node" id="INT-21-2" />
+            <circle cx="1239" cy="741" r="3" class="node" id="INT-22-2" />
+            <circle cx="1662" cy="741" r="3" class="node" id="INT-23-2" />
+            <circle cx="1181" cy="425" r="3" class="node" id="INT-26-2" />
+            <circle cx="1181" cy="685" r="3" class="node" id="INT-27-2" />
+            <circle cx="1536" cy="425" r="3" class="node" id="INT-34-2" />
+            <circle cx="1536" cy="685" r="3" class="node" id="INT-35-2" />
+            <circle cx="664" cy="425" r="3" class="node" id="INT-37-2" />
+            <circle cx="664" cy="685" r="3" class="node" id="INT-38-2" />
+            <circle cx="664" cy="1077" r="3" class="node" id="INT-39-2" />
+            <circle cx="1116" cy="1077" r="3" class="node" id="INT-40-2" />
+            <circle cx="1753" cy="1045" r="3" class="node" id="INT-43-2" />
+            <circle cx="2257" cy="1032" r="3" class="node" id="INT-44-2" />
+            <circle cx="2257" cy="1009" r="3" class="node" id="INT-45-2" />
+            <circle cx="2257" cy="883" r="3" class="node" id="INT-46-2" />
+            <circle cx="2257" cy="784" r="3" class="node" id="INT-47-2" />
+            <circle cx="2060" cy="425" r="3" class="node" id="INT-48-2" />
+            <circle cx="1894" cy="425" r="3" class="node" id="INT-49-2" />
+            <circle cx="2257" cy="721" r="3" class="node" id="INT-52-2" />
+            <circle cx="1894" cy="721" r="3" class="node" id="INT-53-2" />
+            <circle cx="1836" cy="721" r="3" class="node" id="INT-54-2" />
+            <circle cx="1836" cy="825" r="3" class="node" id="INT-55-2" />
+            <circle cx="1798" cy="1045" r="3" class="node" id="INT-56-2" />
+            <circle cx="1798" cy="825" r="3" class="node" id="INT-57-2" />
+            <circle cx="1798" cy="725" r="3" class="node" id="INT-58-2" />
+            <circle cx="1750" cy="685" r="3" class="node" id="INT-59-2" />
+            <circle cx="1750" cy="725" r="3" class="node" id="INT-60-2" />
+            <circle cx="1662" cy="640" r="3" class="node" id="INT-61-2" />
+            <circle cx="1744" cy="425" r="3" class="node" id="INT-62-2" />
+            <circle cx="1744" cy="640" r="3" class="node" id="US-COAT-ROOM" />
+            <circle cx="1231" cy="685" r="3" class="node" id="INT-64-2" />
+            <circle cx="1231" cy="707" r="3" class="node" id="INT-65-2" />
+            <circle cx="664" cy="1003" r="3" class="node" id="INT-66-2" />
+            <circle cx="294" cy="926" r="3" class="node" id="INT-69-2" />
+            <circle cx="294" cy="874" r="3" class="node" id="INT-70-2" />
+            <circle cx="262" cy="874" r="3" class="node" id="INT-71-2" />
+            <circle cx="262" cy="861" r="3" class="node" id="INT-72-2" />
+            <circle cx="245" cy="861" r="3" class="node" id="INT-73-2" />
+            <circle cx="245" cy="850" r="3" class="node" id="INT-74-2" />
+            <circle cx="500" cy="1003" r="3" class="node" id="INT-75-2" />
+            <circle cx="490" cy="1003" r="3" class="node" id="INT-76-2" />
+            <circle cx="536" cy="1003" r="3" class="node" id="INT-77-2" />
+            <circle cx="335" cy="1003" r="3" class="node" id="INT-79-2" />
+            <circle cx="335" cy="926" r="3" class="node" id="L-206" />
+            <circle cx="817" cy="1077" r="3" class="node" id="INT-81-2" />
+            <circle cx="846" cy="1077" r="3" class="node" id="INT-82-2" />
+            <circle cx="1036" cy="1077" r="3" class="node" id="INT-83-2" />
+            <circle cx="1051" cy="1077" r="3" class="node" id="INT-84-2" />
+            <circle cx="1095" cy="1077" r="3" class="node" id="INT-85-2" />
+            <circle cx="782" cy="1077" r="3" class="node" id="INT-86-2" />
+            <circle cx="1372" cy="685" r="3" class="node" id="INT-87-2" />
+            <circle cx="1372" cy="650" r="3" class="node" id="INT-88-2" />
+            <circle cx="1398" cy="425" r="3" class="node" id="INT-89-2" />
+            <circle cx="1340" cy="425" r="3" class="node" id="INT-90-2" />
+            <circle cx="1246" cy="425" r="3" class="node" id="INT-91-2" />
+            <circle cx="1228" cy="425" r="3" class="node" id="INT-92-2" />
+            <circle cx="1181" cy="564" r="3" class="node" id="INT-93-2" />
+            <circle cx="1181" cy="591" r="3" class="node" id="INT-94-2" />
+            <circle cx="1088" cy="685" r="3" class="node" id="INT-99-2" />
+            <circle cx="763" cy="425" r="3" class="node" id="INT-100-2" />
+            <circle cx="692" cy="425" r="3" class="node" id="INT-101-2" />
+            <circle cx="664" cy="596" r="3" class="node" id="INT-102-2" />
+            <circle cx="691" cy="596" r="3" class="node" id="INT-103-2" />
+            <circle cx="777" cy="729" r="3" class="node" id="INT-104-2" />
+            <circle cx="664" cy="729" r="3" class="node" id="INT-105-2" />
+            <circle cx="1362" cy="1045" r="3" class="node" id="INT-106-2" />
+            <circle cx="1427" cy="993" r="3" class="node" id="INT-107-2" />
+            <circle cx="1450" cy="995" r="3" class="node" id="INT-108-2" />
+            <circle cx="1516" cy="1045" r="3" class="node" id="INT-109-2" />
+            <circle cx="1614" cy="1045" r="3" class="node" id="INT-110-2" />
+            <circle cx="1640" cy="1045" r="3" class="node" id="INT-111-2" />
+            <circle cx="1261" cy="1045" r="3" class="node" id="INT-112-2" />
+            <circle cx="1181" cy="623" r="3" class="node" id="INT-113-2" />
+            <circle cx="1884" cy="425" r="3" class="node" id="INT-114-2" />
+            <circle cx="1884" cy="386" r="3" class="node" id="INT-115-2" />
+            <circle cx="2163" cy="425" r="3" class="node" id="INT-116-2" />
+            <circle cx="2210" cy="425" r="3" class="node" id="INT-117-2" />
+            <circle cx="2076" cy="425" r="3" class="node" id="INT-118-2" />
+            <circle cx="2046" cy="425" r="3" class="node" id="INT-119-2" />
+            <circle cx="1894" cy="480" r="3" class="node" id="INT-120-2" />
+            <circle cx="1894" cy="472" r="3" class="node" id="INT-121-2" />
+            <circle cx="1894" cy="510" r="3" class="node" id="INT-122-2" />
+            <circle cx="1894" cy="547" r="3" class="node" id="INT-123-2" />
+            <circle cx="1894" cy="593" r="3" class="node" id="INT-124-2" />
+            <circle cx="1894" cy="636" r="3" class="node" id="INT-125-2" />
+            <circle cx="1894" cy="688" r="3" class="node" id="INT-126-2" />
+            <circle cx="1894" cy="694" r="3" class="node" id="INT-128-2" />
+            <circle cx="2049" cy="1090" r="3" class="node" id="INT-129-2" />
+            <circle cx="1902" cy="721" r="3" class="node" id="INT-130-2" />
+            <circle cx="2257" cy="1060" r="3" class="node" id="INT-131-2" />
+            <circle cx="1888" cy="1060" r="3" class="node" id="INT-132-2" />
+            <circle cx="1068" cy="824" r="3" class="node" id="INT-133-2" />
+            <circle cx="1068" cy="883" r="3" class="node" id="INT-134-2" />
+            <circle cx="1543" cy="425" r="3" class="node" id="INT-135-2" />
+            <circle cx="1543" cy="388" r="3" class="node" id="N-200" />
+            <circle cx="1507" cy="388" r="3" class="node" id="INT-137-2" />
+            <circle cx="1486" cy="388" r="3" class="node" id="INT-138-2" />
+            <circle cx="1393" cy="388" r="3" class="node" id="INT-139-2" />
+            <circle cx="1306" cy="425" r="3" class="node" id="INT-140-2" />
+            <circle cx="1100" cy="425" r="3" class="node" id="INT-141-2" />
+            <circle cx="892" cy="425" r="3" class="node" id="INT-142-2" />
+            <circle cx="796" cy="425" r="3" class="node" id="INT-143-2" />
+            <circle cx="1649" cy="881" r="3" class="node" id="INT-144-2" />
+            <circle cx="892" cy="396" r="3" class="node" id="N-207" />
+            <circle cx="796" cy="394" r="3" class="node" id="N-208" />
+            <circle cx="1306" cy="389" r="3" class="node" id="N-203" />
+            <circle
+              cx="1393"
+              cy="317"
+              r="3"
+              class="node"
+              id="US-ASSISTANT-PRINCIPAL"
+            />
+            <circle
+              cx="1373"
+              cy="388"
+              r="3"
+              class="node"
+              id="US-CONFERENCE-ROOM"
+            />
+            <circle cx="1486" cy="320" r="3" class="node" id="US-PRINCIPAL" />
+            <circle
+              cx="1507"
+              cy="315"
+              r="3"
+              class="node"
+              id="US-DEAN-OF-STUDENT-LIFE"
+            />
+            <circle cx="1398" cy="463" r="3" class="node" id="N-201-1" />
+            <circle cx="1406" cy="650" r="3" class="node" id="N-201-2" />
+            <circle cx="1345" cy="650" r="3" class="node" id="N-215" />
+            <circle cx="1214" cy="623" r="3" class="node" id="N-213" />
+            <circle cx="1126" cy="591" r="3" class="node" id="M-BATHROOM-4" />
+            <circle cx="1130" cy="564" r="3" class="node" id="W-BATHROOM-4" />
+            <circle cx="763" cy="453" r="3" class="node" id="N-212-1" />
+            <circle cx="1088" cy="642" r="3" class="node" id="N-212-2" />
+            <circle cx="536" cy="919" r="3" class="node" id="L-204" />
+            <circle cx="536" cy="1047" r="3" class="node" id="L-203" />
+            <circle cx="500" cy="1039" r="3" class="node" id="L-202" />
+            <circle cx="490" cy="924" r="3" class="node" id="L-205" />
+            <circle cx="335" cy="1042" r="3" class="node" id="L-201" />
+            <circle cx="817" cy="1094" r="3" class="node" id="A-204" />
+            <circle cx="846" cy="1051" r="3" class="node" id="A-200" />
+            <circle cx="1036" cy="1050" r="3" class="node" id="A-201" />
+            <circle cx="1051" cy="1098" r="3" class="node" id="A-203" />
+            <circle cx="1095" cy="1101" r="3" class="node" id="A-202" />
+            <circle cx="1239" cy="1086" r="3" class="node" id="M-200" />
+            <circle cx="1261" cy="1071" r="3" class="node" id="M-201" />
+            <circle cx="1261" cy="976" r="3" class="node" id="M-211" />
+            <circle cx="1362" cy="1009" r="3" class="node" id="M-BATHROOM-5" />
+            <circle cx="1427" cy="1070" r="3" class="node" id="M-202" />
+            <circle cx="1450" cy="1075" r="3" class="node" id="M-203" />
+            <circle cx="1427" cy="970" r="3" class="node" id="M-209" />
+            <circle cx="1450" cy="971" r="3" class="node" id="M-208" />
+            <circle cx="1614" cy="969" r="3" class="node" id="M-206" />
+            <circle cx="1614" cy="1075" r="3" class="node" id="M-204" />
+            <circle cx="1640" cy="1076" r="3" class="node" id="M-205" />
+            <circle cx="1753" cy="1077" r="3" class="node" id="U-230" />
+            <circle cx="1662" cy="539" r="3" class="node" id="INT-147-2" />
+            <circle cx="1536" cy="539" r="3" class="node" id="INT-148-2" />
+            <circle cx="1598" cy="539" r="3" class="node" id="US-SWAMP" />
+            <circle cx="1912" cy="386" r="3" class="node" id="U-207" />
+            <circle cx="1857" cy="386" r="3" class="node" id="U-206" />
+            <circle cx="2060" cy="392" r="3" class="node" id="U-208" />
+            <circle cx="2163" cy="388" r="3" class="node" id="U-210" />
+            <circle cx="2076" cy="456" r="3" class="node" id="U-211" />
+            <circle cx="2046" cy="455" r="3" class="node" id="U-209" />
+            <circle cx="2210" cy="388" r="3" class="node" id="U-212" />
+            <circle cx="2257" cy="388" r="3" class="node" id="U-213" />
+            <circle cx="2257" cy="622" r="3" class="node" id="INT-150-2" />
+            <circle cx="2300" cy="622" r="3" class="node" id="INT-151-2" />
+            <circle cx="2288" cy="622" r="3" class="node" id="INT-152-2" />
+            <circle cx="2288" cy="596" r="3" class="node" id="U-214-1" />
+            <circle cx="2288" cy="425" r="3" class="node" id="U-214-2" />
+            <circle cx="2285" cy="784" r="3" class="node" id="U-219" />
+            <circle cx="2293" cy="883" r="3" class="node" id="U-220" />
+            <circle cx="2288" cy="1009" r="3" class="node" id="U-221" />
+            <circle cx="2286" cy="1032" r="3" class="node" id="U-222" />
+            <circle cx="2257" cy="1126" r="3" class="node" id="U-223" />
+            <circle cx="2176" cy="1090" r="3" class="node" id="INT-153-2" />
+            <circle cx="2176" cy="1115" r="3" class="node" id="U-224" />
+            <circle cx="2049" cy="1122" r="3" class="node" id="U-225" />
+            <circle cx="1931" cy="1147" r="3" class="node" id="U-226" />
+            <circle cx="1895" cy="1148" r="3" class="node" id="U-227" />
+            <circle cx="1857" cy="1122" r="3" class="node" id="U-228" />
+            <circle cx="1888" cy="1011" r="3" class="node" id="U-229" />
+            <circle cx="1902" cy="753" r="3" class="node" id="U-200" />
+            <circle cx="2002" cy="721" r="3" class="node" id="INT-154-2" />
+            <circle cx="2002" cy="685" r="3" class="node" id="U-218" />
+            <circle cx="2257" cy="652" r="3" class="node" id="INT-155-2" />
+            <circle cx="2229" cy="652" r="3" class="node" id="U-216" />
+            <circle cx="2257" cy="607" r="3" class="node" id="INT-156-2" />
+            <circle cx="2220" cy="607" r="3" class="node" id="U-215" />
+            <circle cx="1832" cy="472" r="3" class="node" id="U-205" />
+            <circle cx="1863" cy="510" r="3" class="node" id="U-204" />
+            <circle cx="1866" cy="547" r="3" class="node" id="U-202" />
+            <circle cx="1858" cy="636" r="3" class="node" id="U-201" />
+            <circle cx="692" cy="476" r="3" class="node" id="N-209" />
+            <circle cx="691" cy="571" r="3" class="node" id="N-210" />
+            <circle cx="691" cy="631" r="3" class="node" id="N-211" />
+            <circle cx="536" cy="991" r="3" class="node" id="INT-158-2" />
+            <circle cx="575" cy="991" r="3" class="node" id="STAIR-L-A-2" />
+            <circle cx="335" cy="979" r="3" class="node" id="INT-159-2" />
+            <circle cx="302" cy="979" r="3" class="node" id="STAIR-C-L-2" />
+            <circle cx="664" cy="1027" r="3" class="node" id="STAIR-N-D-2" />
+            <circle cx="664" cy="388" r="3" class="node" id="STAIR-N-A-2" />
+            <circle cx="1195" cy="707" r="3" class="node" id="STAIR-N-C-2" />
+            <circle cx="1744" cy="390" r="3" class="node" id="STAIR-N-B-2" />
+            <circle cx="1239" cy="952" r="3" class="node" id="STAIR-M-A-2" />
+            <circle cx="1116" cy="952" r="3" class="node" id="STAIR-E-A-2" />
+            <circle cx="1686" cy="881" r="3" class="node" id="STAIR-M-B-2" />
+            <circle cx="1695" cy="723" r="3" class="node" id="STAIR-H-F-2" />
+            <circle cx="1930" cy="688" r="3" class="node" id="STAIR-H-B-2" />
+            <circle cx="1926" cy="480" r="3" class="node" id="STAIR-H-C-2" />
+            <circle cx="2257" cy="477" r="3" class="node" id="INT-162-2" />
+            <circle cx="2228" cy="477" r="3" class="node" id="STAIR-H-E-2" />
+            <circle cx="2257" cy="690" r="3" class="node" id="INT-163-2" />
+            <circle cx="2226" cy="690" r="3" class="node" id="STAIR-H-D-2" />
+            <circle cx="2257" cy="908" r="3" class="node" id="INT-164-2" />
+            <circle cx="2291" cy="908" r="3" class="node" id="STAIR-H-H-2" />
+          </svg>
+        </div>
+        <div class="carousel-item">
+          <svg
+            id="floor-plan"
+            class="data-svg"
+            width="2448"
+            height="1584"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <image href="/floor_plans/floor_3.png" />
+            <circle cx="1734" cy="639" r="3" class="node" id="INT-2-3" />
+            <circle cx="1734" cy="426" r="3" class="node" id="INT-3-3" />
+            <circle cx="1183" cy="639" r="3" class="node" id="INT-5-3" />
+            <circle cx="1183" cy="426" r="3" class="node" id="INT-6-3" />
+            <circle cx="1734" cy="700" r="3" class="node" id="INT-8-3" />
+            <circle cx="2360" cy="1164" r="3" class="node" id="INT-10-3" />
+            <circle cx="1747" cy="1164" r="3" class="node" id="INT-12-3" />
+            <circle cx="1747" cy="1150" r="3" class="node" id="INT-13-3" />
+            <circle cx="1704" cy="1150" r="3" class="node" id="INT-14-3" />
+            <circle cx="1704" cy="1120" r="3" class="node" id="M-300-2" />
+            <circle cx="1272" cy="1120" r="3" class="node" id="INT-18-3" />
+            <circle cx="1272" cy="989" r="3" class="node" id="M-300-3" />
+            <circle cx="1232" cy="989" r="3" class="node" id="INT-21-3" />
+            <circle cx="1704" cy="888" r="3" class="node" id="M-300-1" />
+            <circle cx="1272" cy="888" r="3" class="node" id="INT-23-3" />
+            <circle cx="1748" cy="700" r="3" class="node" id="INT-24-3" />
+            <circle cx="1748" cy="888" r="3" class="node" id="INT-25-3" />
+            <circle cx="2360" cy="765" r="3" class="node" id="INT-27-3" />
+            <circle cx="2304" cy="765" r="3" class="node" id="U-300-3" />
+            <circle cx="2304" cy="1134" r="3" class="node" id="INT-30-3" />
+            <circle cx="1876" cy="1164" r="3" class="node" id="INT-31-3" />
+            <circle cx="1876" cy="1134" r="3" class="node" id="U-300-2" />
+            <circle cx="2360" cy="1117" r="3" class="node" id="INT-33-3" />
+            <circle cx="2304" cy="1117" r="3" class="node" id="INT-34-3" />
+            <circle cx="2360" cy="933" r="3" class="node" id="INT-35-3" />
+            <circle cx="2304" cy="933" r="3" class="node" id="INT-36-3" />
+            <circle cx="2360" cy="713" r="3" class="node" id="INT-38-3" />
+            <circle cx="1329" cy="426" r="3" class="node" id="INT-39-3" />
+            <circle cx="1447" cy="426" r="3" class="node" id="INT-40-3" />
+            <circle cx="1563" cy="426" r="3" class="node" id="INT-41-3" />
+            <circle cx="1564" cy="639" r="3" class="node" id="INT-42-3" />
+            <circle cx="1449" cy="639" r="3" class="node" id="INT-43-3" />
+            <circle cx="1209" cy="639" r="3" class="node" id="INT-44-3" />
+            <circle cx="1329" cy="639" r="3" class="node" id="INT-45-3" />
+            <circle cx="1308" cy="639" r="3" class="node" id="INT-46-3" />
+            <circle cx="1094" cy="639" r="3" class="node" id="INT-47-3" />
+            <circle cx="986" cy="639" r="3" class="node" id="INT-48-3" />
+            <circle cx="891" cy="639" r="3" class="node" id="INT-49-3" />
+            <circle cx="692" cy="639" r="3" class="node" id="INT-50-3" />
+            <circle cx="790" cy="639" r="3" class="node" id="INT-51-3" />
+            <circle cx="792" cy="426" r="3" class="node" id="INT-52-3" />
+            <circle cx="889" cy="426" r="3" class="node" id="INT-53-3" />
+            <circle cx="987" cy="426" r="3" class="node" id="INT-54-3" />
+            <circle cx="1096" cy="426" r="3" class="node" id="INT-55-3" />
+            <circle cx="1258" cy="426" r="3" class="node" id="INT-56-3" />
+            <circle cx="502" cy="990" r="3" class="node" id="INT-58-3" />
+            <circle cx="527" cy="990" r="3" class="node" id="INT-60-3" />
+            <circle cx="502" cy="972" r="3" class="node" id="INT-66-3" />
+            <circle cx="336" cy="972" r="3" class="node" id="INT-67-3" />
+            <circle cx="314" cy="972" r="3" class="node" id="INT-68-3" />
+            <circle cx="314" cy="926" r="3" class="node" id="INT-69-3" />
+            <circle cx="290" cy="926" r="3" class="node" id="L-308" />
+            <circle cx="290" cy="836" r="3" class="node" id="INT-71-3" />
+            <circle cx="936" cy="1153" r="3" class="node" id="INT-72-3" />
+            <circle cx="936" cy="990" r="3" class="node" id="INT-73-3" />
+            <circle cx="1124" cy="990" r="3" class="node" id="INT-74-3" />
+            <circle cx="1099" cy="990" r="3" class="node" id="INT-75-3" />
+            <circle cx="891" cy="667" r="3" class="node" id="N-322" />
+            <circle cx="986" cy="668" r="3" class="node" id="N-323" />
+            <circle cx="1094" cy="662" r="3" class="node" id="N-325" />
+            <circle cx="1094" cy="605" r="3" class="node" id="N-312-1" />
+            <circle cx="986" cy="609" r="3" class="node" id="N-324" />
+            <circle cx="790" cy="605" r="3" class="node" id="N-321" />
+            <circle cx="692" cy="664" r="3" class="node" id="N-320" />
+            <circle cx="1209" cy="667" r="3" class="node" id="N-326" />
+            <circle cx="1308" cy="612" r="3" class="node" id="N-307-1" />
+            <circle cx="792" cy="447" r="3" class="node" id="N-317" />
+            <circle cx="792" cy="392" r="3" class="node" id="N-316" />
+            <circle cx="889" cy="390" r="3" class="node" id="N-315" />
+            <circle cx="987" cy="395" r="3" class="node" id="N-314" />
+            <circle cx="1096" cy="394" r="3" class="node" id="N-313" />
+            <circle cx="1161" cy="426" r="3" class="node" id="INT-76-3" />
+            <circle cx="1161" cy="392" r="3" class="node" id="N-310" />
+            <circle cx="1258" cy="392" r="3" class="node" id="N-308" />
+            <circle cx="1329" cy="393" r="3" class="node" id="N-307" />
+            <circle cx="1447" cy="395" r="3" class="node" id="N-305" />
+            <circle cx="1563" cy="393" r="3" class="node" id="N-301" />
+            <circle cx="1563" cy="452" r="3" class="node" id="N-302-1" />
+            <circle cx="1564" cy="612" r="3" class="node" id="N-302-2" />
+            <circle cx="1564" cy="669" r="3" class="node" id="N-330" />
+            <circle cx="1449" cy="670" r="3" class="node" id="N-329" />
+            <circle cx="1449" cy="611" r="3" class="node" id="N-304-1" />
+            <circle cx="1447" cy="452" r="3" class="node" id="N-304-2" />
+            <circle cx="1329" cy="566" r="3" class="node" id="N-306-2" />
+            <circle cx="1329" cy="451" r="3" class="node" id="N-306-1" />
+            <circle cx="1096" cy="450" r="3" class="node" id="N-312-2" />
+            <circle cx="1092" cy="990" r="3" class="node" id="INT-80-3" />
+            <circle cx="1092" cy="954" r="3" class="node" id="STAIR-E-A-3" />
+            <circle cx="1232" cy="955" r="3" class="node" id="STAIR-M-A-3" />
+            <circle cx="661" cy="639" r="3" class="node" id="INT-81-3" />
+            <circle cx="661" cy="426" r="3" class="node" id="INT-82-3" />
+            <circle cx="661" cy="990" r="3" class="node" id="STAIR-N-D-3" />
+            <circle cx="661" cy="1075" r="3" class="node" id="INT-84-3" />
+            <circle cx="661" cy="388" r="3" class="node" id="STAIR-N-A-3" />
+            <circle cx="527" cy="1069" r="3" class="node" id="L-304" />
+            <circle cx="527" cy="897" r="3" class="node" id="L-305" />
+            <circle cx="502" cy="898" r="3" class="node" id="L-306" />
+            <circle cx="502" cy="1055" r="3" class="node" id="L-303" />
+            <circle cx="336" cy="920" r="3" class="node" id="L-307" />
+            <circle cx="336" cy="1034" r="3" class="node" id="L-302" />
+            <circle cx="314" cy="1024" r="3" class="node" id="L-301" />
+            <circle cx="194" cy="836" r="3" class="node" id="L-309" />
+            <circle cx="1799" cy="700" r="3" class="node" id="INT-85-3" />
+            <circle cx="1799" cy="765" r="3" class="node" id="U-300-1" />
+            <circle cx="1799" cy="1134" r="3" class="node" id="INT-87-3" />
+            <circle cx="1799" cy="713" r="3" class="node" id="INT-88-3" />
+            <circle cx="1329" cy="666" r="3" class="node" id="N-327" />
+            <circle cx="1183" cy="731" r="3" class="node" id="STAIR-N-C-3" />
+            <circle cx="1734" cy="396" r="3" class="node" id="STAIR-N-B-3" />
+            <circle cx="2217" cy="647" r="3" class="node" id="US-LIBRARY-3" />
+            <circle cx="2217" cy="500" r="3" class="node" id="US-LIBRARY-4" />
+            <circle cx="2217" cy="487" r="3" class="node" id="STAIR-H-E-3" />
+            <circle cx="2217" cy="671" r="3" class="node" id="STAIR-H-D-3" />
+            <circle cx="1734" cy="481" r="3" class="node" id="INT-95-3" />
+            <circle cx="1734" cy="601" r="3" class="node" id="INT-96-3" />
+            <circle cx="1887" cy="647" r="3" class="node" id="INT-98-3" />
+            <circle cx="1887" cy="500" r="3" class="node" id="INT-99-3" />
+            <circle cx="1887" cy="481" r="3" class="node" id="INT-100-3" />
+            <circle cx="1887" cy="601" r="3" class="node" id="INT-101-3" />
+            <circle cx="1788" cy="481" r="3" class="node" id="US-LIBRARY-1" />
+            <circle cx="1788" cy="601" r="3" class="node" id="US-LIBRARY-2" />
+            <circle cx="1124" cy="957" r="3" class="node" id="M-BATHROOM-7" />
+            <circle cx="1124" cy="1012" r="3" class="node" id="W-BATHROOM-7" />
+            <circle cx="1183" cy="541" r="3" class="node" id="INT-102-3" />
+            <circle cx="1183" cy="568" r="3" class="node" id="INT-103-3" />
+            <circle cx="1142" cy="568" r="3" class="node" id="M-BATHROOM-6" />
+            <circle cx="1139" cy="541" r="3" class="node" id="W-BATHROOM-6" />
+            <circle cx="314" cy="1001" r="3" class="node" id="INT-104-3" />
+            <circle cx="295" cy="1001" r="3" class="node" id="STAIR-C-L-3" />
+            <circle cx="1695" cy="700" r="3" class="node" id="STAIR-H-F-3" />
+          </svg>
+        </div>
+      </div>
+      <a
+        class="carousel-control-prev"
+        href="#carouselExampleControls"
+        role="button"
+        data-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a
+        class="carousel-control-next"
+        href="#carouselExampleControls"
+        role="button"
+        data-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </div>
+  <script>
+    const connections = <%-JSON.stringify(connections)%>;
+    const multi_room = <%-JSON.stringify(multi_room)%>;
+  </script>
+  <script src="connections2.js"></script>
+</body>
+
+<%- include('partials/footer') -%>

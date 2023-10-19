@@ -11,9 +11,14 @@ router.get('/', function(request, response) {
     try {
         const u = request.session.passport.user
         let data = Maps.getAllRooms();
-        response.render("index", {
+        let connections = Maps.getAllConnections();
+        let multi_room = Maps.getAllMultiRooms();
+        console.log(data)
+        response.render("index2", {
             user: request.user,
             data: data,
+            connections: connections,
+            multi_room:multi_room,
             logged: true,
         });
     } catch {
