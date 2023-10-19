@@ -192,27 +192,34 @@ function toTextBased(path) {
       const node1 = document.getElementById(path[i - 2]);
       const node2 = document.getElementById(path[i - 1]);
       const node3 = document.getElementById(path[i]);
+      const node4 = document.getElementById(path[i - 3]);
+      console.log(node3.id.split("-")[0]);
       if (i == (path.length - 1)) {
           directions.push("You are at " + node3.id);
       }
+      if(node2.id.split("-")[0]=="STAIR"){
+          if(node1.id.split("-")[0]=="STAIR"){
+          if((node3.closest("svg").id.split("-")[2] - node4.closest("svg").id.split("-")[2]) > (0)){
+            directions.push("Go down the stairs " + Math.abs(node3.closest("svg").id.split("-")[2] - node4.closest("svg").id.split("-")[2]) + " flight(s)");
+          }
+          if((node3.closest("svg").id.split("-")[2] - node4.closest("svg").id.split("-")[2]) < (0)){
+            directions.push("Go up the stairs " + Math.abs(node3.closest("svg").id.split("-")[2] - node4.closest("svg").id.split("-")[2]) + " flight(s)");
+          }
+        }
+      }else{
       if (((Math.abs(node1.cx.baseVal.value - node2.cx.baseVal.value)) < (Math.abs(node1.cy.baseVal.value - node2.cy.baseVal.value))) && ((Math.abs(node2.cx.baseVal.value - node3.cx.baseVal.value)) > (Math.abs(node2.cy.baseVal.value - node3.cy.baseVal.value)))) {
           if ((node2.cx.baseVal.value > node3.cx.baseVal.value) && (node1.cy.baseVal.value > node2.cy.baseVal.value)) {
-              console.log("here1");
               directions.push("Turn right by " + node2.id);
           }
           if ((node2.cx.baseVal.value > node3.cx.baseVal.value) && (node1.cy.baseVal.value < node2.cy.baseVal.value)) {
-              console.log("here1");
               directions.push("Turn left by " + node2.id);
           }
-
       }
       if (((Math.abs(node1.cx.baseVal.value - node2.cx.baseVal.value)) > (Math.abs(node1.cy.baseVal.value - node2.cy.baseVal.value))) && ((Math.abs(node2.cx.baseVal.value - node3.cx.baseVal.value)) < (Math.abs(node2.cy.baseVal.value - node3.cy.baseVal.value)))) {
           if ((node2.cy.baseVal.value > node3.cy.baseVal.value) && (node1.cx.baseVal.value > node2.cx.baseVal.value)) {
-              console.log("here1");
               directions.push("Turn left by " + node2.id);
           }
           if ((node2.cy.baseVal.value > node3.cy.baseVal.value) && (node1.cx.baseVal.value < node2.cx.baseVal.value)) {
-              console.log("here1");
               directions.push("Turn right by " + node2.id);
           }
       }
@@ -229,10 +236,11 @@ function toTextBased(path) {
               directions.push("Move west past " + node2.id);
           }
       }
-
+    }
       if (i == 2) {
           directions.push("You have arrived at " + node1.id)
       }
+      
   }
   console.log(directions);
   const textDiv = document.getElementById('text-directions')
