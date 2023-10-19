@@ -245,7 +245,8 @@ option {
 } */
 
 .data-svg{
-  border:5px solid black;
+  transform: translateY(-29rem) scale(0.4);
+  
 }
 .path_line{ 
   stroke-width: 10;
