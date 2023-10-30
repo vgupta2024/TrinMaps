@@ -15,15 +15,26 @@
       </div>
       <script>
         $(document).ready(function () {
-  // Get the data from the server or define it as needed
-  var data = [<%= JSON.stringify(data) %>];
-
-  // Initialize the autocomplete for both input elements
-  $("#from, #to").autocomplete({
-    source: data,
-  });
-});
+          // Get the data from the server or define it as needed
+          var data = <%= JSON.stringify(data) %>;
+          console.log("I am here");
+          console.log(data);
+        
+          // Cache the select elements
+          var $fromSelect = $('#from');
+          var $toSelect = $('#to');
+        
+          // Initialize the autocomplete feature for both selects
+          $fromSelect.autocomplete({
+            source: data,
+          });
+        
+          $toSelect.autocomplete({
+            source: data,
+          });
+        });
         </script>
+        
         
         <!--<div class="selection-div">
           <p class="tip">Start:</p>
