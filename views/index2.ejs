@@ -1,11 +1,31 @@
 <%- include('partials/header', {title:"TrinMaps", logged: true}) -%>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <body>
   <div class="form-div">
     <p>Enter your current locaiton and your desired destination.</p>
     <form action="/directions" method="POST">
-      <div style="display: flex">
-        <div class="selection-div">
+      <div class="selection-div">
+        <p class="tip">Start:</p>
+        <input type="text" id="from" class="selection" placeholder="Search for a room">
+      </div>
+      <div class="selection-div">
+        <p class="tip">End:</p>
+        <input type="text" id="to" class="selection" placeholder="Search for a room">
+      </div>
+      <script>
+        $(document).ready(function () {
+  // Get the data from the server or define it as needed
+  var data = [<%= JSON.stringify(data) %>];
+
+  // Initialize the autocomplete for both input elements
+  $("#from, #to").autocomplete({
+    source: data,
+  });
+});
+        </script>
+        
+        <!--<div class="selection-div">
           <p class="tip">Start:</p>
           <select class="selection" id="from">
             <% for(let room of data){ %>
@@ -20,7 +40,7 @@
             <% for(let room of data){ %>
             <option><%=room%></option>
             <%}%>
-          </select>
+          </select> -->
         </div>
       </div>
       <div class="center">
