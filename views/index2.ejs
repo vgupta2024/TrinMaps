@@ -1,6 +1,8 @@
-<%- include('partials/header', {title:"TrinMaps", logged: true}) -%>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<%- include('partials/header', {title:"TrinMaps", logged: true}, {data:data}) -%>
+
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
 <body>
   <div class="form-div">
     <p>Enter your current locaiton and your desired destination.</p>
@@ -13,27 +15,22 @@
         <p class="tip">End:</p>
         <input type="text" id="to" class="selection" placeholder="Search for a room">
       </div>
+      
       <script>
+        
         $(document).ready(function () {
-          // Get the data from the server or define it as needed
-          var data = <%= JSON.stringify(data) %>;
-          console.log("I am here");
-          console.log(data);
-        
-          // Cache the select elements
-          var $fromSelect = $('#from');
-          var $toSelect = $('#to');
-        
-          // Initialize the autocomplete feature for both selects
-          $fromSelect.autocomplete({
-            source: data,
-          });
-        
-          $toSelect.autocomplete({
-            source: data,
-          });
-        });
-        </script>
+      var $fromSelect = $('#from');
+      var $toSelect = $('#to');
+
+      $fromSelect.autocomplete({
+        source: <%-JSON.stringify(data)%>,
+      });
+
+      $toSelect.autocomplete({
+        source: <%-JSON.stringify(data)%>,
+      });
+  });
+      </script>
         
         
         <!--<div class="selection-div">

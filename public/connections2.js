@@ -133,7 +133,7 @@ function showSolution(solution){
       const n1 = document.getElementById(solution[i])
       const n2 = document.getElementById(solution[i - 1])
       if(!(solution[i].split('-')[0] === "STAIR" && solution[i-1].split('-')[0] === "STAIR")){
-        addLine(n1.cx.baseVal.value, n1.cy.baseVal.value, n2.cx.baseVal.value, n2.cy.baseVal.value,n1.closest("svg").getAttribute('id'))
+        addLine(n1.cx.baseVal.value, n1.cy.baseVal.value, n2.cx.baseVal.value, n2.cy.baseVal.value,n1.closest("svg").getAttribute('id'), solution)
       }
   }
 }
@@ -201,8 +201,9 @@ function clearYouAreHere() {
   })
 }
 
-function addLine(x1, y1, x2, y2, floor) {
+function addLine(x1, y1, x2, y2, floor, solution) {
   var newLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  newLine.href = toTextBased(solution);
   newLine.setAttribute('id', 'line2');
   newLine.setAttribute('x1', x1);
   newLine.setAttribute('y1', y1);
