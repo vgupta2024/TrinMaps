@@ -3,8 +3,6 @@ router = express.Router();
 const fs = require('fs');
 const Maps = require('../models/maps_model')
 
-
-
 router.get('/', function(request, response) {
     response.status(200);
     response.setHeader('Content-Type', 'text/html')
@@ -13,7 +11,6 @@ router.get('/', function(request, response) {
         let data = Maps.getAllRooms();
         let connections = Maps.getAllConnections();
         let multi_room = Maps.getAllMultiRooms();
-        console.log(data)
         response.render("index2", {
             user: request.user,
             data: data,
@@ -27,8 +24,8 @@ router.get('/', function(request, response) {
             logged: false,
         });
     }
-
 });
+
 router.get('/d', (req,res)=>{
     console.log('h')
     res.status(200);
@@ -44,7 +41,16 @@ router.get('/d', (req, res) => {
     res.render('structure')
 })
 
+router.get('/alg', (req, res) => {
 
+    console.log('h')
+    res.status(200);
+    let connections = Maps.getAllConnections();
+    res.setHeader('Content-Type', 'text/html')
+    res.render('algs', {
+        connections: connections
+    })
+})
 
 
 router.get('/login', function(request, response) {
@@ -54,6 +60,5 @@ router.get('/login', function(request, response) {
         user: request.user
     });
 });
-
 
 module.exports = router;

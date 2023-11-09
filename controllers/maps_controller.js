@@ -16,7 +16,7 @@ function loggedIn(request, response, next) {
 
 
 router.post('/news', function(request, response) {
-
+    
 });
 
 

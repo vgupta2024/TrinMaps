@@ -33,4 +33,3 @@ app.listen(port, function() {
   console.log('Server started at http://localhost:'+port+'.')
 });
 
-module.exports = router;
