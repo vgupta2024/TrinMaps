@@ -1,30 +1,3 @@
-const dfs = (startNodeID, endNodeID)=>{
-  const endNode = document.getElementById(endNodeID)
-  const startNode = document.getElementById(startNodeID)
-  const startX = startNode.cx.baseVal.value,
-      startY = startNode.cy.baseVal.value
-  const endX = endNode.cx.baseVal.value,
-      endY = endNode.cy.baseVal.value
-  let visited = new Set()
-  visited.add("START")
-  visited.add(startNodeID)
-  let path = [startNodeID]
-  let currentNodeID = startNodeID
-  while(true){
-    let neighbors = connections[currentNodeID]
-    let newNodeID = "START";
-    while(visited.has(newNodeID)){
-      newNodeID = neighbors[Math.floor(Math.random()*neighbors.length)];
-    }
-    path.push(newNodeID);
-    if(newNodeID == endNodeID){
-      break
-    }
-    visited.add(newNodeID)
-    currentNodeID = newNodeID
-  }
-  return path
-}
 const shortestPath = function(startNodeID, endNodeID) {
   console.time()
   const endNode = document.getElementById(endNodeID)
