@@ -86,18 +86,15 @@
       const prefix = input.value.trim();
       const suggestions = autocompleteTrie.search(prefix);
 
-      // Clear previous suggestions
       suggestionsList.innerHTML = "";
 
-      // Display new suggestions
       suggestions.forEach(suggestion => {
         const listItem = document.createElement("li");
         listItem.textContent = suggestion;
 
-        // Add click event listener to fill in the input field
         listItem.addEventListener("click", function () {
           input.value = suggestion;
-          suggestionsList.innerHTML = ""; // Clear suggestions after selecting one
+          suggestionsList.innerHTML = ""; 
         });
 
         suggestionsList.appendChild(listItem);
@@ -110,7 +107,6 @@
 
     fromInput.addEventListener("keyup", function (event) {
       if (event.key === "Backspace" && this.value === "") {
-        // Handle backspace key when the input is empty
         fromSuggestionsList.innerHTML = "";
       }
     });
@@ -121,7 +117,7 @@
 
     toInput.addEventListener("keyup", function (event) {
       if (event.key === "Backspace" && this.value === "") {
-        // Handle backspace key when the input is empty
+
         toSuggestionsList.innerHTML = "";
       }
     });
