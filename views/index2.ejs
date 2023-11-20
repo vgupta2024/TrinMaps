@@ -1,36 +1,175 @@
 <%- include('partials/header', {title:"TrinMaps", logged: true}, {data:data}) -%>
 
-  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
 <body>
   <div class="form-div">
-    <p>Enter your current locaiton and your desired destination.</p>
+    <p>Enter your current location and your desired destination.</p>
     <form action="/directions" method="POST">
       <div class="selection-div">
         <p class="tip">Start:</p>
         <input type="text" id="from" class="selection" placeholder="Search for a room">
+        <ul id="fromSuggestions"></ul>
       </div>
       <div class="selection-div">
         <p class="tip">End:</p>
         <input type="text" id="to" class="selection" placeholder="Search for a room">
+        <ul id="toSuggestions"></ul>
       </div>
-      
-      <script>
-        
-        $(document).ready(function () {
-      var $fromSelect = $('#from');
-      var $toSelect = $('#to');
+    </form>
+  </div>
 
-      $fromSelect.autocomplete({
-        source: <%-JSON.stringify(data)%>,
-      });
+</body>
 
-      $toSelect.autocomplete({
-        source: <%-JSON.stringify(data)%>,
+<script>
+  class TrieNode {
+    constructor() {
+      this.children = {};
+      this.isEndOfWord = false;
+    }
+  }
+
+  class Trie {
+    constructor() {
+      this.root = new TrieNode();
+    }
+
+    insert(word) {
+      let node = this.root;
+      for (let char of word) {
+        if (!node.children[char]) {
+          node.children[char] = new TrieNode();
+        }
+        node = node.children[char];
+      }
+      node.isEndOfWord = true;
+    }
+
+    search(prefix) {
+      let node = this.root;
+      for (let char of prefix) {
+        if (!node.children[char]) {
+          return [];
+        }
+        node = node.children[char];
+      }
+
+      const suggestions = [];
+      this._dfs(node, prefix, suggestions);
+      return suggestions;
+    }
+
+    _dfs(node, currentPrefix, suggestions) {
+      if (node.isEndOfWord) {
+        suggestions.push(currentPrefix);
+      }
+
+      for (let char in node.children) {
+        this._dfs(node.children[char], currentPrefix + char, suggestions);
+      }
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const data = <%-JSON.stringify(data)%>;
+    const autocompleteTrie = new Trie();
+
+    data.forEach(word => {
+      autocompleteTrie.insert(word);
+    });
+
+    const fromInput = document.getElementById("from");
+    const toInput = document.getElementById("to");
+    const fromSuggestionsList = document.getElementById("fromSuggestions");
+    const toSuggestionsList = document.getElementById("toSuggestions");
+
+    function updateSuggestions(input, suggestionsList) {
+      const prefix = input.value.trim();
+      const suggestions = autocompleteTrie.search(prefix);
+
+      // Clear previous suggestions
+      suggestionsList.innerHTML = "";
+
+      // Display new suggestions
+      suggestions.forEach(suggestion => {
+        const listItem = document.createElement("li");
+        listItem.textContent = suggestion;
+
+        // Add click event listener to fill in the input field
+        listItem.addEventListener("click", function () {
+          input.value = suggestion;
+          suggestionsList.innerHTML = ""; // Clear suggestions after selecting one
+        });
+
+        suggestionsList.appendChild(listItem);
       });
+    }
+
+    fromInput.addEventListener("input", function () {
+      updateSuggestions(this, fromSuggestionsList);
+    });
+
+    fromInput.addEventListener("keyup", function (event) {
+      if (event.key === "Backspace" && this.value === "") {
+        // Handle backspace key when the input is empty
+        fromSuggestionsList.innerHTML = "";
+      }
+    });
+
+    toInput.addEventListener("input", function () {
+      updateSuggestions(this, toSuggestionsList);
+    });
+
+    toInput.addEventListener("keyup", function (event) {
+      if (event.key === "Backspace" && this.value === "") {
+        // Handle backspace key when the input is empty
+        toSuggestionsList.innerHTML = "";
+      }
+    });
   });
-      </script>
+</script>
+
+<style>
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .selection-div {
+    margin-bottom: 20px;
+  }
+
+  .tip {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #ffffff;
+  }
+
+  .selection {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  li:hover {
+    background-color: #f0f0f0;
+    width: 100%;
+  }
+</style>
         
         
         <!--<div class="selection-div">
