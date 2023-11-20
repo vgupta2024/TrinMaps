@@ -1,5 +1,10 @@
+let rooms = Object.keys(connections);
 let time_chart = null;
 let visited_chart = null;
+let table = null;
+let floyd_visited,
+  floyd_time,
+  distanceMatrix = null;
 
 function parseUnique(array, set) {
   let unique = [];
@@ -8,6 +13,189 @@ function parseUnique(array, set) {
   }
   return unique;
 }
+const createFloydMatrix = function () {
+  const start = performance.now();
+  let count = 0;
+  let distanceMatrix = {};
+  for (let nodeID1 in connections) {
+    distanceMatrix[nodeID1] = {};
+    for (let nodeID2 in connections) {
+      distanceMatrix[nodeID1][nodeID2] = Infinity;
+    }
+  }
+
+  for (let nodeID in connections) {
+    distanceMatrix[nodeID][nodeID] = 0;
+  }
+
+  for (let nodeID1 in connections) {
+    for (let nodeID2 of connections[nodeID1]) {
+      const node = document.getElementById(nodeID2);
+      const node1 = document.getElementById(nodeID1);
+      const weight =
+        Math.abs(node1.cx.baseVal.value - node.cx.baseVal.value) +
+        Math.abs(node1.cy.baseVal.value - node.cy.baseVal.value);
+
+      distanceMatrix[nodeID1][nodeID2] = weight;
+    }
+  }
+
+  for (let k in connections) {
+    for (let i in connections) {
+      for (let j in connections) {
+        count++;
+        const ikjSum = distanceMatrix[i][k] + distanceMatrix[k][j];
+        if (ikjSum < distanceMatrix[i][j]) {
+          distanceMatrix[i][j] = ikjSum;
+        }
+      }
+    }
+  }
+  const end = performance.now();
+  return [count, end - start, distanceMatrix];
+};
+const floydNoMatrix = async function (startNodeID, endNodeID) {
+  let path = [startNodeID];
+  let current_node = startNodeID;
+  let count = 1;
+  while (current_node !== endNodeID) {
+    let nextNodeID = null;
+    let minDistance = Infinity;
+    count++;
+    for (let neighborID of connections[current_node]) {
+      if (distanceMatrix[neighborID][endNodeID] < minDistance) {
+        minDistance = distanceMatrix[neighborID][endNodeID];
+        nextNodeID = neighborID;
+      }
+    }
+    if (nextNodeID === null) {
+      return [];
+    }
+    path.push(nextNodeID);
+    current_node = nextNodeID;
+  }
+  return {
+    path: path,
+    visited: count,
+  };
+};
+const floydWarshall = async function (startNodeID, endNodeID) {
+  let distanceMatrix = {};
+  let count = 0;
+  const start = performance.now();
+  for (let nodeID1 in connections) {
+    distanceMatrix[nodeID1] = {};
+    for (let nodeID2 in connections) {
+      distanceMatrix[nodeID1][nodeID2] = Infinity;
+    }
+  }
+
+  for (let nodeID in connections) {
+    distanceMatrix[nodeID][nodeID] = 0;
+  }
+
+  for (let nodeID1 in connections) {
+    for (let nodeID2 of connections[nodeID1]) {
+      const node = document.getElementById(nodeID2);
+      const weight =
+        Math.abs(
+          document.getElementById(nodeID1).cx.baseVal.value -
+            node.cx.baseVal.value
+        ) +
+        Math.abs(
+          document.getElementById(nodeID1).cy.baseVal.value -
+            node.cy.baseVal.value
+        );
+
+      distanceMatrix[nodeID1][nodeID2] = weight;
+    }
+  }
+
+  for (let k in connections) {
+    for (let i in connections) {
+      for (let j in connections) {
+        if (
+          distanceMatrix[i][k] + distanceMatrix[k][j] <
+          distanceMatrix[i][j]
+        ) {
+          distanceMatrix[i][j] = distanceMatrix[i][k] + distanceMatrix[k][j];
+        }
+      }
+    }
+  }
+  const end = performance.now();
+  let path = [startNodeID];
+  while (startNodeID !== endNodeID) {
+    let nextNodeID = null;
+    let minDistance = Infinity;
+    for (let neighborID of connections[startNodeID]) {
+      if (distanceMatrix[neighborID][endNodeID] < minDistance) {
+        minDistance = distanceMatrix[neighborID][endNodeID];
+        nextNodeID = neighborID;
+      }
+    }
+    if (nextNodeID === null) {
+      console.log("No path found");
+      return [];
+    }
+    path.push(nextNodeID);
+    startNodeID = nextNodeID;
+  }
+
+  return {
+    path: path,
+    visited: 10000,
+  };
+};
+const bellmanFord = async function (startNodeID, endNodeID) {
+  if (startNodeID == endNodeID) {
+    return { path: [startNodeID, endNodeID], visited: 0 };
+  }
+  let count = 0;
+  let node_data = {};
+  let update = true;
+  for (const nodeID in connections) {
+    node_data[nodeID] = {
+      distance: Infinity,
+      previous: null,
+    };
+  }
+  node_data[startNodeID].distance = 0;
+
+  for (let i = 0; i < Object.keys(connections).length - 1 && update; i++) {
+    update = false;
+    for (const sourceNodeID in connections) {
+      count++;
+      for (const targetNodeID of connections[sourceNodeID]) {
+        const sourceNode = document.getElementById(sourceNodeID);
+        const targetNode = document.getElementById(targetNodeID);
+
+        const weight =
+          Math.abs(sourceNode.cx.baseVal.value - targetNode.cx.baseVal.value) +
+          Math.abs(sourceNode.cy.baseVal.value - targetNode.cy.baseVal.value);
+
+        const newDistance = node_data[sourceNodeID].distance + weight;
+
+        if (newDistance < node_data[targetNodeID].distance) {
+          node_data[targetNodeID].distance = newDistance;
+          node_data[targetNodeID].previous = sourceNodeID;
+          update = true;
+        }
+      }
+    }
+  }
+  let path = [];
+  let next = endNodeID;
+  while (next !== startNodeID) {
+    path.push(next);
+    next = node_data[next].previous;
+  }
+  path.push(next);
+  return {
+    path: path,
+    visited: count,
+  };
+};
 const dfs = async (startNodeID, endNodeID) => {
   let visited = new Set();
   visited.add("START");
@@ -64,7 +252,6 @@ async function bfs(startNode, endNode) {
   const visited = {};
   const queue = [[startNode, [startNode]]];
   visited[startNode] = true;
-
   while (queue.length > 0) {
     const [currentNode, path] = queue.shift();
 
@@ -74,7 +261,6 @@ async function bfs(startNode, endNode) {
         visited: Object.keys(visited).length,
       };
     }
-
     for (const neighbor of connections[currentNode] || []) {
       if (!visited[neighbor]) {
         visited[neighbor] = true;
@@ -82,7 +268,6 @@ async function bfs(startNode, endNode) {
       }
     }
   }
-
   return {
     path: null,
     visited: null,
@@ -198,17 +383,17 @@ async function dijkstra(startNode, endNode) {
   let distances = {};
   let predecessors = {};
   let visited = new Set();
-  let queue = [startNode]
+  let queue = [startNode];
   distances[startNode] = 0;
-  predecessors[startNode] = null
+  predecessors[startNode] = null;
   while (queue.length) {
-    const currentNode = queue.pop()
+    const currentNode = queue.pop();
     if (currentNode === endNode) {
       break;
     }
     visited.add(currentNode);
     for (const neighbor of connections[currentNode]) {
-      if(true) {
+      if (true) {
         const current_node_element = document.getElementById(currentNode);
         const neighbor_node_element = document.getElementById(neighbor);
         const edgeWeight =
@@ -225,12 +410,12 @@ async function dijkstra(startNode, endNode) {
           if (potentialDistance < distances[neighbor]) {
             distances[neighbor] = potentialDistance;
             predecessors[neighbor] = currentNode;
-            dij_insertSorted(queue, neighbor, distances)
+            dij_insertSorted(queue, neighbor, distances);
           }
         } else {
           distances[neighbor] = potentialDistance;
           predecessors[neighbor] = currentNode;
-          dij_insertSorted(queue, neighbor, distances)
+          dij_insertSorted(queue, neighbor, distances);
         }
       }
     }
@@ -238,8 +423,8 @@ async function dijkstra(startNode, endNode) {
   const path = [];
   let node = endNode;
   while (node !== null) {
-    path.push(node)
-    node = predecessors[node]
+    path.push(node);
+    node = predecessors[node];
   }
   return {
     path: path,
@@ -295,16 +480,16 @@ function createTimeChart(data) {
         x: {
           title: {
             display: true,
-            text: "Manhattan Distance Between Start and End (units)",
+            text: "Shortest Path Length (nodes)",
           },
           align: "center",
         },
         y: {
-          // max:3,
           title: {
             display: true,
             text: "Execution Time (ms)",
           },
+          min:0,
           align: "center",
           ticks: {
             callback: function (value, index, values) {
@@ -314,7 +499,7 @@ function createTimeChart(data) {
         },
       },
       plugins: {
-        colors:{
+        colors: {
           enabled: true,
         },
         decimation: {
@@ -325,7 +510,7 @@ function createTimeChart(data) {
         },
         title: {
           display: true,
-          text: "Execution Time vs. Manhattan Distance Between Start and End",
+          text: "Execution Time vs. Shortest Path Length",
         },
       },
     },
@@ -341,7 +526,7 @@ function createVisitedChart(data) {
         x: {
           title: {
             display: true,
-            text: "Manhattan Distance Between Start and End (units)",
+            text: "Shortest Path Length (nodes)",
           },
           align: "center",
         },
@@ -359,13 +544,19 @@ function createVisitedChart(data) {
         },
         title: {
           display: true,
-          text: "Visited Nodes vs. Manhattan Distance Between Start and End",
+          text: "Visited Nodes vs. Shortest Path Length",
         },
       },
     },
   });
 }
 async function runTest() {
+  document.getElementById("startScreen").classList.add("noSpace");
+  let floyd_test = document.getElementById("floyd_test").checked;
+  let bell_test = document.getElementById("bell_test").checked;
+  if (floyd_test) {
+    [floyd_visited, floyd_time, distanceMatrix] = await createFloydMatrix();
+  }
   const count = getCount();
   let testCombos = [];
 
@@ -375,819 +566,222 @@ async function runTest() {
       rooms[Math.floor(Math.random() * rooms.length)],
     ]);
   }
+  let algs = [
+    {
+      name: "A*",
+      code: "ast",
+      func: a_star,
+      avg: {
+        path: 0,
+        time: 0,
+        dist: 0,
+        vino: 0,
+      },
+      time: {
+        data: [],
+        label: "A*",
+      },
+      complexity: "O((V+E)*log(V))",
+      visited: {
+        data: [],
+        label: "A*",
+      },
+    },
+    {
+      name: "Dijkstra's",
+      code: "dij",
+      func: dijkstra,
+      avg: {
+        path: 0,
+        time: 0,
+        dist: 0,
+        vino: 0,
+      },
+      time: {
+        data: [],
+        label: "Dijkstra's",
+      },
+      complexity: "Elog(V)",
+      visited: {
+        data: [],
+        label: "Dijkstra's",
+      },
+    },
+    {
+      name: "Bellman Ford",
+      code: "bel",
+      func: bellmanFord,
+      avg: {
+        path: 0,
+        time: 0,
+        dist: 0,
+        vino: 0,
+      },
+      time: {
+        data: [],
+        label: "Bellman Ford",
+      },
+      visited: {
+        data: [],
+        label: "Bellman Ford",
+      },
+    },
+    {
+      name: "Floyd Warshall",
+      code: "flo",
+      func: floydNoMatrix,
+      avg: {
+        path: 0,
+        time: 0,
+        dist: 0,
+        vino: 0,
+      },
+      time: {
+        data: [],
+        label: "Floyd Warshall",
+      },
+      visited: {
+        data: [],
+        label: "Floyd Warshall",
+      },
+    },
+    {
+      name: "Depth First Search",
+      code: "dfs",
+      func: dfs,
+      avg: {
+        path: 0,
+        time: 0,
+        dist: 0,
+        vino: 0,
+      },
+      time: {
+        data: [],
+        label: "Depth First Search",
+      },
+      visited: {
+        data: [],
+        label: "Depth First Search",
+      },
+    },
+    {
+      name: "Breadth First Search",
+      code: "bfs",
+      func: bfs,
+      avg: {
+        path: 0,
+        time: 0,
+        dist: 0,
+        vino: 0,
+      },
+      time: {
+        data: [],
+        label: "Breadth First Search",
+      },
+      visited: {
+        data: [],
+        label: "Breadth First Search",
+      },
+    },
+  ];
 
-  let dij_time_dataset = {
-    data: [],
-    label: "Dijkstra's",
-  };
-  let ast_time_dataset = {
-    data: [],
-    label: "A*",
-  };
-  let dfs_time_dataset = {
-    data: [],
-    label: "Depth First Search",
-  };
-  let bfs_time_dataset = {
-    data: [],
-    label: "Breadth First Search",
-  };
-  let dij_visited_dataset = {
-    data: [],
-    label: "Dijkstra's",
-  };
-  let ast_visited_dataset = {
-    data: [],
-    label: "A*",
-  };
-  let dfs_visited_dataset = {
-    data: [],
-    label: "Depth First Search",
-  };
-  let bfs_visited_dataset = {
-    data: [],
-    label: "Breadth First Search",
-  };
-
-  let dij_path_avg = 0;
-  let dij_dist_avg = 0;
-  let dij_time_avg = 0;
-  let dij_vino_avg = 0;
-
-  let ast_path_avg = 0;
-  let ast_dist_avg = 0;
-  let ast_time_avg = 0;
-  let ast_vino_avg = 0;
-
-  let dfs_path_avg = 0;
-  let dfs_dist_avg = 0;
-  let dfs_time_avg = 0;
-  let dfs_vino_avg = 0;
-
-  let bfs_path_avg = 0;
-  let bfs_dist_avg = 0;
-  let bfs_time_avg = 0;
-  let bfs_vino_avg = 0;
-
-  for (const combo of testCombos) {
-    const manhattan_distance =
-      Math.abs(
-        document.getElementById(combo[0]).cx.baseVal.value -
-          document.getElementById(combo[1]).cx.baseVal.value
-      ) +
-      Math.abs(
-        document.getElementById(combo[0]).cy.baseVal.value -
-          document.getElementById(combo[1]).cy.baseVal.value
-      );
-    // const sol = await a_star(combo[0], combo[1])
-    // const manhattan_distance =sol.path.length
-    const dij_startTime = performance.now();
-    const dijkstra_result = await dijkstra(combo[0], combo[1]);
-    const dij_endTime = performance.now();
-    const dij_solution = dijkstra_result.path;
-    dij_time_avg += dij_endTime - dij_startTime;
-    dij_path_avg += dij_solution.length;
-    dij_dist_avg += calculate_distance(dij_solution);
-    dij_vino_avg += dijkstra_result.visited;
-    dij_time_dataset.data.push({
-      x: manhattan_distance,
-      y: dij_endTime - dij_startTime,
-    });
-    dij_visited_dataset.data.push({
-      x: manhattan_distance,
-      y: dijkstra_result.visited,
-    });
-
-    const ast_startTime = performance.now();
-    const a_star_result = await a_star(combo[0], combo[1]);
-    const ast_endTime = performance.now();
-    const ast_solution = a_star_result.path;
-    ast_time_avg += ast_endTime - ast_startTime;
-    ast_path_avg += ast_solution.length;
-    ast_dist_avg += calculate_distance(ast_solution);
-    ast_vino_avg += a_star_result.visited;
-    ast_time_dataset.data.push({
-      x: manhattan_distance,
-      y: ast_endTime - ast_startTime,
-    });
-    ast_visited_dataset.data.push({
-      x: manhattan_distance,
-      y: a_star_result.visited,
-    });
-
-    const dfs_startTime = performance.now();
-    const dfs_result = await dfs(combo[0], combo[1]);
-    const dfs_endTime = performance.now();
-    const dfs_solution = dfs_result.path;
-    dfs_time_avg += dfs_endTime - dfs_startTime;
-    dfs_path_avg += dfs_solution.length;
-    dfs_dist_avg += calculate_distance(dfs_solution);
-    dfs_vino_avg += dfs_result.visited;
-    dfs_time_dataset.data.push({
-      x: manhattan_distance,
-      y: dfs_endTime - dfs_startTime,
-    });
-    dfs_visited_dataset.data.push({
-      x: manhattan_distance,
-      y: dfs_result.visited,
-    });
-
-    const bfs_startTime = performance.now();
-    const bfs_result = await bfs(combo[0], combo[1]);
-    const bfs_endTime = performance.now();
-    const bfs_solution = bfs_result.path;
-    bfs_time_avg += bfs_endTime - bfs_startTime;
-    bfs_path_avg += bfs_solution.length;
-    bfs_dist_avg += calculate_distance(bfs_solution);
-    bfs_vino_avg += bfs_result.visited;
-    bfs_time_dataset.data.push({
-      x: manhattan_distance,
-      y: bfs_endTime - bfs_startTime,
-    });
-    bfs_visited_dataset.data.push({
-      x: manhattan_distance,
-      y: bfs_result.visited,
-    });
+  if (!floyd_test && !bell_test) {
+    algs.splice(2, 2);
+  } else if (!floyd_test) {
+    algs.splice(3, 1);
+  } else if (!bell_test) {
+    algs.splice(2, 1);
   }
 
-  dij_path_avg = Math.round((dij_path_avg * 1000) / count) / 1000;
-  dij_dist_avg = Math.round((dij_dist_avg * 1000) / count) / 1000;
-  dij_time_avg = Math.round((dij_time_avg * 1000) / count) / 1000;
-  dij_vino_avg = Math.round((dij_vino_avg * 1000) / count) / 1000;
-  let dij_viti_avg = Math.round((dij_time_avg * 1000) / dij_vino_avg) / 1000;
-
-  ast_path_avg = Math.round((ast_path_avg * 1000) / count) / 1000;
-  ast_dist_avg = Math.round((ast_dist_avg * 1000) / count) / 1000;
-  ast_time_avg = Math.round((ast_time_avg * 1000) / count) / 1000;
-  ast_vino_avg = Math.round((ast_vino_avg * 1000) / count) / 1000;
-  let ast_viti_avg = Math.round((ast_time_avg * 1000) / ast_vino_avg) / 1000;
-
-  dfs_path_avg = Math.round((dfs_path_avg * 1000) / count) / 1000;
-  dfs_dist_avg = Math.round((dfs_dist_avg * 1000) / count) / 1000;
-  dfs_time_avg = Math.round((dfs_time_avg * 1000) / count) / 1000;
-  dfs_vino_avg = Math.round((dfs_vino_avg * 1000) / count) / 1000;
-  let dfs_viti_avg = Math.round((dfs_time_avg * 1000) / dfs_vino_avg) / 1000;
-
-  bfs_path_avg = Math.round((bfs_path_avg * 1000) / count) / 1000;
-  bfs_dist_avg = Math.round((bfs_dist_avg * 1000) / count) / 1000;
-  bfs_time_avg = Math.round((bfs_time_avg * 1000) / count) / 1000;
-  bfs_vino_avg = Math.round((bfs_vino_avg * 1000) / count) / 1000;
-  let bfs_viti_avg = Math.round((bfs_time_avg * 1000) / bfs_vino_avg) / 1000;
-
-  const dij_path_element = document.getElementById("dij_path");
-  const dij_dist_element = document.getElementById("dij_dist");
-  const dij_time_element = document.getElementById("dij_time");
-  const dij_vino_element = document.getElementById("dij_vino");
-  const dij_viti_element = document.getElementById("dij_viti");
-
-  const ast_path_element = document.getElementById("ast_path");
-  const ast_dist_element = document.getElementById("ast_dist");
-  const ast_time_element = document.getElementById("ast_time");
-  const ast_vino_element = document.getElementById("ast_vino");
-  const ast_viti_element = document.getElementById("ast_viti");
-
-  const dfs_path_element = document.getElementById("dfs_path");
-  const dfs_dist_element = document.getElementById("dfs_dist");
-  const dfs_time_element = document.getElementById("dfs_time");
-  const dfs_vino_element = document.getElementById("dfs_vino");
-  const dfs_viti_element = document.getElementById("dfs_viti");
-
-  const bfs_path_element = document.getElementById("bfs_path");
-  const bfs_dist_element = document.getElementById("bfs_dist");
-  const bfs_time_element = document.getElementById("bfs_time");
-  const bfs_vino_element = document.getElementById("bfs_vino");
-  const bfs_viti_element = document.getElementById("bfs_viti");
-
-  dij_path_element.innerHTML = dij_path_avg;
-  dij_dist_element.innerHTML = dij_dist_avg;
-  dij_time_element.innerHTML = dij_time_avg;
-  dij_vino_element.innerHTML = dij_vino_avg;
-  dij_viti_element.innerHTML = dij_viti_avg;
-
-  ast_path_element.innerHTML = ast_path_avg;
-  ast_dist_element.innerHTML = ast_dist_avg;
-  ast_time_element.innerHTML = ast_time_avg;
-  ast_vino_element.innerHTML = ast_vino_avg;
-  ast_viti_element.innerHTML = ast_viti_avg;
-
-  dfs_path_element.innerHTML = dfs_path_avg;
-  dfs_dist_element.innerHTML = dfs_dist_avg;
-  dfs_time_element.innerHTML = dfs_time_avg;
-  dfs_vino_element.innerHTML = dfs_vino_avg;
-  dfs_viti_element.innerHTML = dfs_viti_avg;
-
-  bfs_path_element.innerHTML = bfs_path_avg;
-  bfs_dist_element.innerHTML = bfs_dist_avg;
-  bfs_time_element.innerHTML = bfs_time_avg;
-  bfs_vino_element.innerHTML = bfs_vino_avg;
-  bfs_viti_element.innerHTML = bfs_viti_avg;
+  for (const combo of testCombos) {
+    // const manhattan_distance =
+    //   Math.abs(
+    //     document.getElementById(combo[0]).cx.baseVal.value -
+    //       document.getElementById(combo[1]).cx.baseVal.value
+    //   ) +
+    //   Math.abs(
+    //     document.getElementById(combo[0]).cy.baseVal.value -
+    //       document.getElementById(combo[1]).cy.baseVal.value
+    //   );
+    let manhattan_distance = await a_star(combo[0], combo[1]);
+    manhattan_distance = manhattan_distance.path.length;
+    for (const alg_data of algs) {
+      const startTime = performance.now();
+      const result = await alg_data["func"](combo[0], combo[1]);
+      const endTime = performance.now();
+      const solution = result.path;
+      alg_data.avg.time += endTime - startTime;
+      alg_data.avg.path += solution.length;
+      alg_data.avg.dist += calculate_distance(solution);
+      alg_data.avg.vino += result.visited;
+      alg_data.time.data.push({
+        x: manhattan_distance,
+        y: endTime - startTime,
+      });
+      alg_data.visited.data.push({
+        x: manhattan_distance,
+        y: result.visited,
+      });
+    }
+  }
+  let tableData = algs.map((alg_data) => {
+    return {
+      name: alg_data.name,
+      path: Math.round((alg_data.avg.path * 1000) / count) / 1000,
+      distance: Math.round((alg_data.avg.dist * 1000) / count) / 1000,
+      time: Math.round((alg_data.avg.time * 1000) / count) / 1000,
+      visited: Math.round((alg_data.avg.vino * 1000) / count) / 1000,
+      tpv:
+        Math.round(
+          ((Math.round((alg_data.avg.time * 1000) / count) / 1000) * 100000) /
+            (Math.round((alg_data.avg.vino * 1000) / count) / 1000)
+        ) / 100000,
+    };
+  });
+  table = new Tabulator("#myDataTable", {
+    data: tableData,
+    layout: "fitDataStretch",
+    columns: [
+      { title: "Algorithm Name", field: "name", width: 150 },
+      { title: "Avg. Path Length (nodes)", field: "path" },
+      { title: "Avg. Distance (units)", field: "distance" },
+      { title: "Avg. Time (ms)", field: "time" },
+      { title: "Avg. # of Visited Nodes", field: "visited" },
+      { title: "Avg. Time per Visited Node (ms)", field: "tpv" },
+    ],
+  });
+  
+  if (floyd_test) {
+    if (bell_test) {
+      tableData[3].time += ` + ${floyd_time}`;
+      tableData[3].visited += ` + ${floyd_visited}`;
+    } else {
+      tableData[2].time += ` + ${floyd_time}`;
+      tableData[2].visited += ` + ${floyd_visited}`;
+    }
+  }
 
   createTimeChart({
-    datasets: [
-      dij_time_dataset,
-      ast_time_dataset,
-      dfs_time_dataset,
-      bfs_time_dataset,
-    ],
+    datasets: algs.map((alg_data) => {
+      return alg_data.time;
+    }),
   });
   createVisitedChart({
-    datasets: [
-      dij_visited_dataset,
-      ast_visited_dataset,
-      dfs_visited_dataset,
-      bfs_visited_dataset,
-    ],
+    datasets: algs.map((alg_data) => {
+      return alg_data.visited;
+    }),
   });
+  document.getElementById("myDataTable").classList.remove("noSpace");
+  // document.getElementById("myGeneralTable").classList.remove("noSpace");
+  document.getElementById("timeChartDiv").classList.remove("noSpace");
+  document.getElementById("visitedChartDiv").classList.remove("noSpace");
 }
 
-let rooms = [
-  "A-101",
-  "A-102",
-  "A-104",
-  "A-200",
-  "A-201",
-  "A-202",
-  "A-203",
-  "A-204",
-  "ADMISSIONS",
-  "BERLIN-GARDEN",
-  "CAFETERIA-1",
-  "CAFETERIA-2",
-  "CAFETERIA-3",
-  "CAFETERIA-4",
-  "EXIT-101",
-  "EXIT-ANNEX",
-  "EXIT-HM",
-  "EXIT-KITCHEN",
-  "EXIT-LINK",
-  "EXIT-LS",
-  "EXIT-MS",
-  "EXIT-STAIR-N-A",
-  "EXIT-STAIR-N-B",
-  "EXIT-US-EAST",
-  "EXIT-US-WEST",
-  "HAWLEY-1",
-  "HAWLEY-2",
-  "HAWLEY-3",
-  "HEAD-CONF",
-  "HEAD-OFFICE",
-  "INT-0-2",
-  "INT-1-2",
-  "INT-10",
-  "INT-10-2",
-  "INT-10-3",
-  "INT-100",
-  "INT-100-2",
-  "INT-100-3",
-  "INT-101",
-  "INT-101-2",
-  "INT-101-3",
-  "INT-102",
-  "INT-102-2",
-  "INT-102-3",
-  "INT-103-2",
-  "INT-103-3",
-  "INT-104",
-  "INT-104-2",
-  "INT-104-3",
-  "INT-105",
-  "INT-105-2",
-  "INT-106",
-  "INT-106-2",
-  "INT-107",
-  "INT-107-2",
-  "INT-108",
-  "INT-108-2",
-  "INT-109",
-  "INT-109-2",
-  "INT-11-2",
-  "INT-110-2",
-  "INT-111",
-  "INT-111-2",
-  "INT-112-2",
-  "INT-113-2",
-  "INT-114-2",
-  "INT-115",
-  "INT-115-2",
-  "INT-116",
-  "INT-116-2",
-  "INT-117-2",
-  "INT-118-2",
-  "INT-119",
-  "INT-119-2",
-  "INT-12",
-  "INT-12-2",
-  "INT-12-3",
-  "INT-120",
-  "INT-120-2",
-  "INT-121",
-  "INT-121-2",
-  "INT-122",
-  "INT-122-2",
-  "INT-123",
-  "INT-123-2",
-  "INT-124",
-  "INT-124-2",
-  "INT-125-2",
-  "INT-126",
-  "INT-126-2",
-  "INT-127",
-  "INT-128-2",
-  "INT-129",
-  "INT-129-2",
-  "INT-13",
-  "INT-13-2",
-  "INT-13-3",
-  "INT-130",
-  "INT-130-2",
-  "INT-131",
-  "INT-131-2",
-  "INT-132",
-  "INT-132-2",
-  "INT-133-2",
-  "INT-134",
-  "INT-134-2",
-  "INT-135",
-  "INT-135-2",
-  "INT-137",
-  "INT-137-2",
-  "INT-138",
-  "INT-138-2",
-  "INT-139",
-  "INT-139-2",
-  "INT-14",
-  "INT-14-3",
-  "INT-140",
-  "INT-140-2",
-  "INT-141",
-  "INT-141-2",
-  "INT-142",
-  "INT-142-2",
-  "INT-143",
-  "INT-143-2",
-  "INT-144",
-  "INT-144-2",
-  "INT-146",
-  "INT-147",
-  "INT-147-2",
-  "INT-148",
-  "INT-148-2",
-  "INT-149",
-  "INT-15-2",
-  "INT-150",
-  "INT-150-2",
-  "INT-151",
-  "INT-151-2",
-  "INT-152",
-  "INT-152-2",
-  "INT-153",
-  "INT-153-2",
-  "INT-154-2",
-  "INT-155",
-  "INT-155-2",
-  "INT-156",
-  "INT-156-2",
-  "INT-157",
-  "INT-158",
-  "INT-158-2",
-  "INT-159",
-  "INT-159-2",
-  "INT-16-2",
-  "INT-160",
-  "INT-161",
-  "INT-162",
-  "INT-162-2",
-  "INT-163",
-  "INT-163-2",
-  "INT-164",
-  "INT-164-2",
-  "INT-165",
-  "INT-166",
-  "INT-167",
-  "INT-168",
-  "INT-169",
-  "INT-17-2",
-  "INT-170",
-  "INT-171",
-  "INT-172",
-  "INT-173",
-  "INT-174",
-  "INT-175",
-  "INT-176",
-  "INT-177",
-  "INT-178",
-  "INT-179",
-  "INT-18",
-  "INT-18-2",
-  "INT-18-3",
-  "INT-189",
-  "INT-19-2",
-  "INT-190",
-  "INT-192",
-  "INT-193",
-  "INT-194",
-  "INT-195",
-  "INT-196",
-  "INT-197",
-  "INT-198",
-  "INT-199",
-  "INT-2-2",
-  "INT-2-3",
-  "INT-2-4",
-  "INT-20-2",
-  "INT-202",
-  "INT-203",
-  "INT-21-2",
-  "INT-21-3",
-  "INT-22-2",
-  "INT-23-2",
-  "INT-23-3",
-  "INT-24-3",
-  "INT-25-3",
-  "INT-26",
-  "INT-26-2",
-  "INT-27",
-  "INT-27-2",
-  "INT-27-3",
-  "INT-29",
-  "INT-3-2",
-  "INT-3-3",
-  "INT-30-3",
-  "INT-31-3",
-  "INT-32",
-  "INT-33-3",
-  "INT-34",
-  "INT-34-2",
-  "INT-34-3",
-  "INT-35-2",
-  "INT-35-3",
-  "INT-36-3",
-  "INT-37-2",
-  "INT-38",
-  "INT-38-2",
-  "INT-38-3",
-  "INT-39-2",
-  "INT-39-3",
-  "INT-4",
-  "INT-4-2",
-  "INT-40-2",
-  "INT-40-3",
-  "INT-41-3",
-  "INT-42-3",
-  "INT-43",
-  "INT-43-2",
-  "INT-43-3",
-  "INT-44",
-  "INT-44-2",
-  "INT-44-3",
-  "INT-45",
-  "INT-45-2",
-  "INT-45-3",
-  "INT-46",
-  "INT-46-2",
-  "INT-46-3",
-  "INT-47",
-  "INT-47-2",
-  "INT-47-3",
-  "INT-48",
-  "INT-48-2",
-  "INT-48-3",
-  "INT-49",
-  "INT-49-2",
-  "INT-49-3",
-  "INT-5-2",
-  "INT-5-3",
-  "INT-5-4",
-  "INT-50",
-  "INT-50-3",
-  "INT-51",
-  "INT-51-3",
-  "INT-52",
-  "INT-52-2",
-  "INT-52-3",
-  "INT-53-2",
-  "INT-53-3",
-  "INT-54",
-  "INT-54-2",
-  "INT-54-3",
-  "INT-55",
-  "INT-55-2",
-  "INT-55-3",
-  "INT-56",
-  "INT-56-2",
-  "INT-56-3",
-  "INT-57-2",
-  "INT-58-2",
-  "INT-58-3",
-  "INT-59-2",
-  "INT-6-2",
-  "INT-6-3",
-  "INT-60-2",
-  "INT-60-3",
-  "INT-61-2",
-  "INT-62-2",
-  "INT-64-2",
-  "INT-65-2",
-  "INT-66-2",
-  "INT-66-3",
-  "INT-67-3",
-  "INT-68",
-  "INT-68-3",
-  "INT-69",
-  "INT-69-2",
-  "INT-69-3",
-  "INT-7",
-  "INT-70",
-  "INT-70-2",
-  "INT-71",
-  "INT-71-2",
-  "INT-71-3",
-  "INT-72",
-  "INT-72-2",
-  "INT-72-3",
-  "INT-73",
-  "INT-73-2",
-  "INT-73-3",
-  "INT-74",
-  "INT-74-2",
-  "INT-74-3",
-  "INT-75",
-  "INT-75-2",
-  "INT-75-3",
-  "INT-76",
-  "INT-76-2",
-  "INT-76-3",
-  "INT-77",
-  "INT-77-2",
-  "INT-79-2",
-  "INT-8-2",
-  "INT-8-3",
-  "INT-80",
-  "INT-80-3",
-  "INT-81-2",
-  "INT-81-3",
-  "INT-82",
-  "INT-82-2",
-  "INT-82-3",
-  "INT-83-2",
-  "INT-84-2",
-  "INT-84-3",
-  "INT-85",
-  "INT-85-2",
-  "INT-85-3",
-  "INT-86",
-  "INT-86-2",
-  "INT-87-2",
-  "INT-87-3",
-  "INT-88-2",
-  "INT-88-3",
-  "INT-89",
-  "INT-89-2",
-  "INT-9",
-  "INT-9-2",
-  "INT-90-2",
-  "INT-91-2",
-  "INT-92",
-  "INT-92-2",
-  "INT-93",
-  "INT-93-2",
-  "INT-94",
-  "INT-94-2",
-  "INT-95",
-  "INT-95-3",
-  "INT-96",
-  "INT-96-3",
-  "INT-98",
-  "INT-98-3",
-  "INT-99",
-  "INT-99-2",
-  "INT-99-3",
-  "KITCHEN-1",
-  "KITCHEN-2",
-  "L-101",
-  "L-102",
-  "L-103",
-  "L-104",
-  "L-105A",
-  "L-105B",
-  "L-201",
-  "L-202",
-  "L-203",
-  "L-204",
-  "L-205",
-  "L-206",
-  "L-301",
-  "L-302",
-  "L-303",
-  "L-304",
-  "L-305",
-  "L-306",
-  "L-307",
-  "L-308",
-  "L-309",
-  "LS-ASSISTANT",
-  "LS-PRINCIPAL",
-  "M-100",
-  "M-101",
-  "M-102",
-  "M-103",
-  "M-104",
-  "M-106",
-  "M-107",
-  "M-108",
-  "M-109",
-  "M-110",
-  "M-111",
-  "M-112",
-  "M-200",
-  "M-201",
-  "M-202",
-  "M-203",
-  "M-204",
-  "M-205",
-  "M-206",
-  "M-208",
-  "M-209",
-  "M-211",
-  "M-212",
-  "M-300-1",
-  "M-300-2",
-  "M-300-3",
-  "M-BATHROOM-1",
-  "M-BATHROOM-2",
-  "M-BATHROOM-3",
-  "M-BATHROOM-4",
-  "M-BATHROOM-5",
-  "M-BATHROOM-6",
-  "M-BATHROOM-7",
-  "MANUAL-INT-1",
-  "MANUAL-INT-2",
-  "MS-ASSISTANT",
-  "MS-PRINCIPAL",
-  "N-101",
-  "N-101A",
-  "N-200",
-  "N-201-1",
-  "N-201-2",
-  "N-203",
-  "N-207",
-  "N-208",
-  "N-209",
-  "N-210",
-  "N-211",
-  "N-212-1",
-  "N-212-2",
-  "N-213",
-  "N-215",
-  "N-301",
-  "N-302-1",
-  "N-302-2",
-  "N-304-1",
-  "N-304-2",
-  "N-305",
-  "N-306-1",
-  "N-306-2",
-  "N-307",
-  "N-307-1",
-  "N-308",
-  "N-310",
-  "N-312-1",
-  "N-312-2",
-  "N-313",
-  "N-314",
-  "N-315",
-  "N-316",
-  "N-317",
-  "N-320",
-  "N-321",
-  "N-322",
-  "N-323",
-  "N-324",
-  "N-325",
-  "N-326",
-  "N-327",
-  "N-329",
-  "N-330",
-  "NURSE-LS",
-  "NURSE-US",
-  "STAIR-C-L-1",
-  "STAIR-C-L-2",
-  "STAIR-C-L-3",
-  "STAIR-E-A-1",
-  "STAIR-E-A-2",
-  "STAIR-E-A-3",
-  "STAIR-E-B-1",
-  "STAIR-H-A-1",
-  "STAIR-H-B-1",
-  "STAIR-H-B-2",
-  "STAIR-H-C-1",
-  "STAIR-H-C-2",
-  "STAIR-H-D-1",
-  "STAIR-H-D-2",
-  "STAIR-H-D-3",
-  "STAIR-H-E-1",
-  "STAIR-H-E-2",
-  "STAIR-H-E-3",
-  "STAIR-H-F-1",
-  "STAIR-H-F-2",
-  "STAIR-H-F-3",
-  "STAIR-H-F-4",
-  "STAIR-H-G-1",
-  "STAIR-H-H-2",
-  "STAIR-L-A-1",
-  "STAIR-L-A-2",
-  "STAIR-M-A-1",
-  "STAIR-M-A-2",
-  "STAIR-M-A-3",
-  "STAIR-M-B-1",
-  "STAIR-M-B-2",
-  "STAIR-N-A-1",
-  "STAIR-N-A-2",
-  "STAIR-N-A-3",
-  "STAIR-N-A-4",
-  "STAIR-N-B-1",
-  "STAIR-N-B-2",
-  "STAIR-N-B-3",
-  "STAIR-N-B-4",
-  "STAIR-N-C-2",
-  "STAIR-N-C-3",
-  "STAIR-N-D-1",
-  "STAIR-N-D-2",
-  "STAIR-N-D-3",
-  "STAIR-N-D-4",
-  "TRASH-ROOM",
-  "TURF-1",
-  "TURF-2",
-  "TURF-3",
-  "TURF-4",
-  "U-101",
-  "U-102",
-  "U-103",
-  "U-104",
-  "U-105",
-  "U-106",
-  "U-107",
-  "U-108",
-  "U-108A",
-  "U-109",
-  "U-111",
-  "U-112",
-  "U-113",
-  "U-114",
-  "U-115",
-  "U-116",
-  "U-117",
-  "U-118",
-  "U-119",
-  "U-120",
-  "U-121",
-  "U-200",
-  "U-201",
-  "U-202",
-  "U-204",
-  "U-205",
-  "U-206",
-  "U-207",
-  "U-208",
-  "U-209",
-  "U-210",
-  "U-211",
-  "U-212",
-  "U-213",
-  "U-214-1",
-  "U-214-2",
-  "U-215",
-  "U-216",
-  "U-218",
-  "U-219",
-  "U-220",
-  "U-221",
-  "U-222",
-  "U-223",
-  "U-224",
-  "U-225",
-  "U-226",
-  "U-227",
-  "U-228",
-  "U-229",
-  "U-230",
-  "U-300-1",
-  "U-300-2",
-  "U-300-3",
-  "US-ASSISTANT-PRINCIPAL",
-  "US-COAT-ROOM",
-  "US-CONFERENCE-ROOM",
-  "US-DEAN-OF-STUDENT-LIFE",
-  "US-LIBRARY-1",
-  "US-LIBRARY-2",
-  "US-LIBRARY-3",
-  "US-LIBRARY-4",
-  "US-PRINCIPAL",
-  "US-SWAMP",
-  "W-BATHROOM-1",
-  "W-BATHROOM-2",
-  "W-BATHROOM-3",
-  "W-BATHROOM-4",
-  "W-BATHROOM-6",
-  "W-BATHROOM-7",
-];
+function testOptions() {
+  document.getElementById("test-options-div").classList.toggle("noSpace");
+  document.getElementById("test_options").innerHTML =
+    document.getElementById("test_options").innerHTML ===
+    "Show Advanced Test Options"
+      ? "Hide Advanced Test Options"
+      : "Show Advanced Test Options";
+}

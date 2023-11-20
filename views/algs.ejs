@@ -1,12 +1,106 @@
 <html>
   <style>
+    *{
+      padding:0;
+      margin:0;
+    }
     table, th, td{
       border: 1px solid black;
     }
+    #startScreen{
+      justify-content: center;
+      align-items: center;
+      width: 100vw;
+      height: 100vh;
+    }
+    #name-intro{
+      /* margin-top:40vh; */
+    }
+    .center{
+      display:flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .flex-col{
+      display:flex;
+      flex-direction: column;
+    }
+    .flex-row{
+      display:flex;
+      flex-direction: row;
+    }
+    .small-padding{
+      padding: .5rem;
+    }
+    .large-padding{
+      padding: 1rem;
+    }
+    .desc{
+      font-size: .75rem;
+      width: 50vw;
+    }
+    .noSpace{
+      display:none;
+    }
+    .side{
+      width:30vw;
+      margin: 0 10vw;
+    }
+    .alg-container{
+      margin: 10vh 5vw;
+    }
+    .alg-p{
+      font-size: 0.8rem
+    }
+    .alg-question{
+      font-size: 1.1rem;
+      font-weight:50;
+      text-decoration:underline;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+    .study-title{
+      font-size: 2rem
+    }
   </style>
-  <input type="text" value="10000" id="count"/>
-  <button id="run_test" onclick="runTest()">Run Tests</button>
-  <table>
+  <link href="https://unpkg.com/tabulator-tables@5.5.2/dist/css/tabulator.min.css" rel="stylesheet">
+  <style>
+    
+  </style>
+  <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.2/dist/js/tabulator.min.js"></script>
+  <div id="startScreen" class="flex-col">
+    <div id="name-intro" class="center flex-col small-padding">
+      <h1>Path Algorithms</h1>
+      <h4>By Matthew Chin</h4>
+    </div>
+    <div class="flex-row">
+      <label class="small-padding" for="count">Number of Trials: </label>
+      <input type="number" value="100" min="50" max="500" step="50" autocomplete="off" id="count"/>
+    </div>
+    <button id="run_test" onclick="runTest()">Run Tests</button>
+    <div id="test-options-div" class="noSpace large-padding flex-col center">
+      <h3>Include the Following Algorithms:</h3>
+      <div class="small-padding center flex-col">
+        <div class="small-padding flex-row">
+          <input type="checkbox" name="bell" id="bell_test"/>
+          <label class="" for="floyd">Bellman Ford</label>        
+        </div>
+        <p class="desc">The Bellman Ford algorithm takes ~10-20ms to execute per trial. Opting to include Bellman Ford in the test may increase the time required for the test.</p>
+      </div>
+      <div class="small-padding center flex-col">
+        <div class="flex-row">
+          <input type="checkbox" name="floyd" id="floyd_test"/>
+          <label class="" for="floyd">Floyd Warshall</label>
+        </div>
+        <p class="desc">The Floyd Warshall Algorithm requires an additional ~10-15 seconds to create the distance matrix that is used by the algorithm. Opting to include Floyd Warshall in the test may significantly increase the time required for the test and may cause the page to become unresponsive. Note: the algorithm is still running and the tab should remain open.</p>
+      </div>
+    </div>
+    <button id="test_options" onclick="testOptions()">Show Advanced Test Options</button>
+  </div>
+
+  <div class="noSpace" id="myDataTable"></div>
+  <!-- <table>
     <tr>
       <td>Algorithm Name</td>
       <td>Paths Length (nodes)</td>
@@ -32,6 +126,22 @@
       <td id="dij_viti">0</td>
     </tr>
     <tr>
+      <td>Bellman Ford</td>
+      <td id="bel_path">0</td>
+      <td id="bel_dist">0</td>
+      <td id="bel_time">0</td>
+      <td id="bel_vino">0</td>
+      <td id="bel_viti">0</td>
+    </tr>
+    <tr>
+      <td>Floyd Warshall</td>
+      <td id="flo_path">0</td>
+      <td id="flo_dist">0</td>
+      <td id="flo_time">0</td>
+      <td id="flo_vino">0</td>
+      <td id="flo_viti">0</td>
+    </tr>
+    <tr>
       <td>Depth First Search</td>
       <td id="dfs_path">0</td>
       <td id="dfs_dist">0</td>
@@ -47,13 +157,125 @@
       <td id="bfs_vino">0</td>
       <td id="bfs_viti">0</td>
     </tr>
-  </table>
-  <div>
+  </table> -->
+  <div id="timeChartDiv" class="noSpace">
     <canvas id="myTimeChart"></canvas>
   </div>  
-  <div>
+  <div id="visitedChartDiv" class="noSpace">
     <canvas id="myVisitedChart"></canvas>
-  </div>  
+  </div>
+  <div class="alg-container center flex-col">
+    <div>
+      <h3 class="alg-name study-title">What is the most efficient and feasible path algorithm for TrinMaps?</h3>
+    </div>
+    <div class="flex-row">
+      <div class="side">
+        <h5 class="alg-question">What is TrinMaps?</h5>
+        <p class="alg-p">TrinMaps is an application </p>
+      </div>
+      <div class="side">
+        <h5 class="alg-question">How was the algorithm determined?</h5>
+        <p class="alg-p">In this study, six algorithms, Depth First Search, Breadth First Search, Bellman Ford algorithm, Floyd Warshall algorithm, Dijkstra's algorithm, and A* search, were all analyzed based on their execution time, the distances of their paths, </p>
+      </div>
+    </div>
+  </div>
+  <div class="alg-container center flex-col">
+    <div>
+      <h3 class="alg-name">Depth First Search (DFS)</h3>
+    </div>
+    <div class="flex-row">
+      <div class="side">
+        <h5 class="alg-question">How does it work?</h5>
+        <p class="alg-p">Depth First Search is a graph transversal algorithm that finds a valid path between two nodes. It begins at the starting node and randomly picks a neighboring node, ensuring that this new node has not already been visited. If the new node is the desired end node, it will return the path, otherwise it will repeat the process and explore a random new neighboring node that has not been visited. If the algorithm reaches a dead end, it will backtrack and try again until it has reached the end node.</p>
+      </div>
+      <div class="side">
+        <h5 class="alg-question">Conclusion</h5>
+        <p class="alg-p">Because Depth First Search (DFS) conducts a random walk, it does not actually compute the shortest path. For the graph used by TrinMaps, the path computed by DFS is often considerably longer than the genuine shortest path—a difference which would only scale as the number of nodes and edges in the graph increases. However, for TrinMaps’ graph, DFS remains among the fastest path-finding algorithms that are included in this study, despite the fact that DFS visits more nodes on average. This is because DFS does fewer calculations per each node that it visits, resulting in a drastically lower time spent at each visited node.</p>
+      </div>
+    </div>
+  </div>
+  <div class="alg-container center flex-col">
+    <div>
+      <h3 class="alg-name">Breadth First Search (BFS)</h3>
+    </div>
+    <div class="flex-row">
+      <div class="side">
+        <h5 class="alg-question">How does it work?</h5>
+        <p class="alg-p">Breadth First Search begins at the starting node and expands outward, visiting every node that it neighbors and documenting its path in a queue. Subsequently, it will explore all the nodes that are two nodes away from the starting node and then three nodes away. The algorithm will continually increase the depth of its search until it reaches the final node, at which point it will return the path.</p>
+      </div>
+      <div class="side">
+        <h5 class="alg-question">Conclusion</h5>
+        <p class="alg-p">Breadth First Search (BFS), notably, does not account for edge weights between nodes. As a result, BFS computes the shortest path in terms of nodes, rather than physical distance. For the purposes of TrinMaps, the path that is calculated by BFS is often, but is not always, the one with the fewest physical turns. BFS is among the fastest algorithms, but notably visits considerably more nodes than the rest.</p>
+      </div>
+    </div>
+  </div>
+  <div class="alg-container center flex-col">
+    <div>
+      <h3 class="alg-name">Bellman Ford</h3>
+    </div>
+    <div class="flex-row">
+      <div class="side">
+        <h5 class="alg-question">How does it work?</h5>
+        <p class="alg-p">Bellman Ford initializes a dictionary for every node in the graph, assuming that it is inaccessible by another node and its distance from the starting node is infinite, except for the starting node itself, which has a distance of 0. For every node in the graph, it will evaluate every edge, replacing longer distances with shorter ones and documenting each node’s predecessor. It iterates through each node in the graph until it is completed or the distances can no longer be updated. When this is complete, the algorithm is guaranteed to have found the shortest path between the initial node and every other node in the graph. It reconstructs the shortest path by tracing the path backwards from the end node until it reaches the starting node.</p>
+      </div>
+      <div class="side">
+        <h5 class="alg-question">Conclusion</h5>
+        <p class="alg-p">The Bellman Ford Algorithm intends to find the shortest path from a single source node to every other node in the graph. Because TrinMaps only cares about the shortest path from one node to another, this test is designed accordingly. The Bellman Ford algorithm, as a result, executes an unnecessary amount of operations that contribute to its significant execution time. It reconstructs the shortest path by tracing the path backwards from the end node until it reaches the starting node.</p>
+      </div>
+    </div>
+  </div>
+  <div class="alg-container center flex-col">
+    <div>
+      <h3 class="alg-name">Floyd Warshall</h3>
+    </div>
+    <div class="flex-row">
+      <div class="side">
+        <h5 class="alg-question">How does it work?</h5>
+        <p class="alg-p">The Floyd Warshall algorithm initializes a distance matrix entering the edge weights between any nodes that share an edge. Otherwise, distances between nodes are set to infinity. It continually iterates, attempting to improve the distances by examining any intermediate nodes. This process continues until all nodes have been considered, resulting in a matrix that contains the shortest distances between every pair of nodes. Once the matrix has been computed, the algorithm constructs the shortest path from the start node. It examines all of the node’s neighbors, selecting the neighboring node that has the shortest distance to the end node according to the matrix. It continues this process until it reaches the end node.</p>
+      </div>
+      <div class="side">
+        <h5 class="alg-question">Conclusion</h5>
+        <p class="alg-p">The full Floyd Warshall Algorithm is by far, the slowest algorithm, simply because it relies on a matrix of distances from every node to every other node. Although memory was not considered in this study, the Floyd Warshall Algorithm requires O(V^2) memory, which is drastically larger than all of the other algorithms. While the distance matrix requires ~10-15 seconds to be created, the matrix contains every shortest path from every node to every other node and, therefore, only had to be created once. When that operation was completed, finding the shortest path between two nodes was near instantaneous and considerably faster than every other algorithm.</p>
+      </div>
+    </div>
+  </div>
+  <div class="alg-container center flex-col">
+    <div>
+      <h3 class="alg-name">Dijkstra's</h3>
+    </div>
+    <div class="flex-row">
+      <div class="side">
+        <h5 class="alg-question">How does it work?</h5>
+        <p class="alg-p">Dijkstra's algorithm initializes a priority queue that orders the nodes by their distances from the starting node. The distance of each node is set to infinity, except for the starting node’s distance, which is assigned to 0. The algorithm then selects the node with the smallest distance, explores its neighbors, documents each node’s previous node in a dictionary, and updates their distances to the sum of the distance of the previous node and the weight of the edge to reach the new node. It iterates until the algorithm reaches the end node. The algorithm then reconstructs the shortest path by tracing the path backwards from the end node until it reaches the starting node.</p>
+      </div>
+      <div class="side">
+        <h5 class="alg-question">Conclusion</h5>
+        <p class="alg-p">Dijkstra’s algorithm is an adaptation of Breadth First Search that accounts for edge weights. Similarly to its predecessor, Dijkstra’s algorithm is incredibly reliable, but this time computes the shortest path by physical distance. While it reaches the same conclusion as the A* search algorithm, it is noticeably slower than A* search.</p>
+      </div>
+    </div>
+  </div>
+  <div class="alg-container center flex-col">
+    <div>
+      <h3 class="alg-name">A* Search</h3>
+    </div>
+    <div class="flex-row">
+      <div class="side">
+        <h5 class="alg-question">How does it work?</h5>
+        <p class="alg-p">A* initializes a priority queue that orders the nodes by the sum of their known distance from the starting node and a heuristic estimate of the remaining distance to the goal. All initial distances from the starting node are set to infinity, except for the starting node itself, which is assigned to 0. The heuristic values are not calculated yet. A* then selects the node, which has the lowest summed distance and heuristic values, and explores its neighbors. As it explores, it updates the distance from the starting node to be the sum of the distance of the previous node and the weight of the edge to reach the new node. It also logs the predecessor in a dictionary and calculates the heuristic value based on a heuristic function that is unique to each application of the algorithm. In TrinMap’s case, the heuristic function computes the manhattan distance from the node to the end node. After the heuristic value is calculated, the neighbor is added to the priority queue and the algorithm continually repeats this process until the end node is reached. It, then, reconstructs the shortest path by tracing the path backward from the end node based on the dictionary containing each node’s predecessor.</p>
+      </div>
+      <div class="side">
+        <h5 class="alg-question">Conclusion</h5>
+        <p class="alg-p">The A* search algorithm is often considered an adaptation of Dijkstra’s algorithm, which is an adaptation of Breadth First Search. A* search achieves better performance by utilizing heuristics to inform its search, thus sacrificing more operations per visited node for less visited nodes. The performance of A* search is entirely dependent on the heuristic function used. For TrinMaps’ case, the heuristic is the manhattan distance from a node to the end node. Because a favorable heuristic function was used, A* search is the fastest algorithm that calculates the genuine shortest path.</p>
+      </div>
+    </div>
+  </div>
+  <div class="alg-container center flex-col">
+    <div>
+      <h3 class="alg-name">Conclusion</h3>
+    </div>
+    <p>TrinMaps employs the A* search algorithm to calculate the shortest path between two points in the school. Users of TrinMaps desire the shortest path in terms of physical distance. Therefore, TrinMaps does not use Depth First Search or Breadth First Search, despite the two algorithm’s potential for increased performance. The performance of the algorithm is TrinMap users’ next consideration. If performance is synonymous with an algorithm’s execution time, TrinMaps should theoretically employ an adaption of Floyd Warshall’s algorithm that has a distance matrix that is precalculated and is loaded with the page. Alternatively, TrinMaps could precalculate all the shortest paths from every node to every other node and instantaneously return the result to the user. However, both of these solutions are inflexible to the renovations of Trinity’s building and, also, require a significant amount of memory that may delay the page’s loading speed. As a result, TrinMaps opts for the next fastest solution that requires considerably less memory: A* search.</p>
+    </div>
+  </div>
   <div style="display:none;" class="center">
     <div id="carouselExampleControls" class="carousel slide">
       <div class="carousel-inner">
@@ -719,14 +941,4 @@
     const connections = <%-JSON.stringify(connections)%>;
   </script>
   <script type="text/javascript" src="algs-page.js"></script>
-  <h1>TODO:</h1>
-  <ul>
-    <li>Style this page</li>
-    <li>Add quantitative and interactive graphs</li>
-    <li>Add 1 or 2 more algs</li>
-    <li>Adapt all algs for matrix representation</li>
-    <li>Summarize results and algs on this page</li>
-    <li>Poster</li>
-
-  </ul>
 </html>
