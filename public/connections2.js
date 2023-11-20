@@ -1,3 +1,5 @@
+let lineIndex;
+
 const shortestPath = function(startNodeID, endNodeID) {
   console.time()
   const endNode = document.getElementById(endNodeID)
@@ -100,7 +102,7 @@ const shortestPath = function(startNodeID, endNodeID) {
 }
 
 function showSolution(solution){
-  removeAllLines()
+  removeAllLines();
   // addYouAreHere(endX, endY, endNode.closest("svg").getAttribute('id'))
   for (let i = 1; i < solution.length; i++) {
       const n1 = document.getElementById(solution[i])
@@ -152,6 +154,7 @@ function removeAllLines() {
   Array.from(document.getElementsByClassName('path_line')).forEach((el) => {
       el.remove()
   })
+  lineIndex = 0;
 }
 
 function addYouAreHere(x, y, floor) {
@@ -174,9 +177,44 @@ function clearYouAreHere() {
   })
 }
 
+function hoverText(line, solution){
+    let textBased = toTextBased(solution);
+    document.addEventListener("scroll", function() {
+        function showTextDirections(lineElement) {
+          const direction = textBased[lineIndex];
+          console.log("here");
+          if (direction) {
+            const tooltip = document.createElement('div');
+            tooltip.className = 'tooltip';
+            tooltip.textContent = direction;
+      
+            const rect = lineElement.getBoundingClientRect();
+            tooltip.style.top = rect.top - tooltip.offsetHeight + 'px';
+            tooltip.style.left = rect.left + (rect.width - tooltip.offsetWidth) / 2 + 'px';
+      
+            document.body.appendChild(tooltip);
+          }
+        }
+      
+        function hideTextDirections() {
+          const tooltips = document.querySelectorAll('.tooltip');
+          tooltips.forEach(tooltip => tooltip.remove());
+        }
+
+          line.addEventListener('mouseover', function() {
+            showTextDirections(line);
+          });
+      
+          line.addEventListener('mouseout', function() {
+            hideTextDirections();
+          });
+      });
+}
+
 function addLine(x1, y1, x2, y2, floor, solution) {
   var newLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-  newLine.href = toTextBased(solution);
+  hoverText(newLine, solution);
+  lineIndex++;
   newLine.setAttribute('id', 'line2');
   newLine.setAttribute('x1', x1);
   newLine.setAttribute('y1', y1);
