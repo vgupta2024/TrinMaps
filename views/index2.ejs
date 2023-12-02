@@ -1,174 +1,174 @@
 <%- include('partials/header', {title:"TrinMaps", logged: true}, {data:data}) -%>
 
 
-<body>
-  <div class="form-div">
-    <p>Enter your current location and your desired destination.</p>
-    <form action="/directions" method="POST">
-      <div class="selection-div">
-        <p class="tip">Start:</p>
-        <input type="text" id="from" class="selection" placeholder="Search for a room">
-        <ul id="fromSuggestions"></ul>
-      </div>
-      <div class="selection-div">
-        <p class="tip">End:</p>
-        <input type="text" id="to" class="selection" placeholder="Search for a room">
-        <ul id="toSuggestions"></ul>
-      </div>
-    </form>
-  </div>
+    <body>
+        <div class="form-div">
+            <p>Enter your current location and your desired destination.</p>
+            <form action="/directions" method="POST">
+                <div class="selection-div">
+                    <p class="tip">Start:</p>
+                    <input type="text" id="from" class="selection" placeholder="Search for a room">
+                    <ul id="fromSuggestions"></ul>
+                </div>
+                <div class="selection-div">
+                    <p class="tip">End:</p>
+                    <input type="text" id="to" class="selection" placeholder="Search for a room">
+                    <ul id="toSuggestions"></ul>
+                </div>
+            </form>
+        </div>
 
-</body>
+    </body>
 
-<script>
-  class TrieNode {
-    constructor() {
-      this.children = {};
-      this.isEndOfWord = false;
-    }
-  }
-
-  class Trie {
-    constructor() {
-      this.root = new TrieNode();
-    }
-
-    insert(word) {
-      let node = this.root;
-      for (let char of word) {
-        if (!node.children[char]) {
-          node.children[char] = new TrieNode();
+    <script>
+        class TrieNode {
+            constructor() {
+                this.children = {};
+                this.isEndOfWord = false;
+            }
         }
-        node = node.children[char];
-      }
-      node.isEndOfWord = true;
-    }
 
-    search(prefix) {
-      let node = this.root;
-      for (let char of prefix) {
-        if (!node.children[char]) {
-          return [];
+        class Trie {
+            constructor() {
+                this.root = new TrieNode();
+            }
+
+            insert(word) {
+                let node = this.root;
+                for (let char of word) {
+                    if (!node.children[char]) {
+                        node.children[char] = new TrieNode();
+                    }
+                    node = node.children[char];
+                }
+                node.isEndOfWord = true;
+            }
+
+            search(prefix) {
+                let node = this.root;
+                for (let char of prefix) {
+                    if (!node.children[char]) {
+                        return [];
+                    }
+                    node = node.children[char];
+                }
+
+                const suggestions = [];
+                this._dfs(node, prefix, suggestions);
+                return suggestions;
+            }
+
+            _dfs(node, currentPrefix, suggestions) {
+                if (node.isEndOfWord) {
+                    suggestions.push(currentPrefix);
+                }
+
+                for (let char in node.children) {
+                    this._dfs(node.children[char], currentPrefix + char, suggestions);
+                }
+            }
         }
-        node = node.children[char];
-      }
 
-      const suggestions = [];
-      this._dfs(node, prefix, suggestions);
-      return suggestions;
-    }
+        document.addEventListener("DOMContentLoaded", function() {
+            const data = <%-JSON.stringify(data)%>;
+            const autocompleteTrie = new Trie();
 
-    _dfs(node, currentPrefix, suggestions) {
-      if (node.isEndOfWord) {
-        suggestions.push(currentPrefix);
-      }
+            data.forEach(word => {
+                autocompleteTrie.insert(word);
+            });
 
-      for (let char in node.children) {
-        this._dfs(node.children[char], currentPrefix + char, suggestions);
-      }
-    }
-  }
+            const fromInput = document.getElementById("from");
+            const toInput = document.getElementById("to");
+            const fromSuggestionsList = document.getElementById("fromSuggestions");
+            const toSuggestionsList = document.getElementById("toSuggestions");
 
-  document.addEventListener("DOMContentLoaded", function () {
-    const data = <%-JSON.stringify(data)%>;
-    const autocompleteTrie = new Trie();
+            function updateSuggestions(input, suggestionsList) {
+                const prefix = input.value.trim();
+                const suggestions = autocompleteTrie.search(prefix);
 
-    data.forEach(word => {
-      autocompleteTrie.insert(word);
-    });
+                suggestionsList.innerHTML = "";
 
-    const fromInput = document.getElementById("from");
-    const toInput = document.getElementById("to");
-    const fromSuggestionsList = document.getElementById("fromSuggestions");
-    const toSuggestionsList = document.getElementById("toSuggestions");
+                suggestions.forEach(suggestion => {
+                    const listItem = document.createElement("li");
+                    listItem.textContent = suggestion;
 
-    function updateSuggestions(input, suggestionsList) {
-      const prefix = input.value.trim();
-      const suggestions = autocompleteTrie.search(prefix);
+                    listItem.addEventListener("click", function() {
+                        input.value = suggestion;
+                        suggestionsList.innerHTML = "";
+                    });
 
-      suggestionsList.innerHTML = "";
+                    suggestionsList.appendChild(listItem);
+                });
+            }
 
-      suggestions.forEach(suggestion => {
-        const listItem = document.createElement("li");
-        listItem.textContent = suggestion;
+            fromInput.addEventListener("input", function() {
+                updateSuggestions(this, fromSuggestionsList);
+            });
 
-        listItem.addEventListener("click", function () {
-          input.value = suggestion;
-          suggestionsList.innerHTML = ""; 
+            fromInput.addEventListener("keyup", function(event) {
+                if (event.key === "Backspace" && this.value === "") {
+                    fromSuggestionsList.innerHTML = "";
+                }
+            });
+
+            toInput.addEventListener("input", function() {
+                updateSuggestions(this, toSuggestionsList);
+            });
+
+            toInput.addEventListener("keyup", function(event) {
+                if (event.key === "Backspace" && this.value === "") {
+
+                    toSuggestionsList.innerHTML = "";
+                }
+            });
         });
+    </script>
 
-        suggestionsList.appendChild(listItem);
-      });
-    }
-
-    fromInput.addEventListener("input", function () {
-      updateSuggestions(this, fromSuggestionsList);
-    });
-
-    fromInput.addEventListener("keyup", function (event) {
-      if (event.key === "Backspace" && this.value === "") {
-        fromSuggestionsList.innerHTML = "";
-      }
-    });
-
-    toInput.addEventListener("input", function () {
-      updateSuggestions(this, toSuggestionsList);
-    });
-
-    toInput.addEventListener("keyup", function (event) {
-      if (event.key === "Backspace" && this.value === "") {
-
-        toSuggestionsList.innerHTML = "";
-      }
-    });
-  });
-</script>
-
-<style>
-  form {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .selection-div {
-    margin-bottom: 20px;
-  }
-
-  .tip {
-    font-size: 14px;
-    margin-bottom: 5px;
-    color: #ffffff;
-  }
-
-  .selection {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-
-  ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  li {
-    padding: 8px;
-    border-bottom: 1px solid #ccc;
-    cursor: pointer;
-    width: 100%;
-  }
-
-  li:hover {
-    background-color: #f0f0f0;
-    width: 100%;
-  }
-</style>
+    <style>
+        form {
+            display: flex;
+            flex-direction: column;
+        }
         
+        .selection-div {
+            margin-bottom: 20px;
+        }
         
-        <!--<div class="selection-div">
+        .tip {
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+        
+        .selection {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        li {
+            padding: 8px;
+            border-bottom: 1px solid #ccc;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        li:hover {
+            background-color: #f0f0f0;
+            width: 100%;
+        }
+    </style>
+
+
+    <!--<div class="selection-div">
           <p class="tip">Start:</p>
           <select class="selection" id="from">
             <% for(let room of data){ %>
@@ -184,58 +184,44 @@
             <option><%=room%></option>
             <%}%>
           </select> -->
-        </div>
-      </div>
-      <div class="center">
-        <input
-          id="sub"
-          class="selection"
-          type="button"
-          value="Get Directions!"
-          onclick="find()"
-          required
-        />
-      </div>
+    </div>
+    </div>
+    <div class="center">
+        <input id="sub" class="selection" type="button" value="Get Directions!" onclick="find()" required />
+    </div>
     </form>
     <div class="floor-type">
-      <h1 id="floor-ind">1st Floor</h1>
-      <div class="center">
-        <button onclick="changeFloor(1)" class="floor-select floor-selected noRight" id="1st">
+        <h1 id="floor-ind">1st Floor</h1>
+        <div class="center">
+            <button onclick="changeFloor(1)" class="floor-select floor-selected noRight" id="1st">
           1st Floor
         </button>
-        <button
-          onclick="changeFloor(2)"
-          class="floor-select"
-          id="2nd"
-        >
+            <button onclick="changeFloor(2)" class="floor-select" id="2nd">
           2nd Floor
         </button>
-        <button onclick="changeFloor(3)" class="floor-select" id="3rd">
+            <button onclick="changeFloor(3)" class="floor-select" id="3rd">
           3rd Floor
         </button>
-        <button onclick="changeFloor(4)" class=" floor-select noLeft" id="4th">
+            <button onclick="changeFloor(4)" class=" floor-select noLeft" id="4th">
           4th Floor
         </button>
-      </div>
+            <button onclick="showExits()" class=" floor-select" id="emergencyButton">
+          Emergency Button        
+        </button>
+        </div>
     </div>
-  </div>
+    </div>
 
-  <link rel="stylesheet" href="style.css" />
-  <script src="connections2.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <script src="connections2.js"></script>
 
-  <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-  <!-- Created with Inkscape (http://www.inkscape.org/) -->
-  <div class="center">
-    <div id="carouselExampleControls" class="carousel slide">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <svg
-            id="floor-plan-1"
-            class="data-svg"
-            width="2448"
-            height="1584"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+    <!-- Created with Inkscape (http://www.inkscape.org/) -->
+    <div class="center">
+        <div id="carouselExampleControls" class="carousel slide">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <svg id="floor-plan-1" class="data-svg" width="2448" height="1584" xmlns="http://www.w3.org/2000/svg">
             <image href="/floor_plans/floor_1.png" />
             <circle cx="2254" cy="931" r="3" class="node" id="INT-4" />
             <circle cx="1897" cy="810" r="3" class="node" id="INT-7" />
@@ -465,15 +451,9 @@
             <circle cx="672" cy="1130" r="3" class="node" id="INT-202" />
             <circle cx="698" cy="1130" r="3" class="node" id="INT-203" />
           </svg>
-        </div>
-        <div class="carousel-item">
-          <svg
-            id="floor-plan-2"
-            class="data-svg"
-            width="2448"
-            height="1584"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+                </div>
+                <div class="carousel-item">
+                    <svg id="floor-plan-2" class="data-svg" width="2448" height="1584" xmlns="http://www.w3.org/2000/svg">
             <image href="/floor_plans/floor_2.png" />
             <circle cx="2257" cy="425" r="3" class="node" id="INT-0-2" />
             <circle cx="2257" cy="1090" r="3" class="node" id="INT-1-2" />
@@ -716,15 +696,9 @@
             <circle cx="2257" cy="908" r="3" class="node" id="INT-164-2" />
             <circle cx="2291" cy="908" r="3" class="node" id="STAIR-H-H-2" />
           </svg>
-        </div>
-        <div class="carousel-item">
-          <svg
-            id="floor-plan-3"
-            class="data-svg"
-            width="2448"
-            height="1584"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+                </div>
+                <div class="carousel-item">
+                    <svg id="floor-plan-3" class="data-svg" width="2448" height="1584" xmlns="http://www.w3.org/2000/svg">
             <image href="/floor_plans/floor_3.png" />
             <circle cx="1734" cy="639" r="3" class="node" id="INT-2-3" />
             <circle cx="1734" cy="426" r="3" class="node" id="INT-3-3" />
@@ -857,60 +831,50 @@
             <circle cx="295" cy="1001" r="3" class="node" id="STAIR-C-L-3" />
             <circle cx="1695" cy="700" r="3" class="node" id="STAIR-H-F-3" />
           </svg>
-        </div>
-        <div class="carousel-item">
-          <svg id="floor-plan-4" class="data-svg" width="2448" height="1584" xmlns="http://www.w3.org/2000/svg" style="cursor: none;">
+                </div>
+                <div class="carousel-item">
+                    <svg id="floor-plan-4" class="data-svg" width="2448" height="1584" xmlns="http://www.w3.org/2000/svg" style="cursor: none;">
             <image href="/floor_plans/floor_4.png"/>
             <line x1="713" y1="360" x2="1681" y2="360" class="line"/><line x1="1650" y1="342" x2="1650" y2="738" class="line"/><line x1="673" y1="731" x2="1695" y2="731" class="line"/><line x1="673" y1="713" x2="673" y2="997" class="line"/><line x1="760" y1="343" x2="760" y2="745" class="line"/><line x1="1645" y1="414" x2="1699" y2="414" class="line"/><circle cx="1650" cy="360" r="3" class="node" id="TURF-2"/><circle cx="1650" cy="731" r="3" class="node" id="TURF-3"/><circle cx="673" cy="731" r="3" class="node" id="INT-2-4"/><circle cx="760" cy="360" r="3" class="node" id="TURF-1"/><circle cx="760" cy="731" r="3" class="node selected" id="TURF-4"/><circle cx="1650" cy="414" r="3" class="node" id="INT-5-4"/><circle cx="720" cy="360" r="3" class="node" id="STAIR-N-A-4"/><circle cx="1690" cy="414" r="3" class="node" id="STAIR-N-B-4"/><circle cx="1684" cy="731" r="3" class="node" id="STAIR-H-F-4"/><circle cx="673" cy="992" r="3" class="node" id="STAIR-N-D-4"/>
           </svg>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
-      </div>
-      <a
-        class="carousel-control-prev"
-        href="#carouselExampleControls"
-        role="button"
-        data-slide="prev"
-      >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a
-        class="carousel-control-next"
-        href="#carouselExampleControls"
-        role="button"
-        data-slide="next"
-      >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
     </div>
-  </div>
-  <script>
-    const connections = <%-JSON.stringify(connections)%>;
-    const multi_room = <%-JSON.stringify(multi_room)%>;
-  </script>
-  <div id="text-directions"></div>
-  <style>
-    #text-directions {
-      margin-top: 20px;
-    }
-  
-    .text-direction {
-      margin-bottom: 10px;
-      padding: 10px;
-      border-radius: 5px;
-    }
-  </style>
-  <style>
-    .tooltip {
-      position: absolute;
-      background-color: #ff0000;
-      border: 1px solid #ccc;
-      padding: 5px;
-      border-radius: 5px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-  </style>
-</body>
+    <script>
+        const connections = <%-JSON.stringify(connections)%>;
+        const multi_room = <%-JSON.stringify(multi_room)%>;
+    </script>
+    <div id="text-directions"></div>
+    <style>
+        #text-directions {
+            margin-top: 20px;
+        }
+        
+        .text-direction {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+    <style>
+        .tooltip {
+            position: absolute;
+            background-color: #ff0000;
+            border: 1px solid #ccc;
+            padding: 5px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    </body>
 
-<%- include('partials/footer') -%>
+    <%- include('partials/footer') -%>
