@@ -95,6 +95,13 @@
         </div>
         <p class="desc">The Floyd Warshall Algorithm requires an additional ~10-15 seconds to create the distance matrix that is used by the algorithm. Opting to include Floyd Warshall in the test may significantly increase the time required for the test and may cause the page to become unresponsive. Note: the algorithm is still running and the tab should remain open.</p>
       </div>
+      <div class="small-padding center flex-col">
+        <div class="flex-row">
+          <input type="checkbox" name="matrix" id="matrix_test"/>
+          <label class="" for="matrix">Matrix</label>
+        </div>
+        <p class="desc">A matrix is another way to represent a computational graph. Selecting the "matrix" option will require twice the amount of time for the tests to complete.</p>
+      </div>
     </div>
     <button id="test_options" onclick="testOptions()">Show Advanced Test Options</button>
   </div>
@@ -160,6 +167,9 @@
   </table> -->
   <div id="timeChartDiv" class="noSpace">
     <canvas id="myTimeChart"></canvas>
+  </div>  
+  <div id="barChartDiv" class="noSpace">
+    <canvas id="myBarChart"></canvas>
   </div>  
   <div id="visitedChartDiv" class="noSpace">
     <canvas id="myVisitedChart"></canvas>
@@ -939,6 +949,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     const connections = <%-JSON.stringify(connections)%>;
+    const connections_matrix = <%-JSON.stringify(matrix)%>;
   </script>
   <script type="text/javascript" src="algs-page.js"></script>
 </html>
