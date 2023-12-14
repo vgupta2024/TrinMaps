@@ -250,10 +250,12 @@ function hoverText(line, solution) {
     let textBased = toTextBased(solution);
     document.addEventListener("scroll", function() {
         function showTextDirections(lineElement) {
+            const lineIndex = 1;
             const direction = textBased[lineIndex];
             console.log("here");
             if (direction) {
                 const tooltip = document.createElement('div');
+                console.log("here1");
                 tooltip.className = 'tooltip';
                 tooltip.textContent = direction;
 
