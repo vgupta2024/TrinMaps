@@ -6,6 +6,9 @@ exports.getAllRooms = function() {
 exports.getAllConnections = function() {
     return JSON.parse(fs.readFileSync(__dirname + '/../public/floor_plans/connections.json'));
 }
+exports.getMatrix = function() {
+    return JSON.parse(fs.readFileSync(__dirname + '/../public/floor_plans/matrix.json'));
+}
 exports.getAllMultiRooms = function() {
     return JSON.parse(fs.readFileSync(__dirname + '/../public/floor_plans/shared.json'));
 }

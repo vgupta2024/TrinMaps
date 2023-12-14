@@ -55,3 +55,13 @@ console.log(shared)
 unqiue_destinations = unqiue_destinations.concat(Object.keys(shared))
 fs.writeFileSync("destinations.json", JSON.stringify(unqiue_destinations.sort()))
 fs.writeFileSync("shared.json", JSON.stringify(shared))
+
+const key = Object.keys(result)
+let global = null
+const matrix = key.map((r)=>{
+  global = r
+  return key.map((k)=>{
+    return connections[global].includes(k) ? 1 : 0 
+  })
+})
+fs.writeFileSync("matrix.json", JSON.stringify(matrix))

@@ -46,9 +46,11 @@ router.get('/alg', (req, res) => {
     console.log('h')
     res.status(200);
     let connections = Maps.getAllConnections();
+    let matrix = Maps.getMatrix();
     res.setHeader('Content-Type', 'text/html')
     res.render('algs', {
-        connections: connections
+        connections: connections,
+        matrix: matrix
     })
 })
 
