@@ -1340,11 +1340,6 @@ async function runTest() {
       return alg_data.time;
     }),
   });
-  createVisitedChart({
-    datasets: algs.filter(a=>!a.type).map((alg_data) => {
-      return alg_data.visited;
-    }),
-  });
   console.log(algs.filter(a=>!a.type).map((alg_data)=>{return alg_data.name}))
   createBarChart({
     labels: algs.filter(a=>!a.type).map((alg_data)=>{return alg_data.name}),
@@ -1363,6 +1358,7 @@ async function runTest() {
       }
     ]
   })
+
   document.getElementById("myDataTable").classList.remove("noSpace");
   // document.getElementById("myGeneralTable").classList.remove("noSpace");
   document.getElementById("timeChartDiv").classList.remove("noSpace");
