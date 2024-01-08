@@ -27,23 +27,23 @@ router.get('/', function(request, response) {
 });
 
 router.get('/d', (req,res)=>{
-    console.log('h')
+    // console.log('h')
     res.status(200);
     res.setHeader('Content-Type', 'text/html')
     res.render('structure')
 })
-
-router.get('/d', (req, res) => {
-
-    console.log('h')
+router.get('/structure/:id', (req,res)=>{
+    
+    
     res.status(200);
-    res.setHeader('Content-Type', 'text/html')
-    res.render('structure')
+    console.log(req.params.id)
+    // res.setHeader('Content-Type', 'text/html')
+    res.send(Maps.getFloorInfo(req.params.id))
+    // res.render('structure')
 })
-
 router.get('/alg', (req, res) => {
 
-    console.log('h')
+    // console.log('h')
     res.status(200);
     let connections = Maps.getAllConnections();
     let matrix = Maps.getMatrix();

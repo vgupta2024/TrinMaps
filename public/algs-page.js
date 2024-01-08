@@ -903,6 +903,9 @@ function createTimeChart(data) {
             text: "Shortest Path Length (nodes)",
           },
           align: "center",
+          ticks: {
+            textStrokeWidth : 10
+          }
         },
         y: {
           title: {
@@ -915,6 +918,7 @@ function createTimeChart(data) {
             callback: function (value, index, values) {
               return value.toFixed(1);
             },
+            textStrokeWidth: 10
           },
         },
       },

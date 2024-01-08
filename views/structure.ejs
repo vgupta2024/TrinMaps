@@ -42,7 +42,13 @@
   <p id="html_out" class="output"></p>
   <p id="edges_out" class="output"></p>
   <p id="data_out" class="output"></p>
-  <textarea style="width:100%; font-size:2rem; height:50rem;" id='data_in'></textarea>
+  <label for="data-in"></label> 
+    <select name="data-in" id="data-in"> 
+        <option value="floor-1">1st Floor</option> 
+        <option value="floor-2">2nd Floor</option> 
+        <option value="floor-3">3rd Floor</option> 
+        <option value="floor-4">4th Floor</option> 
+    </select>
   <button type="button" style="width:100vw;font-size: 4rem;" onclick="loadInput()">Load Map</button>
 </div>
 <script src="data-struct-gen.js"></script>
