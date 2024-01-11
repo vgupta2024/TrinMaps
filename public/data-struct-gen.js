@@ -369,8 +369,9 @@ function generateOutput(){
   })
   document.getElementById('data_out').innerText = JSON.stringify(data_out)
 }
-function loadInput() {
-  let data_in = JSON.parse(document.getElementById('data_in').value)
+async function loadInput() {
+  const response = await fetch(`/structure/${document.getElementById('data-in').value}`);
+  const data_in = await response.json();
   let nodes2 = Object.keys(data_in.nodes)
   inter_count = nodes2.reduce(((c, name)=>{
     if(name.split('-')[0] === "INT"){

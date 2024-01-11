@@ -28,7 +28,7 @@
   height="1584"
   xmlns="http://www.w3.org/2000/svg"
 >
-  <image href="/floor_plans/floor_4.png" />
+  <image href="/floor_plans/floor_3.png" />
 </svg>
 <div id="item_info_div" style="display: flex; flex-direction: column; width:calc(100vw-2448px); border:1px solid red;font-size: 1.5rem;" class="hidden">
   <h1 style="font-weight: 50;" id="confirm_name">New Name</h1>
@@ -42,7 +42,13 @@
   <p id="html_out" class="output"></p>
   <p id="edges_out" class="output"></p>
   <p id="data_out" class="output"></p>
-  <textarea style="width:100%; font-size:2rem; height:50rem;" id='data_in'></textarea>
+  <label for="data-in"></label> 
+    <select name="data-in" id="data-in"> 
+        <option value="floor-1">1st Floor</option> 
+        <option value="floor-2">2nd Floor</option> 
+        <option value="floor-3">3rd Floor</option> 
+        <option value="floor-4">4th Floor</option> 
+    </select>
   <button type="button" style="width:100vw;font-size: 4rem;" onclick="loadInput()">Load Map</button>
 </div>
 <script src="data-struct-gen.js"></script>
