@@ -8,6 +8,9 @@ const shortestPath = function(startNodeID, endNodeID) {
         startY = startNode.cy.baseVal.value
     const endX = endNode.cx.baseVal.value,
         endY = endNode.cy.baseVal.value
+    console.log("startNode: " + startNode)
+    console.log("endNode: " + endNode)
+
     let node_data = {
         // nodeID : {
         //   distance : // Manhattan distance from endNode
@@ -24,6 +27,8 @@ const shortestPath = function(startNodeID, endNodeID) {
         existingNeighbors.add(nodeID)
         const node = document.getElementById(nodeID)
         const weight = Math.abs(startNode.cx.baseVal.value - node.cx.baseVal.value) + Math.abs(startNode.cy.baseVal.value - node.cy.baseVal.value)
+        console.log("startNodeID: " + startNodeID)
+        console.log("Node: " + nodeID)
         const cell_formatted = {
             distance: Math.abs(node.cx.baseVal.value - endX) + Math.abs(node.cy.baseVal.value - endY),
             cost: weight,
@@ -39,6 +44,7 @@ const shortestPath = function(startNodeID, endNodeID) {
     while (touching.length && !solved) {
 
         const currentID = touching.pop()
+        console.log("currentID: " + currentID)
         existingNeighbors.delete(currentID)
         if (currentID == endNodeID) {
             solved = true
@@ -54,7 +60,9 @@ const shortestPath = function(startNodeID, endNodeID) {
         let requireReorder = newNeighbors.filter((neighborID) => {
             const node = document.getElementById(neighborID)
             const stairCost = currentID.split('-')[0] == "STAIR" && neighborID.split('-')[0] == "STAIR" ? 1 : 0
-            const cost = oldCost + Math.abs(currentNode.cx.baseVal.value - node.cx.baseVal.value) + Math.abs(currentNode.cy.baseVal.value - node.cy.baseVal.value) + (stairCost * 100)
+                //alternate routes
+            let cost = oldCost + Math.abs(currentNode.cx.baseVal.value - node.cx.baseVal.value) + Math.abs(currentNode.cy.baseVal.value - node.cy.baseVal.value) + (stairCost * 100)
+            console.log("cost: " + cost)
             if (existingNeighbors.has(neighborID)) {
                 if (cost < node_data[neighborID].cost) {
                     node_data[neighborID].cost = cost
@@ -100,6 +108,122 @@ const shortestPath = function(startNodeID, endNodeID) {
         }
     }
 }
+
+
+const alternateRoutes = function(startNodeID, endNodeID) {
+    console.time()
+    const endNode = document.getElementById(endNodeID)
+    const startNode = document.getElementById(startNodeID)
+    const startX = startNode.cx.baseVal.value,
+        startY = startNode.cy.baseVal.value
+    const endX = endNode.cx.baseVal.value,
+        endY = endNode.cy.baseVal.value
+    console.log("startNode: " + startNode)
+    console.log("endNode: " + endNode)
+
+    let node_data = {
+        // nodeID : {
+        //   distance : // Manhattan distance from endNode
+        //   cost : // culmulative costs to reach node from start
+        //   previous : // previous node
+        // }
+    }
+    let solved = false
+    let existingNeighbors = new Set()
+    let existingVisted = new Set()
+    existingVisted.add(startNodeID)
+    let touching = [...connections[startNodeID]]
+    touching.forEach((nodeID) => {
+        existingNeighbors.add(nodeID)
+        const node = document.getElementById(nodeID)
+        const weight = Math.abs(startNode.cx.baseVal.value - node.cx.baseVal.value) + Math.abs(startNode.cy.baseVal.value - node.cy.baseVal.value)
+        console.log("startNodeID: " + startNodeID)
+        console.log("Node: " + nodeID)
+        const cell_formatted = {
+            distance: Math.abs(node.cx.baseVal.value - endX) + Math.abs(node.cy.baseVal.value - endY),
+            cost: weight,
+            previous: startNodeID,
+        }
+        node_data[nodeID] = cell_formatted
+    })
+    touching = touching.sort((nodeID1, nodeID2) => {
+        const n1 = node_data[nodeID1]
+        const n2 = node_data[nodeID2]
+        return n2.cost + n2.distance - n1.cost - n2.distance
+    })
+    while (touching.length && !solved) {
+
+        const currentID = touching.pop()
+        console.log("currentID: " + currentID)
+        existingNeighbors.delete(currentID)
+        if (currentID == endNodeID) {
+            solved = true
+            break
+        } else {
+            existingVisted.add(currentID)
+        }
+        let oldCost = node_data[currentID].cost
+        const currentNode = document.getElementById(currentID)
+        let newNeighbors = [...connections[currentID]].filter((neighbor_node) => {
+            return !existingVisted.has(neighbor_node)
+        })
+        let requireReorder = newNeighbors.filter((neighborID) => {
+            const node = document.getElementById(neighborID)
+            const stairCost = currentID.split('-')[0] == "STAIR" && neighborID.split('-')[0] == "STAIR" ? 1 : 0
+                //alternate routes
+            let cost = oldCost + Math.abs(currentNode.cx.baseVal.value - node.cx.baseVal.value) + Math.abs(currentNode.cy.baseVal.value - node.cy.baseVal.value) + (stairCost * 100)
+            console.log("cost: " + cost)
+            if (currentID == "INT-69" || currentID == "INT-70" || currentID == "INT-162" || currentID == "INT-68" || currentID == "INT-71" || currentID == "N-314" || currentID == "N-313" || currentID == "N-310" || currentID == "N-308" || currentID == "N-307" || currentID == "N-305" || currentID == "N-301" || currentID == "N-312" || currentID == "N-309" || currentID == "N-311" || currentID == "INT-41-3" || currentID == "INT-40-3" || currentID == "INT-39-3") {
+                cost = 999999999;
+            }
+            if (existingNeighbors.has(neighborID)) {
+                if (cost < node_data[neighborID].cost) {
+                    node_data[neighborID].cost = cost
+                    node_data[neighborID].previous = currentID
+                    touching.splice(touching.indexOf(neighborID), 1);
+                    return true
+                }
+                return false
+            } else {
+                const distance = Math.abs(node.cx.baseVal.value - endX) + Math.abs(node.cy.baseVal.value - endY)
+                node_data[neighborID] = {
+                    distance: distance,
+                    cost: cost,
+                    previous: currentID
+                }
+                existingNeighbors.add(neighborID)
+                return true
+            }
+        })
+        requireReorder.forEach((id) => {
+            insertSorted(touching, id, node_data)
+        })
+    }
+    if (solved) {
+        let path = []
+        let next = endNodeID
+        while (next !== startNodeID) {
+            path.push(next)
+            next = node_data[next].previous
+        }
+        path.push(next)
+        console.timeEnd()
+
+        return {
+            solution: path.reverse(),
+            distance: node_data[endNodeID].distance + node_data[endNodeID].cost
+        }
+    } else {
+        console.timeEnd()
+        return {
+            solution: [],
+            distance: Infinity,
+        }
+    }
+}
+
+
+
 
 function showSolution(solution) {
     removeAllLines();
@@ -474,35 +598,62 @@ function generateConnections() {
     return connections
 }
 
-function find() {
+function find(shouldUseAlternateRoute) {
     console.log(multi_room)
     let to = document.getElementById("to").value;
     let from = document.getElementById("from").value;
+    console.log("to: " + to)
+    console.log("from: " + from)
     if (from in multi_room && to in multi_room) {
+        console.log("rom in multi_room && to in multi_room")
+
         from = multi_room[from]
         to = multi_room[to]
         const solution = from.map((from) => {
+            if (shouldUseAlternateRoute) {
+                return to.map((to) => alternateRoutes(to, from))
+
+            }
             return to.map((to) => shortestPath(to, from))
         }).flat(Infinity).sort((a, b) => a.distance - b.distance)[0].solution
         showSolution(solution)
         toTextBased(solution)
     } else if (from in multi_room) {
+        console.log("from in multi_room")
+
         from = multi_room[from]
         const solution = from.map((from) => {
-            return shortestPath(to, from);
+            if (shouldUseAlternateRoute) {
+                return to.map((to) => alternateRoutes(to, from))
+
+            }
+            return to.map((to) => shortestPath(to, from))
         }).sort((a, b) => a.distance - b.distance)[0].solution
         showSolution(solution)
         toTextBased(solution)
     } else if (to in multi_room) {
+        console.log("to in multi_room")
         to = multi_room[to]
         const solution = to.map((to) => {
-            return shortestPath(to, from);
+            if (shouldUseAlternateRoute) {
+                return to.map((to) => alternateRoutes(to, from))
+
+            }
+            return to.map((to) => shortestPath(to, from))
         }).sort((a, b) => a.distance - b.distance)[0].solution
         showSolution(solution)
         toTextBased(solution)
 
     } else {
-        const solution = shortestPath(to, from).solution
+        console.log("else")
+        let solution;
+        if (shouldUseAlternateRoute) {
+            solution = alternateRoutes(to, from).solution
+
+        } else {
+            solution = shortestPath(to, from).solution
+        }
+
         showSolution(solution)
         toTextBased(solution)
     }
