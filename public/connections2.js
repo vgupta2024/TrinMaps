@@ -173,7 +173,7 @@ const alternateRoutes = function(startNodeID, endNodeID) {
                 //alternate routes
             let cost = oldCost + Math.abs(currentNode.cx.baseVal.value - node.cx.baseVal.value) + Math.abs(currentNode.cy.baseVal.value - node.cy.baseVal.value) + (stairCost * 100)
             console.log("cost: " + cost)
-            if (currentID == "INT-69" || currentID == "INT-70" || currentID == "INT-162" || currentID == "INT-68" || currentID == "INT-71" || currentID == "N-314" || currentID == "N-313" || currentID == "N-310" || currentID == "N-308" || currentID == "N-307" || currentID == "N-305" || currentID == "N-301" || currentID == "N-312" || currentID == "N-309" || currentID == "N-311" || currentID == "INT-41-3" || currentID == "INT-40-3" || currentID == "INT-39-3") {
+            if (currentID == "INT-69" || currentID == "INT-70" || currentID == "INT-162" || currentID == "INT-68" || currentID == "INT-71" || currentID == "N-314" || currentID == "N-313" || currentID == "N-310" || currentID == "N-308" || currentID == "N-307" || currentID == "N-305" || currentID == "N-301" || currentID == "N-312" || currentID == "N-309" || currentID == "N-311" || currentID == "INT-41-3" || currentID == "INT-40-3" || currentID == "INT-39-3" || currentID == "INT-11-2" || currentID == "INT-112-2" || currentID == "INT-106-2" || currentID == "INT-18-2" || currentID == "INT-17-2" || currentID == "INT-109-2" || currentID == "INT-110-2" || currentID == "INT-111-2" || currentID == "INT-8-2" || currentID == "INT-43-2" || currentID == "INT-56-2" || currentID == "INT-6-2") {
                 cost = 999999999;
             }
             if (existingNeighbors.has(neighborID)) {
