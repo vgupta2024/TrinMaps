@@ -256,14 +256,15 @@ function hoverText(line, solution) {
             if (direction) {
                 const tooltip = document.createElement('div');
                 console.log("here1");
-                tooltip.className = 'tooltip';
+                tooltip.classList.add('tooltip');
                 tooltip.textContent = direction;
 
                 const rect = lineElement.getBoundingClientRect();
-                tooltip.style.top = rect.top - tooltip.offsetHeight + 'px';
-                tooltip.style.left = rect.left + (rect.width - tooltip.offsetWidth) / 2 + 'px';
-
-                document.body.appendChild(tooltip);
+                // tooltip.style.top = rect.top - tooltip.offsetHeight + 'px';
+                // tooltip.style.left = rect.left + (rect.width - tooltip.offsetWidth) / 2 + 'px';
+                console.log(tooltip)
+                console.log("here3")
+                document.getElementById("test123").appendChild(tooltip);
             }
         }
 
