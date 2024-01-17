@@ -1,4 +1,7 @@
 <style>
+.hideNow{
+  visibility: hidden;
+}
 .hidden{
   visibility: hidden;
 }
@@ -19,7 +22,16 @@
   fill:red;
   stroke:red;
 }
+
+#data-in, option{
+  width: 100vw;
+  font-size: 3.5rem;
+}
 </style>
+<div style="position: absolute; width: 100vw; height: 100vh; background: white; display: flex; flex-direction: column; justify-content: center; align-items: center;" id="page-loader">
+  <h1 style='margin: 0 7rem;'>For technical reasons, you must reduce your zoom on your browser to 50% by using 'ctrl' + '-' or 'cmd' + '-'</h1>
+  <button type='button' onclick="document.getElementById('page-loader').classList.add('hideNow')">Continue</button>
+</div>
 <div style="display:flex;flex-direction: row;">
   <svg
   id="floor-plan"
@@ -28,7 +40,7 @@
   height="1584"
   xmlns="http://www.w3.org/2000/svg"
 >
-  <image href="/floor_plans/floor_3.png" />
+  <image id="floor_plan_image" href="/floor_plans/floor_3.png" />
 </svg>
 <div id="item_info_div" style="display: flex; flex-direction: column; width:calc(100vw-2448px); border:1px solid red;font-size: 1.5rem;" class="hidden">
   <h1 style="font-weight: 50;" id="confirm_name">New Name</h1>
