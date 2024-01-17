@@ -1,4 +1,5 @@
 // final ouput = console.log(new XMLSerializer().serializeToString(document.getElementById("floor-plan")))
+let FLOOR_NUMBER = 1;
 const svg = document.getElementById("floor-plan");
 class Nodes {
   constructor(x, y) {
@@ -150,7 +151,7 @@ svg.addEventListener("mousedown", (e) => {
           if(intersection){
             console.log(intersection)
             const new_node = new Nodes(intersection[0], intersection[1])
-            new_node.setID(`INT-${inter_count}-3`)
+            new_node.setID(`INT-${inter_count}-${FLOOR_NUMBER}`)
             inter_count++
             nodes.push(new_node)
             new_line.addNode(new_node)
@@ -322,8 +323,11 @@ function generateRandomString() {
   return randomString;
 }
 
-function generateOutput(){
-  document.getElementById('html_out').innerText = String(new XMLSerializer().serializeToString(document.getElementById("floor-plan")))
+async function generateOutput(){
+  document.getElementById('greenCircle').remove()
+  document.getElementById("floor-plan").setAttribute('id', `floor-plan-${FLOOR_NUMBER}`)
+  const svg_str = String(new XMLSerializer().serializeToString(document.getElementById(`floor-plan-${FLOOR_NUMBER}`)))
+  document.getElementById('html_out').innerText = svg_str
   let edges_output = {}
   lines.forEach((line)=>{
     line.type ? line.nodes.sort((a,b)=>a.y-b.y) : line.nodes.sort((a,b)=>a.x-b.x)
@@ -367,12 +371,39 @@ function generateOutput(){
       data_out.lines[parent.id].nodes.push(node.element.id)
     })
   })
+
+
   document.getElementById('data_out').innerText = JSON.stringify(data_out)
+
+  // const response = await fetch('/d/save', {
+  //   method: "POST", // *GET, POST, PUT, DELETE, etc.
+  //   mode: "cors", // no-cors, *cors, same-origin
+  //   cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+  //   credentials: "same-origin", // include, *same-origin, omit
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     // 'Content-Type': 'application/x-www-form-urlencoded',
+  //   },
+  //   redirect: "follow", // manual, *follow, error
+  //   referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+  //   body: JSON.stringify({
+  //     svg: svg_str,
+  //     edges: edges_output,
+  //     load: data_out,
+  //     floor: FLOOR_NUMBER,
+  //   }), // body data type must match "Content-Type" header
+  // });
+  // return response.json(); // parses JSON response into native JavaScript objects
+
 }
 async function loadInput() {
   const response = await fetch(`/structure/${document.getElementById('data-in').value}`);
+  FLOOR_NUMBER = document.getElementById('data-in').value.split('-')[1]
   const data_in = await response.json();
   let nodes2 = Object.keys(data_in.nodes)
+  const imageElement = document.getElementById("floor_plan_image");
+  const filename = document.getElementById('data-in').value.split('-').join('_')
+  imageElement.setAttribute("href", `/floor_plans/${filename}.png`);
   inter_count = nodes2.reduce(((c, name)=>{
     if(name.split('-')[0] === "INT"){
       const c_val = Number(name.split('-')[1])

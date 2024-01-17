@@ -181,7 +181,7 @@
     <div class="flex-row">
       <div class="side">
         <h5 class="alg-question">What is TrinMaps?</h5>
-        <p class="alg-p">TrinMaps is an application </p>
+        <p class="alg-p">TrinMaps is a navigation tool that visualizes the shortest path and provides written directions between locations in Trinity’s campus. It is intended for use by Trinity students, faculty, parents, and visitors.</p>
       </div>
       <div class="side">
         <h5 class="alg-question">How was the algorithm determined?</h5>
@@ -286,11 +286,11 @@
     <div class="flex-row">
       <div class="side">
         <h5 class="alg-question">What is the difference?</h5>
-        <p class="alg-p">TO BE FINISHED.</p>
+        <p class="alg-p">A matrix representation of a graph is a 2D array, which has the dimensions N by N (where N represents the number of nodes in the graph). Each datapoint is assigned a binary value (1 or 0), which denotes whether or not the two corresponding nodes share an edge. In the adjacency list representation, the graph is represented via an object. Every node in the graph is assigned a key in that object, and each key has its own value. This value is an array, which contains the keys of the nodes, which share an edge with the corresponding node.</p>
       </div>
       <div class="side">
         <h5 class="alg-question">Result</h5>
-        <p class="alg-p">TO BE FINISHED.</p>
+        <p class="alg-p">The adjancency list representation is significantly faster than the matrix representation. This is likely because the matrix representation requires a substantial amount of additional memory since it stores whether nodes do not share an edge. Conversely, in the adjacency list representation, it is assumed that the nodes do not share an edge if not specified. The size of the matrix (which increases exponentially as the number of nodes increase) lead to a longer lookup time than that of the smaller adjacency list representation.</p>
       </div>
     </div>
   </div>
@@ -298,7 +298,7 @@
     <div>
       <h3 class="alg-name">Final Conclusion</h3>
     </div>
-    <p>TrinMaps employs the A* search algorithm to calculate the shortest path between two points in the school. Users of TrinMaps desire the shortest path in terms of physical distance. Therefore, TrinMaps does not use Depth First Search or Breadth First Search, despite the two algorithm’s potential for increased performance. The performance of the algorithm is TrinMap users’ next consideration. If performance is synonymous with an algorithm’s execution time, TrinMaps should theoretically employ an adaption of Floyd Warshall’s algorithm that has a distance matrix that is precalculated and is loaded with the page. Alternatively, TrinMaps could precalculate all the shortest paths from every node to every other node and instantaneously return the result to the user. However, both of these solutions are inflexible to the renovations of Trinity’s building and, also, require a significant amount of memory that may delay the page’s loading speed. As a result, TrinMaps opts for the next fastest solution that requires considerably less memory: A* search.</p>
+    <p>TrinMaps employs an adaptation of Floyd Warshall's algorithm to calculate the shortest path between two points in the school since it is the fastest algorithm. Users of TrinMaps desire the shortest path in terms of physical distance. Therefore, TrinMaps does not use Depth First Search or Breadth First Search, despite the two algorithm’s potential for increased performance. The next consideration was an algorithm's execution time. While A* Search is the fastest shortest path algorithm for an unexplored graph, TrinMaps relies on a static graph. Thus, TrinMaps employs an adaption of Floyd Warshall’s algorithm, which has a precalculated distance matrix that is loaded with the page. The algorithm then relies on the data from the distance matrix to reconstruct the shortest path between any location in the school. This remains the fastest and most feasible solution for TrinMaps.</p>
     </div>
   </div>
   <div style="display:none;" class="center">
