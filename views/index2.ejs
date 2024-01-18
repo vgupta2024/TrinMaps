@@ -1,24 +1,23 @@
 <%- include('partials/header', {title:"TrinMaps", logged: true}, {data:data}) -%>
 
+<body>
+  <div class="form-div">
+      <p>Enter your current location and your desired destination.</p>
+      <form action="/directions" method="POST">
+          <div class="selection-div">
+              <p class="tip">Start:</p>
+              <input type="text" id="from" class="selection" placeholder="Search for a room">
+              <ul id="fromSuggestions"></ul>
+          </div>
+          <div class="selection-div">
+              <p class="tip">End:</p>
+              <input type="text" id="to" class="selection" placeholder="Search for a room">
+              <ul id="toSuggestions"></ul>
+          </div>
+      </form>
+  </div>
+</body>
 
-    <body>
-        <div class="form-div">
-            <p>Enter your current location and your desired destination.</p>
-            <form action="/directions" method="POST">
-                <div class="selection-div">
-                    <p class="tip">Start:</p>
-                    <input type="text" id="from" class="selection" placeholder="Search for a room">
-                    <ul id="fromSuggestions"></ul>
-                </div>
-                <div class="selection-div">
-                    <p class="tip">End:</p>
-                    <input type="text" id="to" class="selection" placeholder="Search for a room">
-                    <ul id="toSuggestions"></ul>
-                </div>
-            </form>
-        </div>
-
-    </body>
 
     <script>
         class TrieNode {
@@ -124,48 +123,70 @@
         });
     </script>
 
-    <style>
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .selection-div {
-            margin-bottom: 20px;
-        }
-        
-        .tip {
-            font-size: 14px;
-            margin-bottom: 5px;
-            color: #ffffff;
-        }
-        
-        .selection {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        
-        ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        li {
-            padding: 8px;
-            border-bottom: 1px solid #ccc;
-            cursor: pointer;
-            width: 100%;
-        }
-        
-        li:hover {
-            background-color: #f0f0f0;
-            width: 100%;
-        }
-    </style>
+<style>
+  form {
+      display: flex;
+      flex-direction: column;
+  }
+
+  .form-div {
+      width: 300px; /* Adjust the width as needed */
+      margin: auto; /* Center the form */
+  }
+
+  .selection-div {
+      margin-bottom: 20px;
+  }
+
+  .tip {
+      font-size: 14px;
+      margin-bottom: 5px;
+      color: #ffffff;
+  }
+
+  .autocomplete-container {
+      position: relative;
+      width: 100%; /* Ensure the container spans the full width of the input */
+  }
+
+  .selection {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+  }
+
+  ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      position: absolute;
+      width: 100%;
+      top: 100%;
+      left: 0;
+      z-index: 1;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-top: none;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  li {
+      padding: 8px;
+      border-bottom: 1px solid #ccc;
+      cursor: pointer;
+      width: 100%;
+  }
+
+  li:hover {
+      background-color: #f0f0f0;
+      width: 100%;
+  }
+</style>
+
+
+
 
 
     <!--<div class="selection-div">
@@ -854,10 +875,53 @@
             </a>
         </div>
     </div>
+    <style>
+      .carousel {
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: -1; /* Set z-index to a lower value to place it in the background */
+      }
+  </style>
     <script>
         const connections = <%-JSON.stringify(connections)%>;
         const multi_room = <%-JSON.stringify(multi_room)%>;
     </script>
+
+<style>
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+    }
+  
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 120px;
+      background-color: #efe3e3;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -60px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+  
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+  </style>
+  
+  <div class="tooltip">
+    Hover over me
+    <div class="tooltiptext">Tooltip Text</div>
+  </div>
     <div id="text-directions"></div>
     <style>
         #text-directions {
@@ -868,20 +932,8 @@
             margin-bottom: 10px;
             padding: 10px;
             border-radius: 5px;
+            align-content: center;
         }
-    </style>
-    <style>
-        .tooltip {
-      display: none;
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      transform: translateX(-50%);
-      background-color: #ffffff;
-      color: #fff;
-      padding: 5px;
-      border-radius: 5px;
-    }
     </style>
     </body>
 

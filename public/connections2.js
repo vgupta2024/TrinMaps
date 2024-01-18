@@ -226,8 +226,17 @@ const alternateRoutes = function(startNodeID, endNodeID) {
 
 
 function showSolution(solution) {
+    clearYouAreHere();
+    clearFinish();
     removeAllLines();
-    // addYouAreHere(endX, endY, endNode.closest("svg").getAttribute('id'))
+    endNode = document.getElementById(solution[solution.length-1]);
+    endX = endNode.cx.baseVal.value;
+    endY = endNode.cy.baseVal.value;
+    startNode = document.getElementById(solution[0]);
+    startX = startNode.cx.baseVal.value;
+    startY = startNode.cy.baseVal.value;
+    addYouAreHere(endX, endY, endNode.closest("svg").getAttribute('id'))
+    finish(startX, startY, startNode.closest("svg").getAttribute('id'))
     for (let i = 1; i < solution.length; i++) {
         const n1 = document.getElementById(solution[i])
         const n2 = document.getElementById(solution[i - 1])
@@ -354,14 +363,34 @@ function addYouAreHere(x, y, floor) {
     console.log('called')
     var youAreHereLabel = document.createElementNS('http://www.w3.org/2000/svg', 'image');
     youAreHereLabel.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'here.png');
-    youAreHereLabel.setAttribute('x', String(x))
-    youAreHereLabel.setAttribute('y', String(y))
+    youAreHereLabel.setAttribute('x', String(x-75))
+    youAreHereLabel.setAttribute('y', String(y-125))
 
-    youAreHereLabel.setAttribute('height', '.8rem')
+    youAreHereLabel.setAttribute('height', '10rem')
     youAreHereLabel.classList.add('you-here')
         // youAreHereLabel.setAttribute('fill', 'green')
 
     document.getElementById(floor).append(youAreHereLabel)
+}
+
+function finish(x, y, floor) {
+    console.log('called')
+    var finishLabel = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+    finishLabel.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'finish.png');
+    finishLabel.setAttribute('x', String(x-75))
+    finishLabel.setAttribute('y', String(y))
+
+    finishLabel.setAttribute('height', '10rem')
+    finishLabel.classList.add('finish')
+        // youAreHereLabel.setAttribute('fill', 'green')
+
+    document.getElementById(floor).append(finishLabel)
+}
+
+function clearFinish() {
+    Array.from(document.getElementsByClassName('finish')).forEach((e) => {
+        e.remove()
+    })
 }
 
 function clearYouAreHere() {
@@ -370,31 +399,18 @@ function clearYouAreHere() {
     })
 }
 
-function hoverText(line, solution) {
+function hoverText(line, solution, index) {
     let textBased = toTextBased(solution);
     document.addEventListener("scroll", function() {
         function showTextDirections(lineElement) {
-            const lineIndex = 1;
-            const direction = textBased[lineIndex];
-            console.log("here");
-            if (direction) {
-                const tooltip = document.createElement('div');
-                console.log("here1");
-                tooltip.classList.add('tooltip');
-                tooltip.textContent = direction;
+                const direction = textBased[textBased.length-index+1];
+                const textDivh = document.getElementById('hover-text')
+                textDivh.innerHTML = direction;
 
-                const rect = lineElement.getBoundingClientRect();
-                // tooltip.style.top = rect.top - tooltip.offsetHeight + 'px';
-                // tooltip.style.left = rect.left + (rect.width - tooltip.offsetWidth) / 2 + 'px';
-                console.log(tooltip)
-                console.log("here3")
-                document.getElementById("test123").appendChild(tooltip);
-            }
-        }
-
+    }
         function hideTextDirections() {
-            const tooltips = document.querySelectorAll('.tooltip');
-            tooltips.forEach(tooltip => tooltip.remove());
+            const textDivh = document.getElementById('hover-text')
+            textDivh.innerHTML = "";
         }
 
         line.addEventListener('mouseover', function() {
@@ -409,7 +425,7 @@ function hoverText(line, solution) {
 
 function addLine(x1, y1, x2, y2, floor, solution) {
     var newLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    hoverText(newLine, solution);
+    hoverText(newLine, solution, lineIndex);
     lineIndex++;
     newLine.setAttribute('id', 'line2');
     newLine.setAttribute('x1', x1);
@@ -492,12 +508,12 @@ function toTextBased(path) {
 
     }
     console.log(directions);
-    const textDiv = document.getElementById('text-directions')
+    const textDiv = document.getElementById('text-direction-container')
     textDiv.innerHTML = ""
     directions.forEach((direction) => {
         const p_element = document.createElement("p")
         p_element.innerHTML = direction
-        p_element.classList.add('text-direction')
+        p_element.classList.add('text-direction-container')
         textDiv.appendChild(p_element)
     })
     return directions
