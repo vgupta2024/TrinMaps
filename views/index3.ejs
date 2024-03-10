@@ -17,7 +17,6 @@
                 </div>
             </form>
         </div>
-
     </body>
 
     <script>
@@ -215,8 +214,24 @@
     </div>
     </div>
 
+
     <link rel="stylesheet" href="style.css" />
     <script src="connections2.js"></script>
+
+    <div id="hover-text"></div>
+
+    <style>
+        #hover-text {
+          width: 200px;
+          height: 100px;
+          padding: 20px;
+          background-color: black;
+          color: white;
+          border-radius: 8px;
+          text-align: center;
+          margin: 20px auto; /* Center the box horizontally */
+        }
+      </style>
 
     <?xml version="1.0" encoding="UTF-8" standalone="no"?>
     <!-- Created with Inkscape (http://www.inkscape.org/) -->
@@ -609,6 +624,7 @@
             <circle cx="314" cy="1001" r="3" class="node" id="INT-104-3" />
             <circle cx="295" cy="1001" r="3" class="node" id="STAIR-C-L-3" />
             <circle cx="1695" cy="700" r="3" class="node" id="STAIR-H-F-3" />
+            
           </svg>
                 </div>
                 <div class="carousel-item">
@@ -632,27 +648,28 @@
         const connections = <%-JSON.stringify(connections)%>;
         const multi_room = <%-JSON.stringify(multi_room)%>;
     </script>
-    <div id="text-directions"></div>
+
+        <div id="text-direction-container"></div>
+        <style>
+            .text-direction-container {
+              margin-top: 20px;
+              padding: 20px;
+              border: 1px solid #ccc;
+              border-radius: 8px;
+              background-color: black; /* Set background color to black */
+              color: white; /* Set text color to white */
+              text-align: center; /* Center the text */
+              box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* Adjust box shadow if needed */
+            }
+          
+            .text-direction {
+              margin-bottom: 10px;
+              font-size: 16px;
+              line-height: 1.5;
+            }
+          </style>
+          
     <style>
-        #text-directions {
-            margin-top: 20px;
-        }
-        
-        .text-direction {
-            margin-bottom: 10px;
-            padding: 10px;
-            border-radius: 5px;
-        }
-    </style>
-    <style>
-        .tooltip {
-            position: absolute;
-            background-color: #ff0000;
-            border: 1px solid #ccc;
-            padding: 5px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
     </style>
     </body>
 
